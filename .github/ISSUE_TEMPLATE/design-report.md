@@ -1,5 +1,5 @@
 ---
-name: 이슈 템플릿 - 퍼블리싱
+name: design-report
 about: 퍼블리싱 설명 및 수정
 title: ''
 labels: 퍼블리싱
