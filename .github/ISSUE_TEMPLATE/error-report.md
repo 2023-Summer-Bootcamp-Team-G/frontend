@@ -2,7 +2,7 @@
 name: error-report
 about: 오류 설명 및 수정
 title: "[fix]"
-labels: ''
+labels: 오류수정
 assignees: ''
 
 ---
