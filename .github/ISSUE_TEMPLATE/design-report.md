@@ -1,9 +1,9 @@
 ---
 name: design-report
 about: 퍼블리싱 설명 및 수정
-title: ''
-labels: 오류수정, 퍼블리싱, 환경설정
-assignees: woohee-jeong
+title: "[design]"
+labels: 퍼블리싱
+assignees: ''
 
 ---
 
