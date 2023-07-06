@@ -1,6 +1,6 @@
 ---
-name: design-report
-about: 퍼블리싱 설명 및 수정
+name: Design
+about: "\U0001F3A8 Design(페이지 경로 또는 컴포넌트): 디자인, 문장 수정"
 title: "[design]"
 labels: 퍼블리싱
 assignees: ''

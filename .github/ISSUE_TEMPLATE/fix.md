@@ -1,6 +1,6 @@
 ---
-name: error-report
-about: 오류 설명 및 수정
+name: Fix
+about: "\U0001F528 Fix(페이지 경로 또는 컴포넌트): 버그 또는 에러 수정"
 title: "[fix]"
 labels: 오류수정
 assignees: ''
