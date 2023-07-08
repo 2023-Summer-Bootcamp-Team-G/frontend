@@ -1,12 +1,14 @@
-import './styles/App.css';
-
-import Button from './components/Btn/Btn';
+import { ThemeProvider } from 'styled-components';
+import GlobalStyle from './styles/GlobalStyle';
+import { theme } from './styles/theme';
+// import MainPage from './pages/main';
 
 function App() {
   return (
-    <>
-      <Button title='시작하기' />
-    </>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      {/* <MainPage /> */}
+    </ThemeProvider>
   );
 }
 
