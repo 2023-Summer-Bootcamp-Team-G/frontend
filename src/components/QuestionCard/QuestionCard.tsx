@@ -26,7 +26,7 @@ const RectangleLayout = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 12.5rem;
+  // margin: 12.5rem;  // 이미지 박스 짤려서 임시로 넣어놨어요
 `;
 
 const ImageContainer = styled.div`
@@ -35,7 +35,7 @@ const ImageContainer = styled.div`
   position: absolute;
   top: -3.125rem;
   left: 6.25rem;
-  background-color: red;
+  // background-color: red;  // 이미지 박스 위치 알아보기 쉬우라고 임시로 정한 색이에요
 `;
 
 const Rectangle = styled.div`
@@ -56,11 +56,9 @@ const Text = styled.div`
   height: 4.75rem;
   left: 1.56rem;
   top: 7.69rem;
-  font-family: "Noto Sans";
   font-style: normal;
   font-weight: 400;
   font-size: 1.75rem;
-  line-height: 2.375rem;
   text-align: center;
   display: flex;
   align-items: center;
