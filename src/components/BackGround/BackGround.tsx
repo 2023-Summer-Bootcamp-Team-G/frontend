@@ -1,19 +1,27 @@
-import { styled } from "styled-components";
+import { ReactNode } from 'react';
+import { styled } from 'styled-components';
 
 type TitleProps = {
   title: string;
+  children: ReactNode;
 };
 
-export default function BackGround(props: TitleProps) {
+export default function BackGround({ title, children }: TitleProps) {
   return (
-    <Box>
-      <Title>{props.title}</Title>
-    </Box>
+    <BoxLayout>
+      <Box>
+        <Title>{title}</Title>
+        {children}
+      </Box>
+    </BoxLayout>
   );
 }
 
+const BoxLayout = styled.div`
+  padding: 5.81rem 7.5rem 0 7.5rem;
+`;
+
 const Box = styled.div`
-  margin: 5.81rem 7.5rem 0 7.5rem;
   background: white;
   border-radius: 3.75rem 3.75rem 0 0;
   height: 100vh;
