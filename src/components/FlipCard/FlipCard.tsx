@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { styled } from 'styled-components';
 
-export default function TestCard() {
+export default function FlipCard() {
   const [boxChange, setBoxChange] = useState(true);
 
   const handleBoxClick = () => {
