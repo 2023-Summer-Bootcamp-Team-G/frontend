@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 interface KeywordTagProps {
   keyword: string;
@@ -22,7 +22,7 @@ const Tag = styled.div`
   filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
 
   /* 토끼 */
-  font-family: "Noto Sans";
+  font-family: 'Noto Sans';
   font-style: normal;
   font-weight: 400;
   font-size: 28px;
