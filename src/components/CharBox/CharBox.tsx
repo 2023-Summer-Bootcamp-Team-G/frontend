@@ -11,5 +11,5 @@ export default function CharBox() {
 const Box = styled.div`
   width: 13rem;
   height: 13rem;
-  background-color: red;
+  //   background-color: red; // 위치 잘 보기위해서 넣은 색
 `;
