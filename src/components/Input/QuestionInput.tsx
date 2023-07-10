@@ -1,7 +1,7 @@
-import React, { ReactElement, useState } from 'react';
+import { useState } from 'react';
 import { styled } from 'styled-components';
 
-export default function QuestionInput(): ReactElement {
+export default function QuestionInput() {
   const [questions, setQuestions] = useState<number[]>([]);
 
   const addQuestion = () => {

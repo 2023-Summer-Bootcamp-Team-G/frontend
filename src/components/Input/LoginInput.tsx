@@ -1,4 +1,3 @@
-import { ReactElement } from 'react';
 import { styled } from 'styled-components';
 
 type TextProps = {
@@ -6,10 +5,7 @@ type TextProps = {
   placeholder: string;
 };
 
-export default function LoginInput({
-  title,
-  placeholder,
-}: TextProps): ReactElement {
+export default function LoginInput({ title, placeholder }: TextProps) {
   return (
     <LoginInputLayout>
       <Label>{title}</Label>

@@ -1,11 +1,10 @@
-import { ReactElement } from 'react';
 import styled from 'styled-components';
 
 type ButtonProps = {
   title: string;
 };
 
-export default function Button({ title }: ButtonProps): ReactElement {
+export default function Button({ title }: ButtonProps) {
   return (
     <ButtonLayout>
       <Btn>{title}</Btn>

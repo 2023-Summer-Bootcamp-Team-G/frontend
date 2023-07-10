@@ -1,11 +1,10 @@
-import { ReactElement } from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 type RoundButtonProps = {
   title: string;
 };
 
-export default function RoundButton({ title }: RoundButtonProps): ReactElement {
+export default function RoundButton({ title }: RoundButtonProps) {
   return (
     <RButtonLayout>
       <RBtn>{title}</RBtn>
