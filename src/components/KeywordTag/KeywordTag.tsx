@@ -1,13 +1,10 @@
-import React from 'react';
 import styled from 'styled-components';
 
 type KeywordTagProps = {
   title: string;
 };
 
-export default function KeywordTag({
-  title,
-}: KeywordTagProps): React.ReactElement {
+export default function KeywordTag({ title }: KeywordTagProps) {
   return (
     <Tag>
       <Text>{title}</Text>

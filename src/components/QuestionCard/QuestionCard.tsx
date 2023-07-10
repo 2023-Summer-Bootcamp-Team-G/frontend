@@ -1,13 +1,10 @@
-import React from 'react';
 import styled from 'styled-components';
 
 type QuestionCardProps = {
   question: string;
 };
 
-export default function QuestionCard({
-  question,
-}: QuestionCardProps): React.ReactElement {
+export default function QuestionCard({ question }: QuestionCardProps) {
   return (
     <RectangleLayout>
       <Rectangle>
