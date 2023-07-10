@@ -1,32 +1,37 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-interface KeywordTagProps {
-  keyword: string;
-  // 필요한 props와 그들의 타입을 여기에 추가하세요
-}
+type KeywordTagProps = {
+  title: string;
+};
 
-export default function KeywordTag(props: KeywordTagProps): React.ReactElement {
-  return <Tag>{props.keyword}</Tag>;
+export default function KeywordTag({
+  title,
+}: KeywordTagProps): React.ReactElement {
+  return (
+    <Tag>
+      <Text>{title}</Text>
+    </Tag>
+  );
 }
 
 const Tag = styled.div`
-  /* Rectangle 9 */
-  padding-left: 25px;
-  padding-right: 25px;
+  /* Rectangle */
+  padding: 0 1.56rem;
   display: inline-block;
-  min-width: 108px;
-  height: 71.64px;
+  min-width: 6.75rem;
+  height: 4.4775rem;
   background: #ffffff;
-  border-radius: 14px;
+  border-radius: 0.875rem;
   filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+`;
 
-  /* 토끼 */
-  font-family: "Noto Sans";
+const Text = styled.div`
+  /* keyword */
   font-style: normal;
   font-weight: 400;
-  font-size: 28px;
-  line-height: 71.64px;
+  font-size: 1.75rem;
+  line-height: 4.4775rem;
   text-align: center;
   color: #000000;
 `;

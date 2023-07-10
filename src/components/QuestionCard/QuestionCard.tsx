@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 type QuestionCardProps = {
   question: string;
@@ -51,7 +51,7 @@ const Rectangle = styled.div`
 const Text = styled.div`
   /* 질문 내용 */
   position: absolute;
-  padding: 0 1.56 0 1.56rem;
+  padding: 0 1.56rem;
   width: 15.625rem;
   height: 4.75rem;
   left: 1.56rem;
