@@ -24,12 +24,12 @@ const BoxLayout = styled.div`
 const Box = styled.div`
   background: white;
   border-radius: 3.75rem 3.75rem 0 0;
-  height: 100vh;
+  height: 100%;
   padding: 1.88rem;
 `;
 
 const Title = styled.p`
   font-size: 2.25rem;
-
+  white-space: pre-line;
   text-align: center;
 `;

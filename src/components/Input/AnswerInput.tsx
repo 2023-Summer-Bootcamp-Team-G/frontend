@@ -23,10 +23,10 @@ const AnswerInputLayout = styled.div`
 
 const Label = styled.label`
   color: #2c2c2c;
-  text-align: center;
   font-size: 1.75rem;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 400;
+  white-space: pre-line;
   margin-bottom: 1.3rem;
   display: flex;
 `;
@@ -35,7 +35,7 @@ const Input = styled.input`
   all: unset;
   display: flex;
   align-items: center;
-  width: 35rem;
+  width: 62.5rem;
   height: 4.5rem;
   border-radius: 0.875rem;
   background: #f0f0f0;
