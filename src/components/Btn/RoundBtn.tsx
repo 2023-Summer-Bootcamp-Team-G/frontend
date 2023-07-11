@@ -6,13 +6,11 @@ type RoundButtonProps = {
 
 export default function RoundButton({ title }: RoundButtonProps) {
   return (
-    <RButtonLayout>
+    <>
       <RBtn>{title}</RBtn>
-    </RButtonLayout>
+    </>
   );
 }
-
-const RButtonLayout = styled.div``;
 
 const RBtn = styled.button`
   /* 글자 */
@@ -28,6 +26,9 @@ const RBtn = styled.button`
   border-radius: 5rem;
   background: #2c2c2c;
   display: inline-block;
+  &:not(:last-child) {
+    margin-right: 1.75rem;
+  }
   &:hover {
     box-shadow: 5px 6px 4px rgba(0, 0, 0, 0.25);
   }
