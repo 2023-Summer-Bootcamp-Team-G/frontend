@@ -25,6 +25,7 @@ const Box = styled.div`
   background: white;
   border-radius: 3.75rem 3.75rem 0 0;
   height: 100%;
+  min-height: 90vh;
   padding: 1.88rem;
 `;
 
