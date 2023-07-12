@@ -15,14 +15,14 @@ export default function LoginInput({ title, placeholder }: TextProps) {
 }
 
 const LoginInputLayout = styled.div`
-  margin-left: 2rem;
+  /* margin-left: 2rem; */
   margin-bottom: 2rem;
 `;
 
 const Label = styled.label`
   color: #2c2c2c;
   text-align: center;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-style: normal;
   font-weight: 700;
   margin-bottom: 1.3rem;
