@@ -1,12 +1,11 @@
 import { styled } from 'styled-components';
-import BackGround from '../components/BoxContainer/BoxContainer';
-
 import AnswerInput from '../components/Input/AnswerInput';
 import RoundButton from '../components/Btn/RoundBtn';
+import BoxContainer from '../components/BoxContainer/BoxContainer';
 
 export default function AnswerPage() {
   return (
-    <BackGround
+    <BoxContainer
       title={`질문에 답변을 달아주세요!
             답변을 기반으로 캐릭터를 만들어드릴게요.
           `}
@@ -35,7 +34,7 @@ export default function AnswerPage() {
         <RoundButton title={'이전 페이지'} />
         <RoundButton title={'캐릭터 생성'} />
       </RButtonLayout>
-    </BackGround>
+    </BoxContainer>
   );
 }
 
