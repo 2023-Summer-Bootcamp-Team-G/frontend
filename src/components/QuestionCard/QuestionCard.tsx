@@ -23,7 +23,7 @@ const RectangleLayout = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0.75rem 2.56rem 1.25rem 2.56rem; // 이미지 박스 짤려서 임시로 넣어놨어요
+  margin: 0.75rem 2.56rem 1.25rem 2.56rem;
 `;
 
 const ImageContainer = styled.div`
@@ -48,17 +48,12 @@ const Rectangle = styled.div`
 const Text = styled.div`
   /* 질문 내용 */
   position: absolute;
-  // padding: 0 1.56rem;  // 왜 줬지;
   width: 15.625rem;
   height: 4.75rem;
-  left: 1.56rem;
+  left: 1.5rem;
   top: 7.69rem;
   font-style: normal;
   font-weight: 400;
   font-size: 1.75rem;
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #000;
 `;
