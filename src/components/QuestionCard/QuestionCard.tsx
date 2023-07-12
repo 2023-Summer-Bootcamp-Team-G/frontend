@@ -2,15 +2,15 @@ import styled from 'styled-components';
 
 type QuestionCardProps = {
   question: string;
+  src: string;
 };
 
-export default function QuestionCard({ question }: QuestionCardProps) {
+export default function QuestionCard({ question, src }: QuestionCardProps) {
   return (
     <RectangleLayout>
       <Rectangle>
         <ImageContainer>
-          {/* <img src="#" alt="Bear" /> */}
-          {/* 아직 이미지 삽입안해서 주석처리함 */}
+          <img src={src} />
         </ImageContainer>
         <Text>{question}</Text>
       </Rectangle>
@@ -23,7 +23,7 @@ const RectangleLayout = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  // margin: 12.5rem;  // 이미지 박스 짤려서 임시로 넣어놨어요
+  margin: 0.75rem 2.56rem 1.25rem 2.56rem;
 `;
 
 const ImageContainer = styled.div`
@@ -32,7 +32,6 @@ const ImageContainer = styled.div`
   position: absolute;
   top: -3.125rem;
   left: 6.25rem;
-  // background-color: red;  // 이미지 박스 위치 알아보기 쉬우라고 임시로 정한 색이에요
 `;
 
 const Rectangle = styled.div`
@@ -43,22 +42,18 @@ const Rectangle = styled.div`
   background: #fafafa;
   box-shadow: 6px 6px 10px 6px rgba(0, 0, 0, 0.25);
   border-radius: 0.625rem;
+  margin-bottom: 2.25rem;
 `;
 
 const Text = styled.div`
   /* 질문 내용 */
   position: absolute;
-  padding: 0 1.56rem;
   width: 15.625rem;
   height: 4.75rem;
-  left: 1.56rem;
+  left: 1.5rem;
   top: 7.69rem;
   font-style: normal;
   font-weight: 400;
   font-size: 1.75rem;
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #000;
 `;
