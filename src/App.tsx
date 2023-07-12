@@ -15,6 +15,7 @@ function App() {
         <Route path='/signup' element={<SignUpPage />} />
         <Route path='/questionroom' element={<></>} />
         <Route path='/answerroom' element={<AnswerPage />} />
+        <Route path='/mypage' element={<></>} />
         <Route path='*' element={<>error page</>} />
       </Routes>
     </>
