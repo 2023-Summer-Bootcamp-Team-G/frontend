@@ -3,6 +3,7 @@ import QuestionCard from '../components/QuestionCard/QuestionCard';
 import QuestionInput from '../components/Input/QuestionInput';
 import RoundButton from '../components/Btn/RoundBtn';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
+import { Link } from 'react-router-dom';
 
 export default function QuestionPage() {
   return (
@@ -48,7 +49,9 @@ export default function QuestionPage() {
       <QuestionLayout>
         <QuestionInput />
         <br />
-        <RoundButton title={'다음 페이지'} />
+        <Link to='/answerroom'>
+          <RoundButton title={'다음 페이지'} />
+        </Link>
       </QuestionLayout>
     </BoxContainer>
   );
