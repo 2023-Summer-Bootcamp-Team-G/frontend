@@ -6,22 +6,17 @@ type TitleProps = {
   children: ReactNode;
 };
 
-export default function BackGround({ title, children }: TitleProps) {
+export default function BoxContainer({ title, children }: TitleProps) {
   return (
-    <BoxLayout>
-      <Box>
-        <Title>{title}</Title>
-        {children}
-      </Box>
-    </BoxLayout>
+    <Box>
+      <Title>{title}</Title>
+      {children}
+    </Box>
   );
 }
 
-const BoxLayout = styled.div`
-  padding: 5.81rem 7.5rem 0 7.5rem;
-`;
-
 const Box = styled.div`
+  margin: 5.81rem 7.5rem 0 7.5rem;
   background: white;
   border-radius: 3.75rem 3.75rem 0 0;
   height: 100%;
