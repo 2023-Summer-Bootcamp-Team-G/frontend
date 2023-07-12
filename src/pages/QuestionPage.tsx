@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import BackGround from '../components/BackGround/BackGround';
 import { Container } from '../styles/backgroundStyle';
-import { Link } from 'react-router-dom';
 import QuestionCard from '../components/QuestionCard/QuestionCard';
 import QuestionInput from '../components/Input/QuestionInput';
 import RoundButton from '../components/Btn/RoundBtn';
