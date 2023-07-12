@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import AnswerInput from '../components/Input/AnswerInput';
 import RoundButton from '../components/Btn/RoundBtn';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
+import { Link } from 'react-router-dom';
 
 export default function AnswerPage() {
   return (
@@ -32,7 +33,9 @@ export default function AnswerPage() {
 
       <RButtonLayout>
         <RoundButton title={'이전 페이지'} />
-        <RoundButton title={'캐릭터 생성'} />
+        <Link to='/result'>
+          <RoundButton title={'캐릭터 생성'} />
+        </Link>
       </RButtonLayout>
     </BoxContainer>
   );
