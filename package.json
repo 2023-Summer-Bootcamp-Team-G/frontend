@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.0",
     "@nivo/pie": "^0.83.0",
     "framer-motion": "^10.12.18",
     "react": "^18.2.0",
