@@ -1,4 +1,4 @@
-import BoxContainer from '../components/BackGround/BoxContainer';
+import BoxContainer from '../components/BoxContainer/BoxContainer';
 
 export default function MainPage() {
   return (

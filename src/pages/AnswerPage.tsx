@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import BackGround from '../components/BackGround/BoxContainer';
+import BackGround from '../components/BoxContainer/BoxContainer';
 
 import AnswerInput from '../components/Input/AnswerInput';
 import RoundButton from '../components/Btn/RoundBtn';
