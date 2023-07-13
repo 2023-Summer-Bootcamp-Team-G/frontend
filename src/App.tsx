@@ -7,6 +7,8 @@ import AnswerPage from './pages/AnswerPage';
 import DetailPage from './pages/DetailPage';
 import QuestionPage from './pages/QuestionPage';
 import CharResultPage from './pages/CharResultPage';
+import MyPage from './pages/MyPage';
+import YourPage from './pages/YourPage';
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
         <Route path='/answerroom' element={<AnswerPage />} />
         <Route path='/result' element={<CharResultPage />} />
         <Route path='/mypage' element={<MyPage />} />
+        <Route path='/yourpage' element={<YourPage />} />
         <Route path='/mypage/detail' element={<DetailPage />} />
         <Route path='*' element={<>error page</>} />
       </Routes>
