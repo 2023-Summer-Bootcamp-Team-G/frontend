@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 import { ResponsivePie } from '@nivo/pie';
+import { useState } from 'react';
+import { DummyData } from '../../utils/data';
 
 type QuestionProps = {
   question: string;
@@ -7,10 +9,11 @@ type QuestionProps = {
 
 export default function Chart({ question }: QuestionProps) {
   // 데이터 받아와서 data={} 에 넣어야함
+  const [dummy] = useState(DummyData);
   return (
     <Box>
       <Question>{question}</Question>
-      <MyResponsivePie data={'temp'}></MyResponsivePie>
+      <MyResponsivePie data={dummy}></MyResponsivePie>
     </Box>
   );
 }
