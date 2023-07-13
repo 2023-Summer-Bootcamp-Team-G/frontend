@@ -21,7 +21,6 @@ function App() {
         <Route path='/signup' element={<SignUpPage />} />
         <Route path='/questionroom' element={<QuestionPage />} />
         <Route path='/answerroom' element={<AnswerPage />} />
-        <Route path='/result' element={<CharResultPage />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/mypage/detail' element={<DetailPage />} />
         <Route path='*' element={<>error page</>} />
