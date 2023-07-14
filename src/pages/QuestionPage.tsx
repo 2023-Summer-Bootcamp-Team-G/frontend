@@ -12,6 +12,7 @@ export default function QuestionPage() {
                   사람들이 답해줄거에요.
               `}
     >
+      <div>test</div>
       <HorizontalLine />
       <Text>기본 질문</Text>
       <CardLayout>
