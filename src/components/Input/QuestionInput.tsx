@@ -1,19 +1,40 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
 
-export default function QuestionInput() {
+type Props = {
+  value: any;
+  setValue: any;
+};
+
+export default function QuestionInput({ value, setValue }: Props) {
   const [questions, setQuestions] = useState<number[]>([]);
+  const [inputs, setInputs] = useState<string[]>([]);
 
   const addQuestion = () => {
     if (questions.length < 4) {
       setQuestions([...questions, questions.length]);
+      setInputs([...inputs, '']);
+      setValue([...value, inputs]);
     }
+  };
+  console.log(inputs);
+
+  const handleInputChange = (index: number, value: string) => {
+    const updatedInputs = [...inputs];
+    updatedInputs[index] = value;
+    setInputs(updatedInputs);
   };
 
   return (
     <>
-      {questions.map((questionId) => (
-        <Input key={questionId} />
+      {questions.map((questionId, index) => (
+        <Input
+          key={questionId}
+          value={inputs[index]}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleInputChange(index, e.target.value)
+          }
+        />
       ))}
       <Button onClick={addQuestion}>
         <span className='material-symbols-rounded'>add_circle</span>
