@@ -3,7 +3,6 @@ import LoginInput from '../components/Input/LoginInput';
 import RoundButton from '../components/Btn/RoundBtn';
 import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { baseInstance } from '../apis/config';
 
 export default function SignUpPage() {
@@ -12,7 +11,7 @@ export default function SignUpPage() {
   const [pw, setPw] = useState('');
   const navigate = useNavigate();
 
-  const createUser = async (e: React.FormEvent<HTMLFormElement>) => {
+  const createUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     const data = { nick_name: nickname, user_id: id, password: pw };
