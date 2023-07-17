@@ -12,25 +12,39 @@ export default function LoginPage() {
   const [passwd, setPasswd] = useState('');
   const navigate = useNavigate();
 
-  const createUser = async (e: any) => {
+  const createUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const data = { user_id: id, password: passwd };
-    const response = await baseInstance.post('/login', data);
-    console.log(response.data);
 
-    if (response.status === 201) {
-      navigate('/login');
-    } else alert('다시 작성해주세요');
+    try {
+      const response = await baseInstance.post('/login/', data);
+      console.log(response.data);
 
-    console.log(response.data);
+      if (response.status === 200) {
+        navigate('/questionroom');
+      }
+    } catch (error) {
+      alert('다시 작성해주세요');
+      console.error(error);
+    }
   };
 
   return (
     <Layout>
       <Box variants={opacityVariants} initial='initial' animate='mount'>
         <h1>로그인</h1>
-        <LoginInput title='아이디' placeholder='영문 + 숫자' />
-        <LoginInput title='비밀번호' placeholder='6자리 이상' />
+        <LoginInput
+          title='아이디'
+          placeholder='영문 + 숫자'
+          value={id}
+          setValue={setId}
+        />
+        <LoginInput
+          title='비밀번호'
+          placeholder='6자리 이상'
+          value={passwd}
+          setValue={setPasswd}
+        />
         <RoundButton onClick={createUser} title='로그인' />
         <br />
         <Link to='/signup'>회원가입 하러가기</Link>
