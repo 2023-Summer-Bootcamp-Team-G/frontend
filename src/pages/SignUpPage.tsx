@@ -3,7 +3,6 @@ import LoginInput from '../components/Input/LoginInput';
 import RoundButton from '../components/Btn/RoundBtn';
 import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { baseInstance } from '../apis/config';
 
 export default function SignUpPage() {
