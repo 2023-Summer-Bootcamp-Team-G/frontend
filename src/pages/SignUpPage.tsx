@@ -12,7 +12,7 @@ export default function SignUpPage() {
   const [pw, setPw] = useState('');
   const navigate = useNavigate();
 
-  const createUser = async (e: any) => {
+  const createUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const data = { nick_name: nickname, user_id: id, password: pw };
