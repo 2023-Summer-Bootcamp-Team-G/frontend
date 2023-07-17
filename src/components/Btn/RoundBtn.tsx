@@ -2,12 +2,15 @@ import { styled } from 'styled-components';
 
 type RoundButtonProps = {
   title: string;
+  onClick: (e: any) => Promise<void>;
 };
 
-export default function RoundButton({ title }: RoundButtonProps) {
+export default function RoundButton({ title, onClick }: RoundButtonProps) {
   return (
     <>
-      <RBtn>{title}</RBtn>
+      <RBtn>
+        <RBtn onClick={onClick}>{title}</RBtn>
+      </RBtn>
     </>
   );
 }

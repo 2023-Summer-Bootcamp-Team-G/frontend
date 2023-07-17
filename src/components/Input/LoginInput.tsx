@@ -2,14 +2,27 @@ import { styled } from 'styled-components';
 
 type TextProps = {
   title: string;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
   placeholder: string;
 };
 
-export default function LoginInput({ title, placeholder }: TextProps) {
+export default function LoginInput({
+  title,
+  value,
+  setValue,
+  placeholder,
+}: TextProps) {
   return (
     <LoginInputLayout>
       <Label>{title}</Label>
-      <Input placeholder={placeholder}></Input>
+      <Input
+        value={value}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setValue(e.target.value);
+        }}
+        placeholder={placeholder}
+      ></Input>
     </LoginInputLayout>
   );
 }
