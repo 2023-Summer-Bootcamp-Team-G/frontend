@@ -1,23 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 type Props = {
-  value: any;
+  value1: any;
   setValue: any;
 };
 
-export default function QuestionInput({ value, setValue }: Props) {
+export default function QuestionInput({ value1, setValue }: Props) {
   const [questions, setQuestions] = useState<number[]>([]);
   const [inputs, setInputs] = useState<string[]>([]);
 
+  //여기서부터 반복문 속 인풋 관리
   const addQuestion = () => {
     if (questions.length < 4) {
       setQuestions([...questions, questions.length]);
-      setInputs([...inputs, '']);
-      setValue([...value, inputs]);
     }
   };
-  console.log(inputs);
 
   const handleInputChange = (index: number, value: string) => {
     const updatedInputs = [...inputs];
@@ -25,11 +23,16 @@ export default function QuestionInput({ value, setValue }: Props) {
     setInputs(updatedInputs);
   };
 
+  //useEffect사용 이유 : 변경함수의 늦게 처리되는걸 막기위해
+  useEffect(() => {
+    setValue([...value1, ...inputs]);
+  }, [inputs]);
+
   return (
     <>
       {questions.map((questionId, index) => (
         <Input
-          key={questionId}
+          key={index}
           value={inputs[index]}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             handleInputChange(index, e.target.value)

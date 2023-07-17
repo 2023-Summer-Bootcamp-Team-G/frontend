@@ -3,8 +3,9 @@ import QuestionCard from '../components/QuestionCard/QuestionCard';
 import QuestionInput from '../components/Input/QuestionInput';
 import RoundButton from '../components/Btn/RoundBtn';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { baseInstance } from '../apis/config';
 
 export default function QuestionPage() {
   const initQuestions = [
@@ -24,8 +25,25 @@ export default function QuestionPage() {
     'https://i.postimg.cc/sX2N4Kvf/emoji-house-with-garden.png',
   ];
   const [questions, setQuestions] = useState(initQuestions);
-  const [addQ, setAddQ] = useState(['']);
-  console.log(`page` + addQ);
+  const [addQ, setAddQ] = useState(initQuestions); // 고정 + 추가 질문 하나로 모인 배열
+  const navigate = useNavigate();
+
+  console.log(addQ);
+
+  const createQuestion = async () => {
+    // json 형식으로 맞춰서 보내주기
+    const transformToJson = addQ.map((q, index) => ({
+      question_text: q,
+    }));
+
+    const response = await baseInstance.post('/question/', {
+      user_id: 'test',
+      questions: transformToJson,
+    });
+    if (response.status === 201) navigate('/answerroom');
+    console.log(response.data);
+  };
+
   return (
     <BoxContainer
       title={`본인에 대한 질문을 만들어주세요!
@@ -37,6 +55,7 @@ export default function QuestionPage() {
       <CardLayout>
         {questions.map((arr, index) => (
           <QuestionCard
+            key={index} //key속성 추가해주는 이유가 리액트가 key값을 보고 각각 구분할 수 있게 해주려고. 없으면 워닝 띄움
             question={initQuestions[index]}
             src={initQuestionSrc[index]}
           />
@@ -49,11 +68,10 @@ export default function QuestionPage() {
       </TextLayout>
 
       <QuestionLayout>
-        <QuestionInput value={initQuestions} setValue={setAddQ} />
+        <QuestionInput value1={initQuestions} setValue={setAddQ} />
         <br />
-        <Link to='/answerroom'>
-          <RoundButton title={'다음 페이지'} />
-        </Link>
+
+        <RoundButton onClick={createQuestion} title={'다음 페이지'} />
       </QuestionLayout>
     </BoxContainer>
   );
