@@ -3,9 +3,46 @@ import QuestionCard from '../components/QuestionCard/QuestionCard';
 import QuestionInput from '../components/Input/QuestionInput';
 import RoundButton from '../components/Btn/RoundBtn';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { baseInstance } from '../apis/config';
 
 export default function QuestionPage() {
+  const initQuestions = [
+    '나를 동물로 표현한다면 어떤 동물이야?',
+    '난 어떤 분위기야?',
+    '나를 색으로 표현한다면 무슨 색이야?',
+    '나는 어떤 그림체가 어울려?',
+    '내가 자주 들고다니는 물건은 뭐야?',
+    '내가 자주 나타나는 장소는 어디야?',
+  ];
+  const initQuestionSrc = [
+    'https://i.postimg.cc/BZHxwHHJ/bear.png',
+    'https://i.postimg.cc/ydvzVkSx/emoji-smiling-face-with-sunglasses.png',
+    'https://i.postimg.cc/LX4r020p/image-9.png',
+    'https://i.postimg.cc/yYqz74DF/image-10.png',
+    'https://i.postimg.cc/qBWpg656/emoji-books.png',
+    'https://i.postimg.cc/sX2N4Kvf/emoji-house-with-garden.png',
+  ];
+  const [questions, setQuestions] = useState(initQuestions);
+  const [addQ, setAddQ] = useState(initQuestions); // 고정 + 추가 질문 하나로 모인 배열
+  const navigate = useNavigate();
+
+  console.log(addQ);
+
+  const createQuestion = async () => {
+    // json 형식으로 맞춰서 보내주기
+    const transformToJson = addQ.map((q, index) => ({
+      question_text: q,
+    }));
+
+    const data = { user_id: 'test', questions: transformToJson };
+
+    const response = await baseInstance.post('/question/', data);
+    if (response.status === 201) navigate('/answerroom');
+    console.log(response.data);
+  };
+
   return (
     <BoxContainer
       title={`본인에 대한 질문을 만들어주세요!
@@ -15,43 +52,25 @@ export default function QuestionPage() {
       <HorizontalLine />
       <Text>기본 질문</Text>
       <CardLayout>
-        <QuestionCard
-          src='https://i.postimg.cc/BZHxwHHJ/bear.png'
-          question={`나를 동물로 표현한다면 어떤 동물이야?`}
-        />
-        <QuestionCard
-          src='https://i.postimg.cc/ydvzVkSx/emoji-smiling-face-with-sunglasses.png'
-          question={`난 어떤 분위기야?`}
-        />
-        <QuestionCard
-          src='https://i.postimg.cc/LX4r020p/image-9.png'
-          question={`나를 색으로 표현한다면 무슨 색이야?`}
-        />
-        <QuestionCard
-          src='https://i.postimg.cc/yYqz74DF/image-10.png'
-          question={`나는 어떤 그림체가 어울려?`}
-        />
-        <QuestionCard
-          src='https://i.postimg.cc/qBWpg656/emoji-books.png'
-          question={`내가 자주 들고다니는 물건은 뭐야?`}
-        />
-        <QuestionCard
-          src='https://i.postimg.cc/sX2N4Kvf/emoji-house-with-garden.png'
-          question={`내가 자주 나타나는 장소는 어디야?`}
-        />
+        {questions.map((arr, index) => (
+          <QuestionCard
+            key={index} //key속성 추가해주는 이유가 리액트가 key값을 보고 각각 구분할 수 있게 해주려고. 없으면 워닝 띄움
+            question={initQuestions[index]}
+            src={initQuestionSrc[index]}
+          />
+        ))}
       </CardLayout>
 
       <TextLayout>
         <Text>추가 질문</Text>
-        <Text2>질문은 5개까지 추가할 수 있어요.</Text2>
+        <Text2>질문은 4개까지 추가할 수 있어요.</Text2>
       </TextLayout>
 
       <QuestionLayout>
-        <QuestionInput />
+        <QuestionInput value1={initQuestions} setValue={setAddQ} />
         <br />
-        <Link to='/answerroom'>
-          <RoundButton title={'다음 페이지'} />
-        </Link>
+
+        <RoundButton onClick={createQuestion} title={'다음 페이지'} />
       </QuestionLayout>
     </BoxContainer>
   );
