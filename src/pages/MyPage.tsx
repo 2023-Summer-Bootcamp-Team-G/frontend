@@ -3,15 +3,40 @@ import BoxContainer from '../components/BoxContainer/BoxContainer';
 import FlipCard from '../components/FlipCard/FlipCard';
 import Button from '../components/Btn/Btn';
 import BasicTabs from '../components/Tab/Tab';
+import { baseInstance } from '../apis/config';
+import { useEffect, useState } from 'react';
+
+interface Character {
+  id: number;
+  result_url: string;
+  nick_name: string;
+}
 
 export default function MyPage() {
+  const [characters, setCharacters] = useState<Character[]>([]);
+
+  const getChar = async () => {
+    try {
+      const response = await baseInstance.get('/characters/?user_id=test');
+      console.log(response.data);
+      setCharacters(response.data.characters);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getChar();
+  }, []);
+
   return (
     <BoxContainer title={''}>
       <Top>
         <CharLayout>
           <Title>“팀 G” 님 본인이 만든 캐릭터에요!</Title>
           <FlipCardLayout>
-            <FlipCard />
+            <FlipCard imageURL={characters[0]?.result_url} />{' '}
+            {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
           </FlipCardLayout>
           <Button title={'캐릭터 다시 만들래요'} />
         </CharLayout>
@@ -19,17 +44,22 @@ export default function MyPage() {
         <CharLayout>
           <Title>중복된 키워드로 만든 “팀 G” 님이에요!</Title>
           <FlipCardLayout>
-            <FlipCard />
+            <FlipCard imageURL='' />
+            {/* {characters.slice(1).map((character) => (
+              <FlipCard key={character.id} imageURL={character.result_url} />
+            ))}{' '} */}
+            {/* 첫 번째 이미지를 제외하고 나머지 캐릭터들을 순회하며 FlipCard 컴포넌트에 전달 */}
           </FlipCardLayout>
           <Button title={'중복 캐릭터 다시 만들기'} />
         </CharLayout>
       </Top>
 
       <HorizontalLine />
-      <BasicTabs />
+      <BasicTabs onSubmit={getChar} />
     </BoxContainer>
   );
 }
+
 const Top = styled.div`
   display: flex;
   padding: 0 4rem;
