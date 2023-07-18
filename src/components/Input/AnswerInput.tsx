@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 type TextProps = {
@@ -13,6 +14,41 @@ export default function AnswerInput({ question, placeholder }: TextProps) {
     </AnswerInputLayout>
   );
 }
+
+// type TextProps = {
+//   values: any;
+//   setValues: any;
+// };
+
+// export default function AnswerInput({ values, setValues }: TextProps) {
+//   const [questions, setQuestions] = useState<number[]>([]);
+//   const [inputs, setInputs] = useState<string[]>([]);
+
+//   const handleInputChange = (index: number, value: string) => {
+//     const updatedInputs = [...inputs];
+//     updatedInputs[index] = value;
+//     setInputs(updatedInputs);
+//   };
+
+//   useEffect(() => {
+//     setValues([...values, ...inputs]);
+//   }, [inputs]);
+
+//   return (
+//     <AnswerInputLayout>
+//       <Label>{}</Label>
+//       {questions.map((questionId, index) => (
+//         <Input
+//           key={index}
+//           value={inputs[index]} //반복문 내에서 구분을 할 수 있게 inputs배열에서 인덱스로 순서대로 가져옴
+//           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+//             handleInputChange(index, e.target.value)
+//           }
+//         />
+//       ))}
+//     </AnswerInputLayout>
+//   );
+// }
 
 const AnswerInputLayout = styled.div`
   margin-left: 2rem;

@@ -3,8 +3,38 @@ import AnswerInput from '../components/Input/AnswerInput';
 import RoundButton from '../components/Btn/RoundBtn';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
 import { Link } from 'react-router-dom';
+import { baseInstance } from '../apis/config';
+import { useEffect, useState } from 'react';
 
 export default function AnswerPage() {
+  const [questions, setQuestions] = useState([]);
+  const [value, setValue] = useState([]);
+  const [inputs, setInputs] = useState<string[]>([]);
+
+  const getQuestions = async () => {
+    const response = await baseInstance.get('/question');
+    setQuestions(response.data.questions);
+  };
+
+  useEffect(() => {
+    const getQuestions = async () => {
+      try {
+        const response = await baseInstance.get('/question/?poll_id=34');
+        console.log(response.data);
+        setQuestions(response.data.questions);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getQuestions();
+  }, []);
+
+  const handleInputChange = (index: number, value: string) => {
+    const updatedInputs = [...inputs]; //상태를 직접 변경하는건 안 좋다 들음, 복사해서 사용하는 이유
+    updatedInputs[index] = value; //인덱스 별로 값을 집어 넣어주려고
+    setInputs(updatedInputs); //업데이트란 배열을 인풋상태변경함수에 넣어줌으로써 인풋상태 변경
+  };
   return (
     <BoxContainer
       title={`질문에 답변을 달아주세요!
@@ -12,24 +42,17 @@ export default function AnswerPage() {
           `}
     >
       <HorizontalLine />
-      <AnswerInput
-        question={`나를 동물로 표현한다면 어떤 동물이야?`}
-        placeholder={''}
-      />
-      <AnswerInput
-        question={`난 어떤 분위기야? 
-                (EX. 웃음, 무표정, 화난, 찡그림, 귀여움, 시크, 무심함, 무서움, 발랄함 등등)`}
-        placeholder={''}
-      />
-      <AnswerInput
-        question={'나를 색으로 표현한다면 무슨 색이야?'}
-        placeholder={''}
-      />
-      <AnswerInput
-        question={`나는 어떤 그림체가 어울려?
-              (디즈니 애니메이션, 지브리, 픽셀아트, 3D 중에 하나로 골라줘)`}
-        placeholder={''}
-      />
+
+      {questions.map((questionTitle: any, index: any) => (
+        <AnswerInput
+          key={index}
+          question={questionTitle}
+          placeholder={''}
+          onChange={(e: React.ChangeEvent<HTMLAreaElement>) =>
+            handleInputChange(index, e.target.value)
+          }
+        />
+      ))}
 
       <RButtonLayout>
         <RoundButton title={'이전 페이지'} />

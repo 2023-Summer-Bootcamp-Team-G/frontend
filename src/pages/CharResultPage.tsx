@@ -5,8 +5,6 @@ import RoundButton from '../components/Btn/RoundBtn';
 import { Link } from 'react-router-dom';
 
 export default function CharResultPage() {
-  const response = await baseInstance.post( /api/characters?poll_id=1);
-
   return (
     <BoxContainer title={`내가 생각한 "*"의 모습이에요!`}>
       <HorizontalLine />
