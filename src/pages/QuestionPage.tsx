@@ -71,6 +71,7 @@ export default function QuestionPage() {
         <br />
 
         <RoundButton onClick={createQuestion} title={'다음 페이지'} />
+
       </QuestionLayout>
     </BoxContainer>
   );

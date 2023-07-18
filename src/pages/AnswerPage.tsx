@@ -2,9 +2,39 @@ import { styled } from 'styled-components';
 import AnswerInput from '../components/Input/AnswerInput';
 import RoundButton from '../components/Btn/RoundBtn';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { baseInstance } from '../apis/config';
+import { useEffect, useState } from 'react';
 
 export default function AnswerPage() {
+  const [questions, setQuestions] = useState([]);
+  const [value, setValue] = useState<string[]>([]);
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate('/questionroom');
+  };
+
+  useEffect(() => {
+    const getQuestions = async () => {
+      try {
+        const response = await baseInstance.get('/question/?poll_id=34');
+        console.log(response.data);
+        setQuestions(response.data.questions);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getQuestions();
+  }, []);
+  const createChar = async () => {
+    const json = { poll_id: 36, creatorName: 'test', answers: value };
+
+    const response = await baseInstance.post('/characters/', json);
+    if (response.status === 201) navigate('/result');
+    console.log(response.data);
+  };
   return (
     <BoxContainer
       title={`질문에 답변을 달아주세요!
@@ -12,30 +42,25 @@ export default function AnswerPage() {
           `}
     >
       <HorizontalLine />
-      <AnswerInput
-        question={`나를 동물로 표현한다면 어떤 동물이야?`}
-        placeholder={''}
-      />
-      <AnswerInput
-        question={`난 어떤 분위기야? 
-                (EX. 웃음, 무표정, 화난, 찡그림, 귀여움, 시크, 무심함, 무서움, 발랄함 등등)`}
-        placeholder={''}
-      />
-      <AnswerInput
-        question={'나를 색으로 표현한다면 무슨 색이야?'}
-        placeholder={''}
-      />
-      <AnswerInput
-        question={`나는 어떤 그림체가 어울려?
-              (디즈니 애니메이션, 지브리, 픽셀아트, 3D 중에 하나로 골라줘)`}
-        placeholder={''}
-      />
+      {questions.map(
+        (questionTitle: any, index: number) => (
+          console.log('test' + index),
+          (
+            <AnswerInput
+              key={index}
+              id={index}
+              question={questionTitle}
+              placeholder={''}
+              value={value}
+              setValue={setValue}
+            />
+          )
+        )
+      )}
 
       <RButtonLayout>
-        <RoundButton title={'이전 페이지'} />
-        <Link to='/result'>
-          <RoundButton title={'캐릭터 생성'} />
-        </Link>
+        <RoundButton title={'이전 페이지'} onClick={goBack} />
+        <RoundButton title={'캐릭터 생성'} onClick={createChar} />
       </RButtonLayout>
     </BoxContainer>
   );
