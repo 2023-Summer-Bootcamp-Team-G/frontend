@@ -16,6 +16,7 @@ export default function FlipCard({ imageURL }: FlipCardProps) {
   return (
     <BoxLayout onClick={handleBoxClick}>
       <CharBox boxChange={boxChange}>
+        {/* <Image src={imageURL} alt='user' /> */}
         <img
           style={{ width: '25rem', height: '25rem', borderRadius: '0.63rem' }}
           src={imageURL}
@@ -65,3 +66,10 @@ const TagBox = styled.div<{ boxChange: boolean }>`
   );
   transition: transform 1s;
 `;
+
+/* const Image = styled.img`
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 8px;
+`; */
