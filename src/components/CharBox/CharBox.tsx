@@ -1,10 +1,18 @@
 import styled from 'styled-components';
 
-export default function CharBox() {
+type CharBoxProps = {
+  imageURL: string;
+};
+
+export default function CharBox({ imageURL }: CharBoxProps) {
   return (
-    <>
-      <Box />
-    </>
+    <Box>
+      <img
+        style={{ width: '13rem', height: '13rem' }}
+        src={imageURL}
+        alt='Character'
+      />
+    </Box>
   );
 }
 

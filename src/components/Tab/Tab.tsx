@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
@@ -7,11 +6,19 @@ import CharBox from '../CharBox/CharBox';
 import styled from 'styled-components';
 import Chart from '../Chart/Chart';
 import Button from '../Btn/Btn';
+import { useState, useEffect } from 'react';
+import { baseInstance } from '../../apis/config';
 
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
+}
+
+interface Character {
+  id: number;
+  result_url: string;
+  nick_name: string;
 }
 
 function CustomTabPanel(props: TabPanelProps) {
@@ -41,12 +48,28 @@ function a11yProps(index: number) {
   };
 }
 
-export default function BasicTabs() {
-  const [value, setValue] = React.useState(0);
+export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
+  const [value, setValue] = useState(0);
+  const [characters, setCharacters] = useState<Character[]>([]);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (e: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    onSubmit(); // 탭이 변경될 때 onSubmit 함수 호출
   };
+
+  useEffect(() => {
+    const getCharacters = async () => {
+      try {
+        const response = await baseInstance.get('/characters/?user_id=test');
+        console.log(response.data);
+        setCharacters(response.data.characters);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getCharacters();
+  }, []);
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -62,7 +85,9 @@ export default function BasicTabs() {
       </Box>
       <CustomTabPanel value={value} index={0}>
         <BoxLayout>
-          <CharBox />
+          {characters.slice(1).map((character) => (
+            <CharBox key={character.id} imageURL={character.result_url} />
+          ))}
         </BoxLayout>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>

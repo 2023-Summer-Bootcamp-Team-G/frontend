@@ -1,7 +1,11 @@
 import { useState, useRef } from 'react';
 import { styled } from 'styled-components';
 
-export default function FlipCard() {
+type FlipCardProps = {
+  imageURL: string;
+};
+
+export default function FlipCard({ imageURL }: FlipCardProps) {
   const [boxChange, setBoxChange] = useState(true);
 
   const handleBoxClick = () => {
@@ -11,7 +15,14 @@ export default function FlipCard() {
   // TagBox안에 키워드 태그 들가야함
   return (
     <BoxLayout onClick={handleBoxClick}>
-      <CharBox boxChange={boxChange}></CharBox>
+      <CharBox boxChange={boxChange}>
+        {/* <Image src={imageURL} alt='user' /> */}
+        <img
+          style={{ width: '25rem', height: '25rem', borderRadius: '0.63rem' }}
+          src={imageURL}
+          alt='UserChar'
+        />
+      </CharBox>
       <TagBox boxChange={boxChange}></TagBox>
     </BoxLayout>
   );
@@ -55,3 +66,10 @@ const TagBox = styled.div<{ boxChange: boolean }>`
   );
   transition: transform 1s;
 `;
+
+/* const Image = styled.img`
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 8px;
+`; */
