@@ -49,9 +49,7 @@ export default function QuestionPage() {
       <QuestionLayout>
         <QuestionInput />
         <br />
-        <Link to='/answerroom'>
-          <RoundButton title={'다음 페이지'} />
-        </Link>
+        <RoundButton title={'다음 페이지'} />
       </QuestionLayout>
     </BoxContainer>
   );

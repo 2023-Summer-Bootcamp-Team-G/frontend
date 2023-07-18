@@ -2,18 +2,17 @@ import { styled } from 'styled-components';
 import AnswerInput from '../components/Input/AnswerInput';
 import RoundButton from '../components/Btn/RoundBtn';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 
 export default function AnswerPage() {
   const [questions, setQuestions] = useState([]);
-  const [value, setValue] = useState([]);
-  const [inputs, setInputs] = useState<string[]>([]);
+  const [value, setValue] = useState<string[]>([]);
+  const navigate = useNavigate();
 
-  const getQuestions = async () => {
-    const response = await baseInstance.get('/question');
-    setQuestions(response.data.questions);
+  const goBack = () => {
+    navigate('/questionroom');
   };
 
   useEffect(() => {
@@ -29,11 +28,12 @@ export default function AnswerPage() {
 
     getQuestions();
   }, []);
+  const createChar = async () => {
+    const json = { poll_id: 36, creatorName: 'test', answers: value };
 
-  const handleInputChange = (index: number, value: string) => {
-    const updatedInputs = [...inputs]; //상태를 직접 변경하는건 안 좋다 들음, 복사해서 사용하는 이유
-    updatedInputs[index] = value; //인덱스 별로 값을 집어 넣어주려고
-    setInputs(updatedInputs); //업데이트란 배열을 인풋상태변경함수에 넣어줌으로써 인풋상태 변경
+    const response = await baseInstance.post('/characters/', json);
+    if (response.status === 201) navigate('/result');
+    console.log(response.data);
   };
   return (
     <BoxContainer
@@ -42,23 +42,25 @@ export default function AnswerPage() {
           `}
     >
       <HorizontalLine />
-
-      {questions.map((questionTitle: any, index: any) => (
-        <AnswerInput
-          key={index}
-          question={questionTitle}
-          placeholder={''}
-          onChange={(e: React.ChangeEvent<HTMLAreaElement>) =>
-            handleInputChange(index, e.target.value)
-          }
-        />
-      ))}
+      {questions.map(
+        (questionTitle: any, index: number) => (
+          console.log('test' + index),
+          (
+            <AnswerInput
+              key={index}
+              id={index}
+              question={questionTitle}
+              placeholder={''}
+              value={value}
+              setValue={setValue}
+            />
+          )
+        )
+      )}
 
       <RButtonLayout>
-        <RoundButton title={'이전 페이지'} />
-        <Link to='/result'>
-          <RoundButton title={'캐릭터 생성'} />
-        </Link>
+        <RoundButton title={'이전 페이지'} onClick={goBack} />
+        <RoundButton title={'캐릭터 생성'} onClick={createChar} />
       </RButtonLayout>
     </BoxContainer>
   );

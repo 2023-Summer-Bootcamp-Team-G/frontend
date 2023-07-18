@@ -4,51 +4,37 @@ import { styled } from 'styled-components';
 type TextProps = {
   question: string;
   placeholder: string;
+  id: number;
+  value: any;
+  setValue: any;
 };
 
-export default function AnswerInput({ question, placeholder }: TextProps) {
+export default function AnswerInput({
+  question,
+  placeholder,
+  id,
+  value,
+  setValue,
+}: TextProps) {
+  const handleInputChange = (id: number, input: string) => {
+    const updatedInputs = [...value]; //상태를 직접 변경하는건 안 좋다 들음, 복사해서 사용하는 이유
+    updatedInputs[id] = input; //인덱스 별로 값을 집어 넣어주려고
+    setValue(updatedInputs); //업데이트란 배열을 인풋상태변경함수에 넣어줌으로써 인풋상태 변경
+  };
+  console.log(id);
+  console.log(value);
   return (
     <AnswerInputLayout>
       <Label>{question}</Label>
-      <Input placeholder={placeholder}></Input>
+      <Input
+        value={value[id]}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          handleInputChange(id, e.target.value)
+        }
+      ></Input>
     </AnswerInputLayout>
   );
 }
-
-// type TextProps = {
-//   values: any;
-//   setValues: any;
-// };
-
-// export default function AnswerInput({ values, setValues }: TextProps) {
-//   const [questions, setQuestions] = useState<number[]>([]);
-//   const [inputs, setInputs] = useState<string[]>([]);
-
-//   const handleInputChange = (index: number, value: string) => {
-//     const updatedInputs = [...inputs];
-//     updatedInputs[index] = value;
-//     setInputs(updatedInputs);
-//   };
-
-//   useEffect(() => {
-//     setValues([...values, ...inputs]);
-//   }, [inputs]);
-
-//   return (
-//     <AnswerInputLayout>
-//       <Label>{}</Label>
-//       {questions.map((questionId, index) => (
-//         <Input
-//           key={index}
-//           value={inputs[index]} //반복문 내에서 구분을 할 수 있게 inputs배열에서 인덱스로 순서대로 가져옴
-//           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-//             handleInputChange(index, e.target.value)
-//           }
-//         />
-//       ))}
-//     </AnswerInputLayout>
-//   );
-// }
 
 const AnswerInputLayout = styled.div`
   margin-left: 2rem;
