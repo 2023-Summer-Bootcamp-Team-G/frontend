@@ -36,10 +36,9 @@ export default function QuestionPage() {
       question_text: q,
     }));
 
-    const response = await baseInstance.post('/question/', {
-      user_id: 'test',
-      questions: transformToJson,
-    });
+    const data = { user_id: 'test', questions: transformToJson };
+
+    const response = await baseInstance.post('/question/', data);
     if (response.status === 201) navigate('/answerroom');
     console.log(response.data);
   };
