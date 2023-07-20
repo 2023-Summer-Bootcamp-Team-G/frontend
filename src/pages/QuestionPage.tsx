@@ -28,19 +28,11 @@ export default function QuestionPage() {
   const [addQ, setAddQ] = useState(initQuestions); // 고정 + 추가 질문 하나로 모인 배열
   const navigate = useNavigate();
 
-  console.log(addQ);
-
   const createQuestion = async () => {
-    // json 형식으로 맞춰서 보내주기
-    const transformToJson = addQ.map((q, index) => ({
-      question_text: q,
-    }));
-
-    const data = { user_id: 'test', questions: transformToJson };
+    const data = { user_id: 'test', questions: addQ };
 
     const response = await baseInstance.post('/question/', data);
     if (response.status === 201) navigate('/answerroom');
-    console.log(response.data);
   };
 
   return (
@@ -71,7 +63,6 @@ export default function QuestionPage() {
         <br />
 
         <RoundButton onClick={createQuestion} title={'다음 페이지'} />
-
       </QuestionLayout>
     </BoxContainer>
   );

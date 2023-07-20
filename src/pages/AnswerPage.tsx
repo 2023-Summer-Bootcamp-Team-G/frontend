@@ -33,7 +33,6 @@ export default function AnswerPage() {
 
     const response = await baseInstance.post('/characters/', json);
     if (response.status === 201) navigate('/result');
-    console.log(response.data);
   };
   return (
     <BoxContainer
@@ -42,21 +41,16 @@ export default function AnswerPage() {
           `}
     >
       <HorizontalLine />
-      {questions.map(
-        (questionTitle: any, index: number) => (
-          console.log('test' + index),
-          (
-            <AnswerInput
-              key={index}
-              id={index}
-              question={questionTitle}
-              placeholder={''}
-              value={value}
-              setValue={setValue}
-            />
-          )
-        )
-      )}
+      {questions.map((questionTitle: any, index: number) => (
+        <AnswerInput
+          key={index}
+          id={index}
+          question={questionTitle}
+          placeholder={''}
+          value={value}
+          setValue={setValue}
+        />
+      ))}
 
       <RButtonLayout>
         <RoundButton title={'이전 페이지'} onClick={goBack} />

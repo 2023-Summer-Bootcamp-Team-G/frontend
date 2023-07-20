@@ -21,8 +21,7 @@ export default function AnswerInput({
     updatedInputs[id] = input; //인덱스 별로 값을 집어 넣어주려고
     setValue(updatedInputs); //업데이트란 배열을 인풋상태변경함수에 넣어줌으로써 인풋상태 변경
   };
-  console.log(id);
-  console.log(value);
+
   return (
     <AnswerInputLayout>
       <Label>{question}</Label>
