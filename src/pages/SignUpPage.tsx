@@ -39,18 +39,21 @@ export default function SignUpPage() {
             placeholder='친구들에게 보여지는 이름이에요!'
             value={nickname}
             setValue={setNickname}
+            type='text'
           />
           <LoginInput
             title='아이디'
             placeholder='영문 + 숫자'
             value={id}
             setValue={setId}
+            type='text'
           />
           <LoginInput
             title='비밀번호'
             placeholder='6자리 이상'
             value={pw}
             setValue={setPw}
+            type='password'
           />
           <RoundButton title='회원가입' onClick={createUser} />
         </WhiteBox>

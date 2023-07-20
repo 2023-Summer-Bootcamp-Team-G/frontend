@@ -5,11 +5,13 @@ type TextProps = {
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
   placeholder: string;
+  type: string;
 };
 
 export default function LoginInput({
   title,
   value,
+  type,
   setValue,
   placeholder,
 }: TextProps) {
@@ -18,6 +20,7 @@ export default function LoginInput({
       <Label>{title}</Label>
       <Input
         value={value}
+        type={type}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setValue(e.target.value);
         }}

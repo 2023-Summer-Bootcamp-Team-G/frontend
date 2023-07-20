@@ -38,12 +38,14 @@ export default function LoginPage() {
           placeholder='영문 + 숫자'
           value={id}
           setValue={setId}
+          type='text'
         />
         <LoginInput
           title='비밀번호'
           placeholder='6자리 이상'
           value={passwd}
           setValue={setPasswd}
+          type='password'
         />
         <RoundButton onClick={createUser} title='로그인' />
         <br />
