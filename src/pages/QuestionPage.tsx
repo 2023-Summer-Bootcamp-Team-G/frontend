@@ -4,8 +4,9 @@ import QuestionInput from '../components/Input/QuestionInput';
 import RoundButton from '../components/Btn/RoundBtn';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';
+import { usePollIdStore } from '../stores/pollId';
 
 export default function QuestionPage() {
   const initQuestions = [
@@ -27,11 +28,15 @@ export default function QuestionPage() {
   const [questions, setQuestions] = useState(initQuestions);
   const [addQ, setAddQ] = useState(initQuestions); // 고정 + 추가 질문 하나로 모인 배열
   const navigate = useNavigate();
+  const { setPollId } = usePollIdStore();
 
   const createQuestion = async () => {
     const data = { user_id: 'test', questions: addQ };
 
     const response = await baseInstance.post('/question/', data);
+
+    setPollId(response.data.poll_id); // 꺼내온거 사용
+
     if (response.status === 201) navigate('/answerroom');
   };
 
