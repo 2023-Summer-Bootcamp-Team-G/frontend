@@ -6,19 +6,22 @@ import { animate, motion } from 'framer-motion';
 import { opacityVariants } from '../constants/variants';
 import { useState } from 'react';
 import { baseInstance } from '../apis/config';
+import { userStore } from '../stores/userStore';
 
 export default function LoginPage() {
   const [id, setId] = useState('');
   const [passwd, setPasswd] = useState('');
   const navigate = useNavigate();
+  const { setUserId } = userStore(); // userStore에서 꺼내오기
 
   const createUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const data = { user_id: id, password: passwd };
-
+    console.log(id);
     try {
       const response = await baseInstance.post('/login/', data);
-      console.log(response.data);
+
+      setUserId(id); // 꺼내온거 사용
 
       if (response.status === 200) {
         navigate('/questionroom');
