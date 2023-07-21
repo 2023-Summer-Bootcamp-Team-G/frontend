@@ -5,11 +5,13 @@ import BoxContainer from '../components/BoxContainer/BoxContainer';
 import { Link, useNavigate } from 'react-router-dom';
 import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
+import { usePollIdStore } from '../stores/pollId';
 
 export default function AnswerPage() {
   const [questions, setQuestions] = useState([]);
   const [value, setValue] = useState<string[]>([]);
   const navigate = useNavigate();
+  const { pollId } = usePollIdStore();
 
   const goBack = () => {
     navigate('/questionroom');
@@ -18,8 +20,12 @@ export default function AnswerPage() {
   useEffect(() => {
     const getQuestions = async () => {
       try {
-        const response = await baseInstance.get('/question/?poll_id=34');
-        console.log(response.data);
+        const response = await baseInstance.get('/question/', {
+          params: {
+            poll_id: pollId, //꺼내온거 사용
+          },
+        });
+
         setQuestions(response.data.questions);
       } catch (error) {
         console.error(error);
@@ -29,7 +35,7 @@ export default function AnswerPage() {
     getQuestions();
   }, []);
   const createChar = async () => {
-    const json = { poll_id: 36, creatorName: 'test', answers: value };
+    const json = { poll_id: pollId, creatorName: 'test', answers: value };
 
     const response = await baseInstance.post('/characters/', json);
     if (response.status === 201) navigate('/result');
