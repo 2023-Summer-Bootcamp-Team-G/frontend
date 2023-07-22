@@ -7,7 +7,8 @@ import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { usePollIdStore } from '../stores/pollId';
 import NickNameInput from '../components/Input/NickNameInput';
-import Loading from '../components/Loading/Loading';
+import { userStore } from '../stores/userStore';
+import { taskIdStore } from '../stores/taskId';
 
 export default function AnswerPage() {
   const [questions, setQuestions] = useState([]);
@@ -15,8 +16,9 @@ export default function AnswerPage() {
   const navigate = useNavigate();
   const { pollId } = usePollIdStore(); // 링크 타고 들어온 답변자는 주소에 보내지는 poll_id 가져오는 방법 생각해야함
   const [modalOpen, setModalOpen] = useState(false); //모달 열리고 닫히고
-  const [taskId, setTaskId] = useState('');
-  const [nickName, setNickName] = useState('hi');
+  const { nickName } = userStore();
+  const { setTaskId } = taskIdStore();
+  const [nick, setNick] = useState('hi'); // 답변자 setNick 추후에 수정
 
   const goBack = () => {
     navigate('/questionroom');
@@ -36,18 +38,20 @@ export default function AnswerPage() {
       }
     };
     getQuestions();
-    if (nickName == '') {
+    if (nick == '') {
       setModalOpen(true);
     }
   }, []);
 
   const createChar = async () => {
-    const json = { poll_id: pollId, creatorName: 'test', answers: value };
+    const json = { poll_id: pollId, creatorName: nickName, answers: value };
 
     const response = await baseInstance.post('/characters/', json);
-    // if (response.status === 201) navigate('/result');
-    console.log(response.data.task_id);
-    setTaskId(response.data.task_id);
+    if (response.status === 201) {
+      navigate('/result');
+      console.log(response.data.task_id);
+      setTaskId(response.data.task_id);
+    }
   };
 
   return (
@@ -62,7 +66,7 @@ export default function AnswerPage() {
         {/* 닉네임이 없으면 모달창 띄우고(modalOpen == true) 있음면 안 띄우게 하고싶음 */}
         {modalOpen === true ? (
           <ModalBackdrop>
-            <NickNameInput setNick={setNickName} setModalOpen={setModalOpen} />
+            <NickNameInput setNick={setNick} setModalOpen={setModalOpen} />
           </ModalBackdrop>
         ) : null}
 
