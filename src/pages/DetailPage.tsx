@@ -2,14 +2,27 @@ import { styled } from 'styled-components';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
 import FlipCard from '../components/FlipCard/FlipCard';
 import QnA from '../components/QnA/QnA';
+import { baseInstance } from '../apis/config';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function DetailPage() {
+  const navigate = useNavigate();
+  const { character_id } = useParams(); // useParams로 character_id 값을 가져옴
+
+  const createQuestion = async () => {
+    try {
+      const response = await baseInstance.get(`/characters/${character_id}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <BoxContainer title={`"짱구"님이 생각한 "팀G"의 모습이에요`}>
       <HorizontalLine />
       <Layout>
         <CardLayout>
-          <FlipCard />
+          <FlipCard imageURL='' />
         </CardLayout>
 
         <QnA
