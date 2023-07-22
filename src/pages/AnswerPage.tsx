@@ -15,8 +15,6 @@ export default function AnswerPage() {
   const navigate = useNavigate();
   const { pollId } = usePollIdStore(); // 링크 타고 들어온 답변자는 주소에 보내지는 poll_id 가져오는 방법 생각해야함
   const [modalOpen, setModalOpen] = useState(false); //모달 열리고 닫히고
-
-  const [loading, setLoading] = useState(false);
   const [taskId, setTaskId] = useState('');
   const [nickName, setNickName] = useState('hi');
 
@@ -48,27 +46,8 @@ export default function AnswerPage() {
 
     const response = await baseInstance.post('/characters/', json);
     // if (response.status === 201) navigate('/result');
-    console.log(loading);
     console.log(response.data.task_id);
     setTaskId(response.data.task_id);
-    setLoading(true);
-  };
-
-  useEffect(() => {
-    console.log('test' + taskId);
-    setTimeout(() => {
-      getFourUrls();
-    }, 5000);
-    // getFourUrls(); 지금 로딩창 뜨는거 보려고 타임아웃으로 구현해둠
-  }, [taskId]);
-
-  const getFourUrls = async () => {
-    const response = await baseInstance.get(`/characters/urls/${taskId}`);
-    if (response.status === 200) {
-      setLoading(false);
-      navigate('/result');
-    }
-    console.log(response.data);
   };
 
   return (
@@ -79,11 +58,6 @@ export default function AnswerPage() {
           `}
       >
         <HorizontalLine />
-        {loading === true ? (
-          <ModalBackdrop>
-            <Loading title='기달' />
-          </ModalBackdrop>
-        ) : null}
 
         {/* 닉네임이 없으면 모달창 띄우고(modalOpen == true) 있음면 안 띄우게 하고싶음 */}
         {modalOpen === true ? (
