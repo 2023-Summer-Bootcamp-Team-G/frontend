@@ -1,12 +1,29 @@
+import { useState } from 'react';
 import { styled } from 'styled-components';
 
-export default function NickNameInput() {
+type Props = {
+  setModalOpen: any;
+  setNick: any;
+};
+
+export default function NickNameInput({ setNick, setModalOpen }: Props) {
+  const [value, setValue] = useState();
+  setNick(value);
+
+  const handler = () => {
+    if (value == null) {
+      null;
+    } else {
+      setModalOpen(false); //modal창 닫기
+    }
+  };
+  console.log(value);
   return (
     <Layout>
       <Title>친구가 볼 닉네임을 써주세요!</Title>
       <InputBox>
-        <Input />
-        <InputButton>확인</InputButton>
+        <Input value={value} onChange={(e: any) => setValue(e.target.value)} />
+        <InputButton onClick={handler}>확인</InputButton>
       </InputBox>
       <Image />
     </Layout>
