@@ -4,12 +4,14 @@ import RoundButton from '../components/Btn/RoundBtn';
 import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { baseInstance } from '../apis/config';
+import { userStore } from '../stores/userStore';
 
 export default function SignUpPage() {
   const [nickname, setNickname] = useState('');
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
   const navigate = useNavigate();
+  const { setUserId } = userStore(); // userStore에서 꺼내오기
 
   const createUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -18,7 +20,8 @@ export default function SignUpPage() {
 
     try {
       const response = await baseInstance.post('/register/', data);
-      console.log(response.data);
+
+      setUserId(id); // 꺼내온거 사용
 
       if (response?.data?.message === 'User registered successfully.') {
         navigate('/login');
