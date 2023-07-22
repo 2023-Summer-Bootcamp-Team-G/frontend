@@ -16,13 +16,14 @@ interface Character {
 
 export default function YourPage() {
   const [characters, setCharacters] = useState<Character[]>([]);
-  const { userId } = userStore();
+  const { userId, nickName } = userStore();
 
   const getChar = async () => {
     try {
       const response = await baseInstance.get('/characters/', {
         params: {
           user_id: userId, //꺼내온거 사용
+          nick_name: nickName,
         },
       });
 
