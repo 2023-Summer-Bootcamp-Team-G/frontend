@@ -35,7 +35,7 @@ export default function QuestionPage() {
   const createQuestion = async () => {
     const data = { user_id: userId, questions: addQ };
 
-    const response = await baseInstance.post('/question/', data);
+    const response = await baseInstance.post('/questions', data);
 
     setPollId(response.data.poll_id); // 꺼내온거 사용
 
