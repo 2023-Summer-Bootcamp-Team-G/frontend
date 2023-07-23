@@ -1,14 +1,27 @@
-import { create } from 'zustand';
+import { create, StateCreator } from 'zustand';
+import { persist, PersistOptions } from 'zustand/middleware';
 
-interface userStore {
+type userStore = {
   userId: string;
   nickName: string;
   setUserId: (id: string) => void;
   setNickName: (name: string) => void;
-}
-export const userStore = create<userStore>((set) => ({
-  userId: '',
-  nickName: '',
-  setUserId: (id) => set({ userId: id }),
-  setNickName: (name) => set({ nickName: name }),
-}));
+};
+type UserPersist = (
+  config: StateCreator<userStore>,
+  options: PersistOptions<userStore>
+) => StateCreator<userStore>;
+
+export const userStore = create<userStore>(
+  (persist as UserPersist)(
+    (set) => ({
+      userId: '',
+      nickName: '',
+      setUserId: (id) => set({ userId: id }),
+      setNickName: (name) => set({ nickName: name }),
+    }),
+    {
+      name: 'user-StoreName',
+    }
+  )
+);
