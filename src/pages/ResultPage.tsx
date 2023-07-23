@@ -6,14 +6,18 @@ import { useEffect, useState } from 'react';
 import FlipModal from '../components/FlipCard/FlipModal';
 import { baseInstance } from '../apis/config';
 import Loading from '../components/Loading/Loading';
+import { urlsStore } from '../stores/urls';
+import { keywordsStore } from '../stores/keywords';
+import { taskIdStore } from '../stores/taskId';
 
 export default function ResultPage() {
   //모달
   const [modal, setModal] = useState(false);
-  const [num, setNum] = useState();
+  const { setIndex } = urlsStore();
+
   const showModal = (index: any) => {
     setModal(true);
-    setNum(index);
+    setIndex(index);
   };
   const closeModal = () => {
     setModal(false);
@@ -29,17 +33,17 @@ export default function ResultPage() {
   }, []);
 
   //이미지 키워드 API
-  const [images, setImages] = useState([]);
-  const [keywords, setKeywords] = useState([]);
+  const { taskId } = taskIdStore();
+  const { setUrls } = urlsStore(); // userStore에서 꺼내오기
+  const { setKeywords } = keywordsStore();
 
   useEffect(() => {
     const getImages = async () => {
       try {
-        const response = await baseInstance.get(
-          '/characters/urls/1104ce62-f200-47eb-abf5-a38546de36c7'
-        );
+        const response = await baseInstance.get('/characters/urls/');
 
-        setImages(response.data.result_url);
+        setUrls(response.data.result_url);
+        setKeywords(response.data.keyword);
       } catch (error) {
         console.error(error);
       }
@@ -59,7 +63,7 @@ export default function ResultPage() {
         ) : null}
 
         <PicLayout>
-          {images.map((src: any, index: number) => (
+          {urls.map((src: any, index: number) => (
             <Pic
               key={index}
               style={{ backgroundImage: `url(${src})` }}

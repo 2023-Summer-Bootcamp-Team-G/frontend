@@ -1,29 +1,49 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { styled } from 'styled-components';
+import { urlsStore } from '../../stores/urls';
+import { baseInstance } from '../../apis/config';
+import { keywordsStore } from '../../stores/keywords';
 
-type FlipCardProps = {
-  imageURL: string;
-};
-
-export default function FlipCard({ imageURL }: FlipCardProps) {
+export default function FlipCard() {
   const [boxChange, setBoxChange] = useState(true);
+  const { urls } = urlsStore();
+  const { index } = urlsStore();
+  const { keywords } = keywordsStore();
 
   const handleBoxClick = () => {
     setBoxChange((prevState) => !prevState);
   };
 
+  const { setKeywords } = keywordsStore();
+
+  useEffect(() => {
+    const getKeywords = async () => {
+      try {
+        const response = await baseInstance.get(
+          '/characters/urls/9dc166d6-7920-4416-bb6c-692c5dda67c2'
+        );
+
+        setKeywords(response.data.keyword);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getKeywords();
+  }, []);
+
   // TagBox안에 키워드 태그 들가야함
   return (
     <BoxLayout onClick={handleBoxClick}>
       <CharBox boxChange={boxChange}>
-        {/* <Image src={imageURL} alt='user' /> */}
         <img
           style={{ width: '25rem', height: '25rem', borderRadius: '0.63rem' }}
-          src={imageURL}
+          src={urls[index]}
           alt='UserChar'
         />
       </CharBox>
-      <TagBox boxChange={boxChange}></TagBox>
+      {keywords.map((keyword: any, index: number) => (
+        <TagBox key={index} title={keyword} boxChange={boxChange} />
+      ))}
     </BoxLayout>
   );
 }

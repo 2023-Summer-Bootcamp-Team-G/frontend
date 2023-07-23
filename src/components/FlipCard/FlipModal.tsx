@@ -12,7 +12,7 @@ export default function FlipModal({ setModal }: Props) {
     <Layout>
       <Title>이 캐릭터로 만드시겠어요?</Title>
       <CardLayout>
-        <FlipCard imageURL={''} />
+        <FlipCard />
       </CardLayout>
       <BtnLayout>
         <Button onClick={() => setModal(false)}>아니요</Button>
