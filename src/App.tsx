@@ -6,9 +6,9 @@ import SignUpPage from './pages/SignUpPage';
 import AnswerPage from './pages/AnswerPage';
 import DetailPage from './pages/DetailPage';
 import QuestionPage from './pages/QuestionPage';
-import CharResultPage from './pages/CharResultPage';
 import MyPage from './pages/MyPage';
 import YourPage from './pages/YourPage';
+import ResultPage from './pages/ResultPage';
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
         <Route path='/signup' element={<SignUpPage />} />
         <Route path='/questionroom' element={<QuestionPage />} />
         <Route path='/answerroom' element={<AnswerPage />} />
-        <Route path='/result' element={<CharResultPage />} />
+        <Route path='/result' element={<ResultPage />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/yourpage' element={<YourPage />} />
         <Route path='/mypage/detail' element={<DetailPage />} />
