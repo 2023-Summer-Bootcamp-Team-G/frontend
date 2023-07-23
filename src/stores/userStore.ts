@@ -21,7 +21,7 @@ export const userStore = create<userStore>(
       setNickName: (name) => set({ nickName: name }),
     }),
     {
-      name: 'user-StoreName',
+      name: 'user',
     }
   )
 );

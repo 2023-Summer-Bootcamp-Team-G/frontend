@@ -2,9 +2,11 @@ import { styled } from 'styled-components';
 import LoginInput from '../components/Input/LoginInput';
 import RoundButton from '../components/Btn/RoundBtn';
 import { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { baseInstance } from '../apis/config';
 import { userStore } from '../stores/userStore';
+import { motion } from 'framer-motion';
+import { opacityVariants } from '../constants/variants';
 
 export default function SignUpPage() {
   const [nickname, setNickname] = useState('');
@@ -36,7 +38,7 @@ export default function SignUpPage() {
   return (
     <BackLayout>
       <Box>
-        <WhiteBox>
+        <WhiteBox variants={opacityVariants} initial='initial' animate='mount'>
           <h1>회원가입</h1>
           <LoginInput
             title='닉네임'
@@ -85,6 +87,7 @@ const Img1 = styled.img`
   width: 15rem;
   height: 15rem;
   margin-left: 9rem;
+  position: relative;
 `;
 const Img2 = styled.img`
   width: 30rem;
@@ -96,7 +99,7 @@ const BackLayout = styled.div`
   display: flex;
   background: linear-gradient(#ff6600, #ffc301);
 `;
-const WhiteBox = styled.div`
+const WhiteBox = styled(motion.div)`
   width: 42rem;
   height: 43rem;
   margin-top: 3rem;
@@ -107,4 +110,5 @@ const WhiteBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 `;
