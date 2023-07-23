@@ -62,7 +62,7 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   useEffect(() => {
     const getCharacters = async () => {
       try {
-        const response = await baseInstance.get('/characters/', {
+        const response = await baseInstance.get('/characters', {
           params: {
             user_id: userId, //꺼내온거 사용
           },

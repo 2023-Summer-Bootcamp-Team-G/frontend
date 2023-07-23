@@ -15,13 +15,14 @@ interface Character {
 
 export default function MyPage() {
   const [characters, setCharacters] = useState<Character[]>([]);
-  const { userId } = userStore();
+  const { userId, nickName } = userStore();
 
   const getChar = async () => {
     try {
-      const response = await baseInstance.get('/characters/', {
+      const response = await baseInstance.get('/characters', {
         params: {
           user_id: userId, //꺼내온거 사용
+          nick_name: nickName,
         },
       });
 
@@ -39,7 +40,7 @@ export default function MyPage() {
     <BoxContainer title={''}>
       <Top>
         <CharLayout>
-          <Title>“팀 G” 님 본인이 만든 캐릭터에요!</Title>
+          <Title>{nickName} 님 본인이 만든 캐릭터에요!</Title>
           <FlipCardLayout>
             <FlipCard imageURL={characters[0]?.result_url} />{' '}
             {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
@@ -48,7 +49,7 @@ export default function MyPage() {
         </CharLayout>
 
         <CharLayout>
-          <Title>중복된 키워드로 만든 “팀 G” 님이에요!</Title>
+          <Title>중복된 키워드로 만든 {nickName} 님이에요!</Title>
           <FlipCardLayout>
             <FlipCard imageURL='' />
             {/* {characters.slice(1).map((character) => (

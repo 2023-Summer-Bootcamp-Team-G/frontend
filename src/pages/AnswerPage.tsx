@@ -27,7 +27,7 @@ export default function AnswerPage() {
   useEffect(() => {
     const getQuestions = async () => {
       try {
-        const response = await baseInstance.get('/question/', {
+        const response = await baseInstance.get('/questions', {
           params: {
             poll_id: pollId, //꺼내온거 사용
           },
@@ -46,7 +46,7 @@ export default function AnswerPage() {
   const createChar = async () => {
     const json = { poll_id: pollId, creatorName: nickName, answers: value };
 
-    const response = await baseInstance.post('/characters/', json);
+    const response = await baseInstance.post('/characters', json);
     if (response.status === 201) {
       navigate('/result');
       console.log(response.data.task_id);

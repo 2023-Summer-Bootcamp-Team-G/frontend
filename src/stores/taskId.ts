@@ -1,11 +1,22 @@
-import { create } from 'zustand';
+import { create, StateCreator } from 'zustand';
+import { persist, PersistOptions } from 'zustand/middleware';
 
-interface store {
+type TaskStore = {
   taskId: string;
   setTaskId: (id: string) => void;
-}
+};
 
-export const taskIdStore = create<store>((set) => ({
-  taskId: '', //상태
-  setTaskId: (id) => set({ taskId: id }), //상태변경
-}));
+type TaskPersist = (
+  config: StateCreator<TaskStore>,
+  options: PersistOptions<TaskStore>
+) => StateCreator<TaskStore>;
+
+export const taskIdStore = create<TaskStore>(
+  (persist as TaskPersist)(
+    (set) => ({
+      taskId: '', //상태
+      setTaskId: (id) => set({ taskId: id }), //상태변경
+    }),
+    { name: 'task_id' }
+  )
+);
