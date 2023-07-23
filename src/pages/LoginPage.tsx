@@ -19,7 +19,7 @@ export default function LoginPage() {
     const data = { user_id: id, password: passwd };
     console.log(id);
     try {
-      const response = await baseInstance.post('/login/', data);
+      const response = await baseInstance.post('/login', data);
 
       setUserId(id); // 꺼내온거 사용
 

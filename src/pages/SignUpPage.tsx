@@ -19,7 +19,7 @@ export default function SignUpPage() {
     const data = { nick_name: nickname, user_id: id, password: pw };
 
     try {
-      const response = await baseInstance.post('/register/', data);
+      const response = await baseInstance.post('/register', data);
 
       setUserId(id); // 꺼내온거 사용
       setNickName(nickname);
