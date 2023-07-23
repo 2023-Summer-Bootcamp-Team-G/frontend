@@ -13,6 +13,7 @@ import { taskIdStore } from '../stores/taskId';
 export default function ResultPage() {
   //모달
   const [modal, setModal] = useState(false);
+  const { urls } = urlsStore();
   const { setIndex } = urlsStore();
 
   const showModal = (index: any) => {
@@ -35,12 +36,12 @@ export default function ResultPage() {
   //이미지 키워드 API
   const { taskId } = taskIdStore();
   const { setUrls } = urlsStore(); // userStore에서 꺼내오기
-  const { setKeywords } = keywordsStore();
+  const { keywords, setKeywords } = keywordsStore();
 
   useEffect(() => {
     const getImages = async () => {
       try {
-        const response = await baseInstance.get('/characters/urls/');
+        const response = await baseInstance.get(`/characters/urls/${taskId}`);
 
         setUrls(response.data.result_url);
         setKeywords(response.data.keyword);

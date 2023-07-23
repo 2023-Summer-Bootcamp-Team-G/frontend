@@ -2,12 +2,34 @@ import { styled } from 'styled-components';
 import { MouseEvent } from 'react';
 import FlipCard from './FlipCard';
 import { Link } from 'react-router-dom';
+import { baseInstance } from '../../apis/config';
+import { urlsStore } from '../../stores/urls';
+
+import { Navigate, useNavigate } from 'react-router-dom';
+import { taskIdStore } from '../../stores/taskId';
 
 type Props = {
   setModal: any;
 };
 
 export default function FlipModal({ setModal }: Props) {
+  const { taskId } = taskIdStore();
+  const { index } = urlsStore();
+  const navigate = useNavigate();
+
+  const PickChar = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const data = { task_id: taskId, index: index };
+    try {
+      const response = await baseInstance.post('/characters/choice', data);
+      if (response.status == 201) {
+        navigate('/mypage');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Layout>
       <Title>이 캐릭터로 만드시겠어요?</Title>
@@ -16,7 +38,7 @@ export default function FlipModal({ setModal }: Props) {
       </CardLayout>
       <BtnLayout>
         <Button onClick={() => setModal(false)}>아니요</Button>
-        <Button>좋아요</Button>
+        <Button onClick={PickChar}>좋아요</Button>
       </BtnLayout>
     </Layout>
   );

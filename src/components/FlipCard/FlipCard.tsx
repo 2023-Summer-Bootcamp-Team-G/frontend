@@ -3,6 +3,8 @@ import { styled } from 'styled-components';
 import { urlsStore } from '../../stores/urls';
 import { baseInstance } from '../../apis/config';
 import { keywordsStore } from '../../stores/keywords';
+import { taskIdStore } from '../../stores/taskId';
+import KeywordTag from '../KeywordTag/KeywordTag';
 
 export default function FlipCard() {
   const [boxChange, setBoxChange] = useState(true);
@@ -14,24 +16,6 @@ export default function FlipCard() {
     setBoxChange((prevState) => !prevState);
   };
 
-  const { setKeywords } = keywordsStore();
-
-  useEffect(() => {
-    const getKeywords = async () => {
-      try {
-        const response = await baseInstance.get(
-          '/characters/urls/9dc166d6-7920-4416-bb6c-692c5dda67c2'
-        );
-
-        setKeywords(response.data.keyword);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getKeywords();
-  }, []);
-
-  // TagBox안에 키워드 태그 들가야함
   return (
     <BoxLayout onClick={handleBoxClick}>
       <CharBox boxChange={boxChange}>
@@ -41,9 +25,11 @@ export default function FlipCard() {
           alt='UserChar'
         />
       </CharBox>
-      {keywords.map((keyword: any, index: number) => (
-        <TagBox key={index} title={keyword} boxChange={boxChange} />
-      ))}
+      <TagBox boxChange={boxChange}>
+        {keywords.map((keyword: any, index: number) => (
+          <KeywordTag key={index} title={keyword} />
+        ))}
+      </TagBox>
     </BoxLayout>
   );
 }
