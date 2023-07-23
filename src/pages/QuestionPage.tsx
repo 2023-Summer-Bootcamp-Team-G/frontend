@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';
 import { usePollIdStore } from '../stores/pollId';
+import { userStore } from '../stores/userStore';
 
 export default function QuestionPage() {
   const initQuestions = [
@@ -29,9 +30,10 @@ export default function QuestionPage() {
   const [addQ, setAddQ] = useState(initQuestions); // 고정 + 추가 질문 하나로 모인 배열
   const navigate = useNavigate();
   const { setPollId } = usePollIdStore();
+  const { userId } = userStore();
 
   const createQuestion = async () => {
-    const data = { user_id: 'test', questions: addQ };
+    const data = { user_id: userId, questions: addQ };
 
     const response = await baseInstance.post('/question/', data);
 
@@ -39,7 +41,7 @@ export default function QuestionPage() {
 
     if (response.status === 201) navigate('/answerroom');
   };
-
+  console.log(userId);
   return (
     <BoxContainer
       title={`본인에 대한 질문을 만들어주세요!

@@ -8,6 +8,7 @@ import Chart from '../Chart/Chart';
 import Button from '../Btn/Btn';
 import { useState, useEffect } from 'react';
 import { baseInstance } from '../../apis/config';
+import { userStore } from '../../stores/userStore';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -51,6 +52,7 @@ function a11yProps(index: number) {
 export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   const [value, setValue] = useState(0);
   const [characters, setCharacters] = useState<Character[]>([]);
+  const { userId } = userStore();
 
   const handleChange = (e: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -60,7 +62,11 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   useEffect(() => {
     const getCharacters = async () => {
       try {
-        const response = await baseInstance.get('/characters/?user_id=test');
+        const response = await baseInstance.get('/characters/', {
+          params: {
+            user_id: userId, //꺼내온거 사용
+          },
+        });
         console.log(response.data);
         setCharacters(response.data.characters);
       } catch (error) {

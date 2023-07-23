@@ -6,6 +6,7 @@ import Tab from '@mui/material/Tab';
 import BasicTabs from '../components/Tab/Tab';
 import { useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';
+import { userStore } from '../stores/userStore';
 
 interface Character {
   id: number;
@@ -15,11 +16,16 @@ interface Character {
 
 export default function YourPage() {
   const [characters, setCharacters] = useState<Character[]>([]);
+  const { userId } = userStore();
 
   const getChar = async () => {
     try {
-      const response = await baseInstance.get('/characters/?user_id=test');
-      console.log(response.data);
+      const response = await baseInstance.get('/characters/', {
+        params: {
+          user_id: userId, //꺼내온거 사용
+        },
+      });
+
       setCharacters(response.data.characters);
     } catch (error) {
       console.error(error);
