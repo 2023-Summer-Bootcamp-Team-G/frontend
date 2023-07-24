@@ -55,7 +55,7 @@ export default function AnswerPage() {
   };
 
   return (
-    <TestContainer>
+    <Container>
       <BoxContainer
         title={`질문에 답변을 달아주세요!
             답변을 기반으로 캐릭터를 만들어드릴게요.
@@ -86,7 +86,7 @@ export default function AnswerPage() {
           <RoundButton title={'캐릭터 생성'} onClick={createChar} />
         </RButtonLayout>
       </BoxContainer>
-    </TestContainer>
+    </Container>
   );
 }
 
@@ -104,7 +104,7 @@ const ModalBackdrop = styled.div`
   bottom: 0;
 `;
 
-const TestContainer = styled.div`
+const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

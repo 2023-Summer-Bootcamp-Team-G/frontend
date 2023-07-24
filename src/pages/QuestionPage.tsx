@@ -43,35 +43,37 @@ export default function QuestionPage() {
   };
   console.log(userId);
   return (
-    <BoxContainer
-      title={`본인에 대한 질문을 만들어주세요!
-                  사람들이 답해줄거에요.
-              `}
-    >
-      <HorizontalLine />
-      <Text>기본 질문</Text>
-      <CardLayout>
-        {questions.map((arr, index) => (
-          <QuestionCard
-            key={index} //key속성 추가해주는 이유가 리액트가 key값을 보고 각각 구분할 수 있게 해주려고. 없으면 워닝 띄움
-            question={initQuestions[index]}
-            src={initQuestionSrc[index]}
-          />
-        ))}
-      </CardLayout>
+    <Container>
+      <BoxContainer
+        title={`본인에 대한 질문을 만들어주세요!
+                    사람들이 답해줄거에요.
+                `}
+      >
+        <HorizontalLine />
+        <Text>기본 질문</Text>
+        <CardLayout>
+          {questions.map((arr, index) => (
+            <QuestionCard
+              key={index} //key속성 추가해주는 이유가 리액트가 key값을 보고 각각 구분할 수 있게 해주려고. 없으면 워닝 띄움
+              question={initQuestions[index]}
+              src={initQuestionSrc[index]}
+            />
+          ))}
+        </CardLayout>
 
-      <TextLayout>
-        <Text>추가 질문</Text>
-        <Text2>질문은 4개까지 추가할 수 있어요.</Text2>
-      </TextLayout>
+        <TextLayout>
+          <Text>추가 질문</Text>
+          <Text2>질문은 4개까지 추가할 수 있어요.</Text2>
+        </TextLayout>
 
-      <QuestionLayout>
-        <QuestionInput value1={initQuestions} setValue={setAddQ} />
-        <br />
+        <QuestionLayout>
+          <QuestionInput value1={initQuestions} setValue={setAddQ} />
+          <br />
 
-        <RoundButton onClick={createQuestion} title={'다음 페이지'} />
-      </QuestionLayout>
-    </BoxContainer>
+          <RoundButton onClick={createQuestion} title={'다음 페이지'} />
+        </QuestionLayout>
+      </BoxContainer>
+    </Container>
   );
 }
 
@@ -111,4 +113,10 @@ const QuestionLayout = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 `;
