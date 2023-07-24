@@ -38,27 +38,29 @@ export default function YourPage() {
   }, []);
 
   return (
-    <BoxContainer title={''}>
-      <Top>
-        <CharLayout>
-          <Title>{nickName} 님 본인이 만든 캐릭터에요!</Title>
-          <FlipCardLayout>
-            <FlipCard imageURL={characters[0]?.result_url} />{' '}
-            {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
-          </FlipCardLayout>
-        </CharLayout>
+    <Container>
+      <BoxContainer title={''}>
+        <Top>
+          <CharLayout>
+            <Title>{nickName} 님 본인이 만든 캐릭터에요!</Title>
+            <FlipCardLayout>
+              <FlipCard imageURL={characters[0]?.result_url} />{' '}
+              {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
+            </FlipCardLayout>
+          </CharLayout>
 
-        <CharLayout>
-          <Title>중복된 키워드로 만든 {nickName} 님이에요!</Title>
-          <FlipCardLayout>
-            <FlipCard imageURL='' />
-          </FlipCardLayout>
-        </CharLayout>
-      </Top>
+          <CharLayout>
+            <Title>중복된 키워드로 만든 {nickName} 님이에요!</Title>
+            <FlipCardLayout>
+              <FlipCard imageURL='' />
+            </FlipCardLayout>
+          </CharLayout>
+        </Top>
 
-      <HorizontalLine />
-      <BasicTabs onSubmit={getChar} />
-    </BoxContainer>
+        <HorizontalLine />
+        <BasicTabs onSubmit={getChar} />
+      </BoxContainer>
+    </Container>
   );
 }
 const Top = styled.div`
@@ -92,4 +94,10 @@ const HorizontalLine = styled.div`
   background-color: #000;
   margin-top: 1.25rem;
   margin-bottom: 2.5rem;
+`;
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 `;
