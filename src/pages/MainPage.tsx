@@ -1,32 +1,50 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../components/Btn/Btn';
+import { keyframes } from 'styled-components';
 
-// const blinkAnimation = `
-//   0% { opacity: 1; }
-//   50% { opacity: 0; }
-//   100% { opacity: 1; }
-// `;
+const blinkAnimation = `
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+`;
 
-// const StyledImg = styled.img`
-//   position: relative;
+// 위치 변경 애니메이션
+const moveAnimation = keyframes`
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(10%, 20%); }
+  50% { transform: translate(-20%, 10%); }
+  75% { transform: translate(20%, -10%); }
+  100% { transform: translate(-10%, -20%); }
+`;
 
-//   &.blink {
-//     animation: ${blinkAnimation} 2s linear infinite;
-//   }
-// `;
+const StyledImg = styled.img`
+  position: relative;
+
+  &.blink {
+    animation: ${blinkAnimation} 2s linear infinite,
+      ${moveAnimation} 5s linear infinite; // 위치 변경 애니메이션
+  }
+`;
 
 export default function MainPage() {
   return (
     <ParentBox>
       <TextLayout>
         <Text>이게 나라고?</Text>
-        <img src='https://i.postimg.cc/hhWXxq4Y/image-6.png' alt='이미지' />
+        <img
+          style={{
+            width: '17rem',
+            height: '6rem',
+          }}
+          src='https://i.postimg.cc/hhWXxq4Y/image-6.png'
+          alt='이미지'
+        />
       </TextLayout>
 
       {/* <ImgLayout> */}
       {/* <CharLayout> */}
-      <img
+      <StyledImg
         style={{
           position: 'absolute',
           top: '0',
@@ -38,7 +56,7 @@ export default function MainPage() {
         alt='토끼'
         className='blink'
       />
-      <img
+      <StyledImg
         style={{
           position: 'absolute',
           bottom: '-100px',
@@ -54,34 +72,39 @@ export default function MainPage() {
       {/* </CharLayout> */}
       <img
         style={{
-          position: 'absolute',
-          width: '50rem',
-          height: '50rem',
-          margin: '17.5rem 20rem 0 20rem',
-          top: '50%',
-          left: '25%',
+          position: 'relative',
+          width: '40rem',
+          height: '40rem',
+          // margin: '17.5rem 20rem 0 20rem',
+          top: '38%',
+          left: '50%',
           transform: 'translate(-50%, -50%)',
+          zIndex: 0,
         }}
         src='https://i.postimg.cc/V6GVj5FZ/1.png'
         alt='여우'
       />
       {/* <CharLayout> */}
-      <img
+      <StyledImg
         style={{
           position: 'absolute',
           top: '0',
           right: '0',
+          width: '30rem',
+          height: '30rem',
         }}
         src='https://i.postimg.cc/DZyJSmK4/4.png'
         alt='고양이'
         className='blink'
       />
-      <img
+      <StyledImg
         style={{
           position: 'absolute',
-          bottom: '-325px',
+          bottom: '-100px',
           right: '0',
           clear: 'both',
+          width: '30rem',
+          height: '30rem',
         }}
         src='https://i.postimg.cc/nLxQt0Rk/5.png'
         alt='새'
@@ -102,11 +125,12 @@ const ParentBox = styled.div`
 `;
 const Text = styled.div`
   color: #fff;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-style: normal;
   font-weight: 700;
   transform: rotate(-8.491deg);
-  margin-top: 7.5rem;
+  margin-top: 2rem;
+  margin-right: 4.7rem;
 `;
 const TextLayout = styled.div`
   display: flex;
@@ -125,9 +149,9 @@ const TextLayout = styled.div`
 //   justify-content: space-between;
 // `;
 const StyledButton = styled(Button)`
-  position: absolute;
+  /* position: absolute; */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 2;
+  z-index: 1;
 `;
