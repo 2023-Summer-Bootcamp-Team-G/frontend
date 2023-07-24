@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
 import FlipCard from '../components/FlipCard/FlipCard';
 import Button from '../components/Btn/Btn';
-import BasicTabs from '../components/Tab/Tab';
+
 import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
@@ -66,7 +66,7 @@ export default function MyPage() {
       </Top>
 
       <HorizontalLine />
-      <BasicTabs onSubmit={getChar} />
+      {/* <BasicTabs onSubmit={getChar} /> */}
     </BoxContainer>
   );
 }

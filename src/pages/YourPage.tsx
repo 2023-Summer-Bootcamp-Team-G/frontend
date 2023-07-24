@@ -1,9 +1,7 @@
 import { styled } from 'styled-components';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
 import FlipCard from '../components/FlipCard/FlipCard';
-import CharBox from '../components/CharBox/CharBox';
-import Tab from '@mui/material/Tab';
-import BasicTabs from '../components/Tab/Tab';
+
 import { useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';
 import { userStore } from '../stores/userStore';
@@ -43,7 +41,7 @@ export default function YourPage() {
         <CharLayout>
           <Title>{nickName} 님 본인이 만든 캐릭터에요!</Title>
           <FlipCardLayout>
-            <FlipCard imageURL={characters[0]?.result_url} />{' '}
+            <FlipCard imageURL={characters[0]?.result_url} keywords={[]} />{' '}
             {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
           </FlipCardLayout>
         </CharLayout>
@@ -51,13 +49,13 @@ export default function YourPage() {
         <CharLayout>
           <Title>중복된 키워드로 만든 {nickName} 님이에요!</Title>
           <FlipCardLayout>
-            <FlipCard imageURL='' />
+            <FlipCard imageURL='' keywords={[]} />
           </FlipCardLayout>
         </CharLayout>
       </Top>
 
       <HorizontalLine />
-      <BasicTabs onSubmit={getChar} />
+      {/* <BasicTabs onSubmit={getChar} /> */}
     </BoxContainer>
   );
 }

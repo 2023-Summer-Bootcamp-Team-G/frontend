@@ -31,7 +31,7 @@ export default function QuestionInput({ value1, setValue }: Props) {
 
   return (
     <>
-      {questions.map((questionId, index) => (
+      {questions.map((index) => (
         <Input
           key={index}
           value={inputs[index]} //반복문 내에서 구분을 할 수 있게 inputs배열에서 인덱스로 순서대로 가져옴

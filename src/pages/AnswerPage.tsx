@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import AnswerInput from '../components/Input/AnswerInput';
 import RoundButton from '../components/Btn/RoundBtn';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { usePollIdStore } from '../stores/pollId';
@@ -20,9 +20,9 @@ export default function AnswerPage() {
   const { setTaskId } = taskIdStore();
   const [nick, setNick] = useState('hi'); // 답변자 setNick 추후에 수정
 
-  const goBack = () => {
-    navigate(-1);
-  };
+  // const goBack = () => {
+  //   navigate(-1);
+  // };
 
   useEffect(() => {
     const getQuestions = async () => {
@@ -82,7 +82,7 @@ export default function AnswerPage() {
         ))}
 
         <RButtonLayout>
-          <RoundButton title={'이전 페이지'} onClick={goBack} />
+          {/* <RoundButton title={'이전 페이지'} onClick={goBack} /> */}
           <RoundButton title={'캐릭터 생성'} onClick={createChar} />
         </RButtonLayout>
       </BoxContainer>

@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { styled } from 'styled-components';
 import KeywordTag from '../KeywordTag/KeywordTag';
 
 type FlipCardProps = {
   imageURL: string;
-  keywords: any;
+  keywords: [];
 };
 
 export default function FlipCard({ imageURL, keywords }: FlipCardProps) {

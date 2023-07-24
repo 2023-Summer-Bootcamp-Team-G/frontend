@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 type TextProps = {
@@ -27,6 +26,7 @@ export default function AnswerInput({
       <Label>{question}</Label>
       <Input
         value={value[id]}
+        placeholder={placeholder}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           handleInputChange(id, e.target.value)
         }

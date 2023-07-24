@@ -9,7 +9,7 @@ export default function DetailPage() {
       <HorizontalLine />
       <Layout>
         <CardLayout>
-          <FlipCard />
+          <FlipCard imageURL={''} keywords={[]} />
         </CardLayout>
 
         <QnA

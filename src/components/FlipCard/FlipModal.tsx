@@ -3,7 +3,7 @@ import FlipCard from './FlipCard';
 import { baseInstance } from '../../apis/config';
 import { urlsStore } from '../../stores/urls';
 
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { taskIdStore } from '../../stores/taskId';
 import { keywordsStore } from '../../stores/keywords';
 
