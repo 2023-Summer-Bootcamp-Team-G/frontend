@@ -27,7 +27,7 @@ export default function SignUpPage() {
       setNickName(nickname);
 
       if (response?.data?.message === 'User registered successfully.') {
-        navigate('/login');
+        navigate('/questionroom');
       }
     } catch (error) {
       alert('다시 작성해주세요!');
