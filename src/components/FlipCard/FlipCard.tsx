@@ -1,29 +1,34 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { styled } from 'styled-components';
+import KeywordTag from '../KeywordTag/KeywordTag';
 
 type FlipCardProps = {
   imageURL: string;
+  keywords: any;
 };
 
-export default function FlipCard({ imageURL }: FlipCardProps) {
+export default function FlipCard({ imageURL, keywords }: FlipCardProps) {
   const [boxChange, setBoxChange] = useState(true);
 
   const handleBoxClick = () => {
     setBoxChange((prevState) => !prevState);
   };
+  console.log('test' + keywords);
 
-  // TagBox안에 키워드 태그 들가야함
   return (
     <BoxLayout onClick={handleBoxClick}>
       <CharBox boxChange={boxChange}>
-        {/* <Image src={imageURL} alt='user' /> */}
         <img
           style={{ width: '25rem', height: '25rem', borderRadius: '0.63rem' }}
           src={imageURL}
           alt='UserChar'
         />
       </CharBox>
-      <TagBox boxChange={boxChange}></TagBox>
+      <TagBox boxChange={boxChange}>
+        {keywords.map((keyword: any, index: number) => (
+          <KeywordTag key={index} title={keyword} />
+        ))}
+      </TagBox>
     </BoxLayout>
   );
 }

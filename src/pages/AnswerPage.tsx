@@ -21,7 +21,7 @@ export default function AnswerPage() {
   const [nick, setNick] = useState('hi'); // 답변자 setNick 추후에 수정
 
   const goBack = () => {
-    navigate('/questionroom');
+    navigate(-1);
   };
 
   useEffect(() => {
