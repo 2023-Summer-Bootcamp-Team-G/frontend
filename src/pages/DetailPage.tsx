@@ -5,32 +5,34 @@ import QnA from '../components/QnA/QnA';
 
 export default function DetailPage() {
   return (
-    <BoxContainer title={`"짱구"님이 생각한 "팀G"의 모습이에요`}>
-      <HorizontalLine />
-      <Layout>
-        <CardLayout>
-          <FlipCard />
-        </CardLayout>
+    <Container>
+      <BoxContainer title={`"짱구"님이 생각한 "팀G"의 모습이에요`}>
+        <HorizontalLine />
+        <Layout>
+          <CardLayout>
+            <FlipCard />
+          </CardLayout>
 
-        <QnA
-          question='나를 동물로 표현한다면 어떤 동물이야?'
-          placeholder='토끼'
-        />
-        <QnA
-          question={`난 어떤 분위기야? 
-        (EX. 웃음, 무표정, 화난, 찡그림, 귀여움, 시크, 무심함, 무서움, 발랄함 등등)`}
-          placeholder=''
-        />
-        <QnA question='나를 색으로 표현한다면 무슨 색이야?' placeholder='' />
-        <QnA
-          question={`나는 어떤 그림체가 어울려?
-        (디즈니 애니메이션, 지브리, 픽셀아트, 3D 중에 하나로 골라줘)`}
-          placeholder=''
-        />
-        <QnA question='내가 자주 들고 다니는 물건은 뭐야?' placeholder='' />
-        <QnA question='내가 자주 나타나는 장소는 어디야?' placeholder='' />
-      </Layout>
-    </BoxContainer>
+          <QnA
+            question='나를 동물로 표현한다면 어떤 동물이야?'
+            placeholder='토끼'
+          />
+          <QnA
+            question={`난 어떤 분위기야? 
+          (EX. 웃음, 무표정, 화난, 찡그림, 귀여움, 시크, 무심함, 무서움, 발랄함 등등)`}
+            placeholder=''
+          />
+          <QnA question='나를 색으로 표현한다면 무슨 색이야?' placeholder='' />
+          <QnA
+            question={`나는 어떤 그림체가 어울려?
+          (디즈니 애니메이션, 지브리, 픽셀아트, 3D 중에 하나로 골라줘)`}
+            placeholder=''
+          />
+          <QnA question='내가 자주 들고 다니는 물건은 뭐야?' placeholder='' />
+          <QnA question='내가 자주 나타나는 장소는 어디야?' placeholder='' />
+        </Layout>
+      </BoxContainer>
+    </Container>
   );
 }
 
@@ -55,4 +57,10 @@ const HorizontalLine = styled.div`
   height: 1px;
   background-color: #000;
   margin-top: 1.25rem;
+`;
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 `;
