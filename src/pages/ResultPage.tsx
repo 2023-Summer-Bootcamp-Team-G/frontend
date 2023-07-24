@@ -1,6 +1,5 @@
 import { styled } from 'styled-components';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import FlipModal from '../components/FlipCard/FlipModal';
@@ -9,12 +8,13 @@ import Loading from '../components/Loading/Loading';
 import { urlsStore } from '../stores/urls';
 import { keywordsStore } from '../stores/keywords';
 import { taskIdStore } from '../stores/taskId';
+import { userStore } from '../stores/userStore';
 
 export default function ResultPage() {
   //모달
   const [modal, setModal] = useState(false);
-  const { urls } = urlsStore();
-  const { setIndex } = urlsStore();
+  const { urls, setIndex } = urlsStore();
+  const { nickName } = userStore();
 
   const showModal = (index: any) => {
     setModal(true);
@@ -54,7 +54,7 @@ export default function ResultPage() {
 
   return (
     <>
-      <BoxContainer title={`내가 생각한 팀G의 모습이에요!`}>
+      <BoxContainer title={`내가 생각한 ${nickName}의 모습이에요!`}>
         <HorizontalLine />
 
         {loading === true ? (

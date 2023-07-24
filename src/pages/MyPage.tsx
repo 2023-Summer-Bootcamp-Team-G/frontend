@@ -6,6 +6,7 @@ import BasicTabs from '../components/Tab/Tab';
 import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
+import { Link } from 'react-router-dom';
 
 interface Character {
   id: number;
@@ -25,7 +26,7 @@ export default function MyPage() {
           nick_name: nickName,
         },
       });
-
+      console.log(response.data);
       setCharacters(response.data.characters);
     } catch (error) {
       console.error(error);
@@ -42,16 +43,19 @@ export default function MyPage() {
         <CharLayout>
           <Title>{nickName} 님 본인이 만든 캐릭터에요!</Title>
           <FlipCardLayout>
-            <FlipCard imageURL={characters[0]?.result_url} />{' '}
+            <FlipCard imageURL={characters[0]?.result_url} keywords={[]} />{' '}
             {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
           </FlipCardLayout>
-          <Button title={'캐릭터 다시 만들래요'} />
+
+          <Link to='/answerroom'>
+            <Button title={'캐릭터 다시 만들래요'} />
+          </Link>
         </CharLayout>
 
         <CharLayout>
           <Title>중복된 키워드로 만든 {nickName} 님이에요!</Title>
           <FlipCardLayout>
-            <FlipCard imageURL='' />
+            <FlipCard imageURL='' keywords={[]} />
             {/* {characters.slice(1).map((character) => (
               <FlipCard key={character.id} imageURL={character.result_url} />
             ))}{' '} */}

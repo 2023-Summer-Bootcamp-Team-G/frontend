@@ -1,27 +1,26 @@
 import { useState, useRef, useEffect } from 'react';
 import { styled } from 'styled-components';
-import { urlsStore } from '../../stores/urls';
-import { baseInstance } from '../../apis/config';
-import { keywordsStore } from '../../stores/keywords';
-import { taskIdStore } from '../../stores/taskId';
 import KeywordTag from '../KeywordTag/KeywordTag';
 
-export default function FlipCard() {
+type FlipCardProps = {
+  imageURL: string;
+  keywords: any;
+};
+
+export default function FlipCard({ imageURL, keywords }: FlipCardProps) {
   const [boxChange, setBoxChange] = useState(true);
-  const { urls } = urlsStore();
-  const { index } = urlsStore();
-  const { keywords } = keywordsStore();
 
   const handleBoxClick = () => {
     setBoxChange((prevState) => !prevState);
   };
+  console.log('test' + keywords);
 
   return (
     <BoxLayout onClick={handleBoxClick}>
       <CharBox boxChange={boxChange}>
         <img
           style={{ width: '25rem', height: '25rem', borderRadius: '0.63rem' }}
-          src={urls[index]}
+          src={imageURL}
           alt='UserChar'
         />
       </CharBox>
