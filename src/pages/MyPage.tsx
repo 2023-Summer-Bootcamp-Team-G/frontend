@@ -14,6 +14,34 @@ interface Character {
   nick_name: string;
 }
 
+const setMetaTags = ({
+  title = "It's me?!", // 기본 타이틀
+  description = '친구들의 답변으로 닮은 캐릭터를 만들어줘요!', // 기본 설명
+  imageUrl = 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 기본 사이트 이미지 경로
+}) => {
+  const titleTag = document.querySelector('meta[property="og:title"]');
+  if (titleTag) {
+    titleTag.setAttribute('content', `${title}`);
+  }
+
+  const descriptionTag = document.querySelector(
+    'meta[property="og:description"]'
+  );
+  if (descriptionTag) {
+    descriptionTag.setAttribute('content', description);
+  }
+
+  const imageTag = document.querySelector('meta[property="og:image"]');
+  if (imageTag) {
+    imageTag.setAttribute('content', imageUrl);
+  }
+
+  const urlTag = document.querySelector('meta[property="og:url"]');
+  if (urlTag) {
+    urlTag.setAttribute('content', window.location.href);
+  }
+};
+
 export default function MyPage() {
   const [characters, setCharacters] = useState<Character[]>([]);
   const { userId, nickName } = userStore();
@@ -35,6 +63,11 @@ export default function MyPage() {
 
   useEffect(() => {
     getChar();
+    setMetaTags({
+      title: "It's me?! 마이페이지",
+      description: '친구들이 만들어준 캐릭터들을 확인해보세요!',
+      imageUrl: 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 배포하고나서 이미지 url 바꿔주기 // 일단 메인페이지 이미지 넣어놈
+    });
   }, []);
 
   return (
