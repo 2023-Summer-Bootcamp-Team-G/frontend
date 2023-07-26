@@ -85,7 +85,7 @@ export default function MyPage() {
             </FlipCardLayout>
 
             <Link to='/answerroom'>
-              <Button title={'캐릭터 다시 만들래요'} />
+              {userId === '' ? null : <Button title={'캐릭터 다시 만들래요'} />}
             </Link>
           </CharLayout>
 
@@ -98,7 +98,9 @@ export default function MyPage() {
               ))}{' '} */}
               {/* 첫 번째 이미지를 제외하고 나머지 캐릭터들을 순회하며 FlipCard 컴포넌트에 전달 */}
             </FlipCardLayout>
-            <Button title={'중복 캐릭터 다시 만들기'} />
+            {userId === '' ? null : (
+              <Button title={'중복 캐릭터 다시 만들기'} />
+            )}
           </CharLayout>
         </Top>
 

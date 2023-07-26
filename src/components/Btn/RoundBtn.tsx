@@ -6,13 +6,7 @@ type RoundButtonProps = {
 };
 
 export default function RoundButton({ title, onClick }: RoundButtonProps) {
-  return (
-    <>
-      <RBtn>
-        <RBtn onClick={onClick}>{title}</RBtn>
-      </RBtn>
-    </>
-  );
+  return <RBtn onClick={onClick}>{title}</RBtn>;
 }
 
 const RBtn = styled.button`

@@ -24,6 +24,11 @@ export default function LoginInput({
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setValue(e.target.value);
         }}
+        onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
+          if (event.key === 'Enter') {
+            console.log('다시 찾으러 올게');
+          }
+        }}
         placeholder={placeholder}
       ></Input>
     </LoginInputLayout>

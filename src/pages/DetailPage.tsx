@@ -7,36 +7,30 @@ import { useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';
 import { idStore } from '../stores/id';
 
-type Question = {
-  question_text: string;
-};
-
-type Answer = {
-  num: number;
-  content: string;
-};
-
 export default function DetailPage() {
   const { nickName, setNickName } = userStore();
   const [img, setImg] = useState('');
   const [anick, setAnick] = useState();
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [answers, setAnswers] = useState<Answer[]>([]);
+  const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState([]);
+  const [keyword, setKeyword] = useState([]);
   const { detailId, setDetailId } = idStore();
 
   const getDetails = async () => {
     try {
       const response = await baseInstance.get(`/characters/${detailId}`);
-
       // setNickName(response.data.nick_name);
+
       setQuestions(response.data.questions);
       setAnswers(response.data.answers);
+      setKeyword(response.data.keyword);
       setImg(response.data.result_url);
       setAnick(response.data.nick_name);
     } catch (error) {
       console.error(error);
     }
   };
+  console.log(keyword);
 
   useEffect(() => {
     getDetails();
@@ -47,14 +41,10 @@ export default function DetailPage() {
       <HorizontalLine />
       <Layout>
         <CardLayout>
-          <FlipCard imageURL={img} keywords={answers} />
+          <FlipCard imageURL={img} keywords={keyword} />
         </CardLayout>
-        {questions.map((question: Question, index: number) => (
-          <QnA
-            key={index}
-            question={question.question_text}
-            answer={answers[index]?.content}
-          />
+        {questions.map((question: string, index: number) => (
+          <QnA key={index} question={question} answer={answers[index]} />
         ))}
       </Layout>
     </BoxContainer>

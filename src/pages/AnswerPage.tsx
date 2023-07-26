@@ -47,7 +47,7 @@ export default function AnswerPage() {
   const navigate = useNavigate();
   const { pollId } = usePollIdStore(); // 링크 타고 들어온 답변자는 주소에 보내지는 poll_id 가져오는 방법 생각해야함
   const [modalOpen, setModalOpen] = useState(false); //모달 열리고 닫히고
-  const { nickName } = userStore();
+  const { userId, nickName } = userStore();
   const { setTaskId } = taskIdStore();
   const [nick, setNick] = useState('hi'); // 답변자 setNick 추후에 수정
 
@@ -118,7 +118,9 @@ export default function AnswerPage() {
         ))}
 
         <RButtonLayout>
-          <RoundButton title={'이전 페이지'} onClick={goBack} />
+          {userId === '' ? null : (
+            <RoundButton title={'이전 페이지'} onClick={goBack} />
+          )}
           <RoundButton title={'캐릭터 생성'} onClick={createChar} />
         </RButtonLayout>
       </BoxContainer>

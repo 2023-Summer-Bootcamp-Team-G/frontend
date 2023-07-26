@@ -25,7 +25,7 @@ export default function FlipCard({ imageURL, keywords }: FlipCardProps) {
       </CharBox>
       <TagBox boxChange={boxChange}>
         {keywords.map((keyword: any, index: number) => (
-          <KeywordTag key={index} title={keyword.content} />
+          <KeywordTag key={index} title={keyword} />
         ))}
       </TagBox>
     </BoxLayout>
