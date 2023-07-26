@@ -34,8 +34,11 @@ const setMetaTags = ({
   description = '친구들의 답변으로 닮은 캐릭터를 만들어줘요!', // 기본 설명
   imageUrl = 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 기본 사이트 이미지 경로
 }) => {
-  const titleTag = document.querySelector('meta[property="og:title"]');
+  const titleTag = document.querySelector('meta[property="og:title"]'); // document.querySelector를 사용하여 index.html의 해당 메타 태그를 선택
+
+  // 해당하는 메타 태그가 없다면 document.querySelector는 null을 반환하게 되고, 그러고 .setAttribute 메서드를 호출하려 하면 오류가 발생
   if (titleTag) {
+    // 따라서 if문으로 메타 태그가 존재하는지 확인한 후에 .setAttribute를 호출해야 함
     titleTag.setAttribute('content', `${title}`);
   }
 
