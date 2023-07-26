@@ -9,6 +9,8 @@ import Button from '../Btn/Btn';
 import { useState, useEffect } from 'react';
 import { baseInstance } from '../../apis/config';
 import { userStore } from '../../stores/userStore';
+import { Link, useNavigate } from 'react-router-dom';
+import { idStore } from '../../stores/id';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -53,6 +55,8 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   const [value, setValue] = useState(0);
   const [characters, setCharacters] = useState<Character[]>([]);
   const { userId } = userStore();
+  const navigate = useNavigate();
+  const { detailId, setDetailId } = idStore();
 
   const handleChange = (e: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -77,6 +81,10 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
     getCharacters();
   }, []);
 
+  const goDetails = (id: number) => {
+    navigate('/mypage/detail');
+    setDetailId(id);
+  };
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -92,7 +100,11 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
       <CustomTabPanel value={value} index={0}>
         <BoxLayout>
           {characters.slice(1).map((character) => (
-            <CharBox key={character.id} imageURL={character.result_url} />
+            <CharBox
+              key={character.id}
+              imageURL={character.result_url}
+              onClick={() => goDetails(character.id)}
+            />
           ))}
         </BoxLayout>
       </CustomTabPanel>
@@ -106,5 +118,6 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
 const BoxLayout = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  gap: 1rem;
+  margin: 1.5rem;
 `;

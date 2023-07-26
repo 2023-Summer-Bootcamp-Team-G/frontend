@@ -30,7 +30,7 @@ export default function ResultPage() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 0);
   }, []);
 
   //이미지 키워드 API

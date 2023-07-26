@@ -2,14 +2,14 @@ import { styled } from 'styled-components';
 
 type TextProps = {
   question: string;
-  placeholder: string;
+  answer: string;
 };
 
-export default function QnA({ question, placeholder }: TextProps) {
+export default function QnA({ question, answer }: TextProps) {
   return (
     <AnswerInputLayout>
       <Label>{question}</Label>
-      <Answer>{placeholder}</Answer>
+      <Answer>{answer}</Answer>
     </AnswerInputLayout>
   );
 }

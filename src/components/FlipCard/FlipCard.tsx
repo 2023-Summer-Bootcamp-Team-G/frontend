@@ -13,7 +13,6 @@ export default function FlipCard({ imageURL, keywords }: FlipCardProps) {
   const handleBoxClick = () => {
     setBoxChange((prevState) => !prevState);
   };
-  console.log('test' + keywords);
 
   return (
     <BoxLayout onClick={handleBoxClick}>
@@ -26,7 +25,7 @@ export default function FlipCard({ imageURL, keywords }: FlipCardProps) {
       </CharBox>
       <TagBox boxChange={boxChange}>
         {keywords.map((keyword: any, index: number) => (
-          <KeywordTag key={index} title={keyword} />
+          <KeywordTag key={index} title={keyword.content} />
         ))}
       </TagBox>
     </BoxLayout>
