@@ -73,8 +73,19 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
         console.error(error);
       }
     };
-
+    const getChart = async () => {
+      try {
+        const response = await baseInstance.get('/characters/chart', {
+          params: { user_id: userId },
+        });
+        console.log(response.data.keyword_count);
+        console.log(typeof response.data.keyword_count);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     getCharacters();
+    getChart();
   }, []);
 
   return (
@@ -89,14 +100,14 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
           <Tab label='Item Two' {...a11yProps(1)} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
+      <CustomTabPanel value={value} index={1}>
         <BoxLayout>
           {characters.slice(1).map((character) => (
             <CharBox key={character.id} imageURL={character.result_url} />
           ))}
         </BoxLayout>
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
+      <CustomTabPanel value={value} index={0}>
         <Chart question={''}></Chart>
       </CustomTabPanel>
     </Box>
