@@ -49,7 +49,7 @@ export default function AnswerPage() {
   const [modalOpen, setModalOpen] = useState(false); //모달 열리고 닫히고
   const { userId, nickName } = userStore();
   const { setTaskId } = taskIdStore();
-  const [nick, setNick] = useState(''); // 답변자 setNick 추후에 수정
+  const [nick, setNick] = useState('hi'); // 답변자 setNick 추후에 수정
 
   const goBack = () => {
     navigate(-1);
