@@ -53,7 +53,7 @@ export default function ResultPage() {
   }, []);
 
   return (
-    <Container>
+    <>
       <BoxContainer title={`내가 생각한 ${nickName}의 모습이에요!`}>
         <HorizontalLine />
 
@@ -83,7 +83,7 @@ export default function ResultPage() {
           </Box>
         </ModalBackdrop>
       )}
-    </Container>
+    </>
   );
 }
 
@@ -131,9 +131,9 @@ const ModalBackdrop = styled.div`
 const Box = styled.div`
   pointer-events: auto;
 `;
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-`;
+// const Container = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100%;
+// `;
