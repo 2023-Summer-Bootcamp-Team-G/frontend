@@ -59,7 +59,7 @@ export default function ResultPage() {
 
         {loading === true ? (
           <ModalBackdrop>
-            <Loading title='기달' />
+            <Loading title='캐릭터를 만들고 있어요!' />
           </ModalBackdrop>
         ) : null}
 
