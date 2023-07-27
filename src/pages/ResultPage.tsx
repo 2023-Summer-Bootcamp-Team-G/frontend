@@ -44,6 +44,7 @@ export default function ResultPage() {
         const response = await baseInstance.get(`/characters/urls/${taskId}`);
 
         setUrls(response.data.result_url);
+        console.log(response.data.result_url);
         setKeywords(response.data.keyword);
       } catch (error) {
         console.error(error);

@@ -23,7 +23,6 @@ export default function YourPage() {
       const response = await baseInstance.get('/characters', {
         params: {
           user_id: userId, //꺼내온거 사용
-          nick_name: nickName,
         },
       });
 

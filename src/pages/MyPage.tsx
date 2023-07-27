@@ -7,12 +7,18 @@ import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
 import { Link } from 'react-router-dom';
+import { taskIdStore } from '../stores/taskId';
 
 interface Character {
   id: number;
   result_url: string;
   nick_name: string;
 }
+
+// type Task = {
+//   result_url: string;
+//   keyword: string;
+// }
 
 const setMetaTags = ({
   title = "It's me?!", // 기본 타이틀
@@ -48,17 +54,49 @@ const setMetaTags = ({
 export default function MyPage() {
   const [characters, setCharacters] = useState<Character[]>([]);
   const { userId, nickName } = userStore();
+  const { taskId, setTaskId } = taskIdStore();
+  const [dupliUrl, setDupliUrl] = useState<string>('');
+  const [keyword, setKeyword] = useState<string[]>([]);
+  const durl = dupliUrl || '';
 
+  // 생성자
   const getChar = async () => {
     try {
       const response = await baseInstance.get('/characters', {
         params: {
           user_id: userId, //꺼내온거 사용
-          nick_name: nickName,
         },
       });
       console.log(response.data);
       setCharacters(response.data.characters);
+      console.log(response.data.characters);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // 중복
+  function a() {
+    createDuplicate();
+    getImages();
+  }
+
+  const createDuplicate = async () => {
+    const data = { user_id: userId };
+
+    const response = await baseInstance.post('/characters/duplicate', data);
+    console.log(response.data);
+    setTaskId(response.data.task_id);
+  };
+
+  const getImages = async () => {
+    try {
+      const response = await baseInstance.get(`/characters/urls/${taskId}`);
+
+      setDupliUrl(response.data.result_url[0]);
+      setKeyword(response.data.keyword);
+      console.log(dupliUrl);
+      console.log(response.data.keyword);
     } catch (error) {
       console.error(error);
     }
@@ -91,15 +129,23 @@ export default function MyPage() {
 
           <CharLayout>
             <Title>중복된 키워드로 만든 {nickName} 님이에요!</Title>
-            <FlipCardLayout>
-              <FlipCard imageURL='' keywords={[]} />
-              {/* {characters.slice(1).map((character) => (
-                <FlipCard key={character.id} imageURL={character.result_url} />
-              ))}{' '} */}
-              {/* 첫 번째 이미지를 제외하고 나머지 캐릭터들을 순회하며 FlipCard 컴포넌트에 전달 */}
-            </FlipCardLayout>
+            {dupliUrl === '' ? (
+              <img
+                style={{
+                  width: '25rem',
+                  height: '25rem',
+                  marginBottom: '4.25rem',
+                }}
+                src='https://i.postimg.cc/G22H5fH9/Group-374.png'
+              />
+            ) : (
+              <FlipCardLayout>
+                <FlipCard imageURL={durl} keywords={[]} />{' '}
+              </FlipCardLayout>
+            )}
+
             {userId === '' ? null : (
-              <Button title={'중복 캐릭터 다시 만들기'} />
+              <Button1 onClick={a}> 중복 캐릭터 만들기</Button1>
             )}
           </CharLayout>
         </Top>
@@ -148,4 +194,22 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
+`;
+const Button1 = styled.button`
+  /* 글자 */
+  color: #fff;
+  text-align: center;
+  font-size: 1.75rem;
+  font-style: normal;
+  font-weight: 800;
+
+  /*네모 박스*/
+  width: 22.1875rem;
+  height: 4.125rem;
+  border-radius: 0.5625rem;
+  background: #222;
+  display: inline-block;
+  &:hover {
+    box-shadow: 5px 6px 4px rgba(0, 0, 0, 0.25);
+  }
 `;
