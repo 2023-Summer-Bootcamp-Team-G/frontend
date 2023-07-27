@@ -7,6 +7,8 @@ import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
 import { Link } from 'react-router-dom';
+import { linkStore } from '../stores/link';
+import { pollStore } from '../stores/poll';
 
 interface Character {
   id: number;
@@ -47,13 +49,14 @@ const setMetaTags = ({
 
 export default function MyPage() {
   const [characters, setCharacters] = useState<Character[]>([]);
-  const { userId, nickName } = userStore();
+  const { userId, nickName, creatorId } = userStore();
+  const { poll } = pollStore();
 
   const getChar = async () => {
     try {
       const response = await baseInstance.get('/characters', {
         params: {
-          user_id: userId, //꺼내온거 사용
+          user_id: userId + creatorId, //꺼내온거 사용
           nick_name: nickName,
         },
       });
@@ -72,7 +75,16 @@ export default function MyPage() {
       imageUrl: 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 배포하고나서 이미지 url 바꿔주기 // 일단 메인페이지 이미지 넣어놈
     });
   }, []);
+  const [copied, setCopied] = useState(false); // 복사 여부 상태 관리
+  const { link } = linkStore();
 
+  const handleCopyClick = () => {
+    if (link) {
+      navigator.clipboard.writeText(link).then(() => {
+        setCopied(true);
+      });
+    }
+  };
   return (
     <Container>
       <BoxContainer title={''}>
@@ -84,7 +96,7 @@ export default function MyPage() {
               {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
             </FlipCardLayout>
 
-            <Link to='/answerroom'>
+            <Link to={`/answerroom/${poll}/${userId}`}>
               {userId === '' ? null : <Button title={'캐릭터 다시 만들래요'} />}
             </Link>
           </CharLayout>
@@ -101,6 +113,9 @@ export default function MyPage() {
             {userId === '' ? null : (
               <Button title={'중복 캐릭터 다시 만들기'} />
             )}
+            <CopyButton onClick={handleCopyClick} disabled={copied}>
+              {copied ? '복사 완료!' : 'URL 복사하기'}
+            </CopyButton>
           </CharLayout>
         </Top>
 
@@ -149,3 +164,4 @@ const Container = styled.div`
   align-items: center;
   height: 100%;
 `;
+const CopyButton = styled.button``;

@@ -54,7 +54,7 @@ function a11yProps(index: number) {
 export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   const [value, setValue] = useState(0);
   const [characters, setCharacters] = useState<Character[]>([]);
-  const { userId } = userStore();
+  const { userId, creatorId } = userStore();
   const navigate = useNavigate();
   const { detailId, setDetailId } = idStore();
 
@@ -68,7 +68,7 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
       try {
         const response = await baseInstance.get('/characters', {
           params: {
-            user_id: userId, //꺼내온거 사용
+            user_id: userId + creatorId, //꺼내온거 사용
           },
         });
         console.log(response.data);

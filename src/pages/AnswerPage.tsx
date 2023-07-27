@@ -11,6 +11,7 @@ import { userStore } from '../stores/userStore';
 import { taskIdStore } from '../stores/taskId';
 import { useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+import { linkStore } from '../stores/link';
 
 const setMetaTags = ({
   title = "It's me?!", // 기본 타이틀
@@ -48,11 +49,12 @@ export default function AnswerPage() {
   const [value, setValue] = useState<string[]>([]);
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false); //모달 열리고 닫히고
-  const { userId, nickName } = userStore();
+  const { userId, nickName, setCreatorId } = userStore();
   const { setTaskId } = taskIdStore();
-  const [nick, setNick] = useState('hi'); // 답변자 setNick 추후에 수정
-  const { poll_id } = useParams();
-
+  const [nick, setNick] = useState(''); // 답변자 setNick 추후에 수정
+  const { poll_id, user_id } = useParams();
+  const { setLink } = linkStore();
+  const usr_id = user_id || '';
   const goBack = () => {
     navigate(-1);
   };
@@ -63,13 +65,14 @@ export default function AnswerPage() {
         const response = await baseInstance.get('/questions', {
           params: {
             poll_id: poll_id, //꺼내온거 사용
-            nick: nickName,
           },
         });
         setQuestions(response.data.questions);
       } catch (error) {
         console.error(error);
       }
+      const url = window.location.href;
+      setLink(url);
     };
     getQuestions();
     setMetaTags({
@@ -77,13 +80,19 @@ export default function AnswerPage() {
       description: '친구가 질문에 답변해주기를 요청하고 있어요!',
       imageUrl: 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 배포하고나서 이미지 url 바꿔주기 // 일단 메인페이지 이미지 넣어놈
     });
-    if (nick == '') {
+
+    if (nickName == '') {
       setModalOpen(true);
     }
+    setCreatorId(usr_id);
   }, []);
 
   const createChar = async () => {
-    const json = { poll_id: poll_id, creatorName: nickName, answers: value };
+    const json = {
+      poll_id: poll_id,
+      creatorName: nickName + nick,
+      answers: value,
+    };
 
     const response = await baseInstance.post('/characters', json);
     if (response.status === 201) {
