@@ -4,7 +4,6 @@ import { persist, PersistOptions } from 'zustand/middleware';
 type userStore = {
   userId: string;
   nickName: string;
-  // creatorId: string;
   creatorId: string | undefined;
   setUserId: (id: string) => void;
   setNickName: (name: string) => void;
