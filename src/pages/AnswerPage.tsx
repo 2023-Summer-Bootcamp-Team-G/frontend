@@ -2,13 +2,15 @@ import { styled } from 'styled-components';
 import AnswerInput from '../components/Input/AnswerInput';
 import RoundButton from '../components/Btn/RoundBtn';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { usePollIdStore } from '../stores/pollId';
 import NickNameInput from '../components/Input/NickNameInput';
 import { userStore } from '../stores/userStore';
 import { taskIdStore } from '../stores/taskId';
+import { useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const setMetaTags = ({
   title = "It's me?!", // 기본 타이틀
@@ -45,11 +47,11 @@ export default function AnswerPage() {
   const [questions, setQuestions] = useState([]);
   const [value, setValue] = useState<string[]>([]);
   const navigate = useNavigate();
-  const { pollId } = usePollIdStore(); // 링크 타고 들어온 답변자는 주소에 보내지는 poll_id 가져오는 방법 생각해야함
   const [modalOpen, setModalOpen] = useState(false); //모달 열리고 닫히고
   const { userId, nickName } = userStore();
   const { setTaskId } = taskIdStore();
   const [nick, setNick] = useState('hi'); // 답변자 setNick 추후에 수정
+  const { poll_id } = useParams();
 
   const goBack = () => {
     navigate(-1);
@@ -60,7 +62,8 @@ export default function AnswerPage() {
       try {
         const response = await baseInstance.get('/questions', {
           params: {
-            poll_id: pollId, //꺼내온거 사용
+            poll_id: poll_id, //꺼내온거 사용
+            nick: nickName,
           },
         });
         setQuestions(response.data.questions);
@@ -80,7 +83,7 @@ export default function AnswerPage() {
   }, []);
 
   const createChar = async () => {
-    const json = { poll_id: pollId, creatorName: nickName, answers: value };
+    const json = { poll_id: poll_id, creatorName: nickName, answers: value };
 
     const response = await baseInstance.post('/characters', json);
     if (response.status === 201) {
