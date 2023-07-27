@@ -19,9 +19,9 @@ function App() {
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<SignUpPage />} />
         <Route path='/questionroom' element={<QuestionPage />} />
-        <Route path='/answerroom/:poll_id/:user_id' element={<AnswerPage />} />
+        <Route path='/answerroom/:poll_id' element={<AnswerPage />} />
         <Route path='/result' element={<ResultPage />} />
-        <Route path='/mypage/:user_id' element={<MyPage />} />
+        <Route path='/mypage' element={<MyPage />} />
         <Route path='/yourpage' element={<YourPage />} />
         <Route path='/mypage/detail' element={<DetailPage />} />
         <Route path='*' element={<>error page</>} />
