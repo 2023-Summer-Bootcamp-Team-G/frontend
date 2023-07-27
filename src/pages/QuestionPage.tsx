@@ -6,8 +6,8 @@ import BoxContainer from '../components/BoxContainer/BoxContainer';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';
-import { usePollIdStore } from '../stores/pollId';
 import { userStore } from '../stores/userStore';
+import { pollStore } from '../stores/poll';
 
 export default function QuestionPage() {
   const initQuestions = [
@@ -30,16 +30,17 @@ export default function QuestionPage() {
   const [addQ, setAddQ] = useState(initQuestions); // 고정 + 추가 질문 하나로 모인 배열
   const navigate = useNavigate();
   const { userId } = userStore();
+  const { poll, setPoll } = pollStore();
 
   const createQuestion = async () => {
     const data = { user_id: userId, questions: addQ };
 
     const response = await baseInstance.post('/questions', data);
 
-    if (response.status === 201)
-      navigate(`/answerroom/${response.data.poll_id}`);
+    if (response.status === 201) setPoll(response.data.poll_id);
+    navigate(`/answerroom/${response.data.poll_id}/${userId}`);
   };
-  console.log(userId);
+
   return (
     <Container>
       <BoxContainer

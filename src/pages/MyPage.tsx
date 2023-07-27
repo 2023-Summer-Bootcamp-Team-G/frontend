@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
 import { Link } from 'react-router-dom';
 import { taskIdStore } from '../stores/taskId';
+import { linkStore } from '../stores/link';
+import { pollStore } from '../stores/poll';
 
 interface Character {
   id: number;
@@ -53,6 +55,8 @@ const setMetaTags = ({
 
 export default function MyPage() {
   const [characters, setCharacters] = useState<Character[]>([]);
+  const { userId, nickName, creatorId } = userStore();
+  const { poll } = pollStore();
   const { userId, nickName } = userStore();
   const { taskId, setTaskId } = taskIdStore();
   const [dupliUrl, setDupliUrl] = useState<string>('');
@@ -64,7 +68,8 @@ export default function MyPage() {
     try {
       const response = await baseInstance.get('/characters', {
         params: {
-          user_id: userId, //꺼내온거 사용
+          user_id: userId + creatorId, //꺼내온거 사용
+          nick_name: nickName,
         },
       });
 
@@ -110,7 +115,16 @@ export default function MyPage() {
       imageUrl: 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 배포하고나서 이미지 url 바꿔주기 // 일단 메인페이지 이미지 넣어놈
     });
   }, []);
+  const [copied, setCopied] = useState(false); // 복사 여부 상태 관리
+  const { link } = linkStore();
 
+  const handleCopyClick = () => {
+    if (link) {
+      navigator.clipboard.writeText(link).then(() => {
+        setCopied(true);
+      });
+    }
+  };
   return (
     <Container>
       <BoxContainer title={''}>
@@ -122,7 +136,7 @@ export default function MyPage() {
               {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
             </FlipCardLayout>
 
-            <Link to='/answerroom'>
+            <Link to={`/answerroom/${poll}/${userId}`}>
               {userId === '' ? null : <Button title={'캐릭터 다시 만들래요'} />}
             </Link>
           </CharLayout>
@@ -147,6 +161,9 @@ export default function MyPage() {
             {userId === '' ? null : (
               <Button1 onClick={a}> 중복 캐릭터 만들기</Button1>
             )}
+            <CopyButton onClick={handleCopyClick} disabled={copied}>
+              {copied ? '복사 완료!' : 'URL 복사하기'}
+            </CopyButton>
           </CharLayout>
         </Top>
 
@@ -219,3 +236,4 @@ const Button1 = styled.button`
     box-shadow: 5px 6px 4px rgba(0, 0, 0, 0.25);
   }
 `;
+const CopyButton = styled.button``;

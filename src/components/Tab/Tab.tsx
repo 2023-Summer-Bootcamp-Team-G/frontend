@@ -68,7 +68,7 @@ interface ChartProps {
 export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   const [value, setValue] = useState(0);
   const [characters, setCharacters] = useState<Character[]>([]);
-  const { userId } = userStore();
+  const { userId, creatorId } = userStore();
   const navigate = useNavigate();
   const { detailId, setDetailId } = idStore();
 
@@ -113,18 +113,21 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
     setValue(newValue);
     onSubmit(); // 탭이 변경될 때 onSubmit 함수 호출
   };
-  const getCharacters = async () => {
-    try {
-      const response = await baseInstance.get('/characters', {
-        params: {
-          user_id: userId, //꺼내온거 사용
-        },
-      });
-      setCharacters(response.data.characters);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
+  useEffect(() => {
+    const getCharacters = async () => {
+      try {
+        const response = await baseInstance.get('/characters', {
+          params: {
+            user_id: userId + creatorId, //꺼내온거 사용
+          },
+        });
+        console.log(response.data);
+        setCharacters(response.data.characters);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
   useEffect(() => {
     getChart();
