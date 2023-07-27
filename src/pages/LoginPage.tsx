@@ -12,7 +12,7 @@ export default function LoginPage() {
   const [id, setId] = useState('');
   const [passwd, setPasswd] = useState('');
   const navigate = useNavigate();
-  const { setUserId, userId } = userStore(); // userStore에서 꺼내오기
+  const { setUserId } = userStore(); // userStore에서 꺼내오기
 
   const createUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ export default function LoginPage() {
       setUserId(id); // 꺼내온거 사용
 
       if (response.status === 200) {
-        navigate(`/mypage/${userId}`);
+        navigate('/questionroom');
       }
     } catch (error) {
       alert('다시 작성해주세요');
