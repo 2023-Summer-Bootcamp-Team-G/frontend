@@ -1,75 +1,67 @@
+import { useRef } from 'react';
+import * as Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 import { styled } from 'styled-components';
-import { ResponsivePie } from '@nivo/pie';
-import { useState } from 'react';
-import { DummyData } from '../../utils/data';
 
-type QuestionProps = {
-  question: string;
-};
+export interface ChartProps extends HighchartsReact.Props {
+  // title?: string; // Define the type for the title prop
+  serData: any;
+}
 
-export default function Chart({ question }: QuestionProps) {
-  // 데이터 받아와서 data={} 에 넣어야함
-  const [dummy] = useState(DummyData);
+export default function Chart({ serData, ...props }: ChartProps) {
+  const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
+  if (!serData || !serData.pieChartData) {
+    return null; // or render a loading state, an error message, or anything appropriate
+  }
+  const options: Highcharts.Options = {
+    title: {
+      text: '',
+    },
+    tooltip: {
+      pointFormat: '{point.y}명<br>{point.percentage:.0f}%</b>', //마우스 올리면 들어나는곳
+    },
+
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: true,
+          format: '<b>{point.name}</b>',
+        },
+      },
+    },
+    series: [
+      {
+        name: 'keywords',
+        type: 'pie',
+        allowPointSelect: true,
+        keys: ['name', 'y', 'selected', 'sliced'],
+        data: serData.pieChartData,
+        showInLegend: true,
+      },
+    ],
+  };
+
   return (
-    <Box>
-      <Question>{question}</Question>
-      <MyResponsivePie data={dummy}></MyResponsivePie>
-    </Box>
+    <BoxLayout>
+      <div
+        style={{ fontSize: '25px', fontWeight: 'bold', marginBottom: '3rem' }}
+      >
+        {serData.title}
+      </div>
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={options}
+        ref={chartComponentRef}
+        {...props}
+      />
+    </BoxLayout>
   );
 }
 
-const Box = styled.div`
-  margin-right: 0.6rem;
-  margin-left: 0.6rem;
-  background: #f0f0f0;
-  border-radius: 0.38rem;
-  width: 21.875rem;
-  height: 27.5rem;
-  padding: 2rem;
+const BoxLayout = styled.div`
+  padding: 1rem 6rem 1rem 6rem;
+  width: 60rem;
+  height: 34rem;
 `;
-
-const Question = styled.p`
-  margin: auto;
-  font-size: 1.65rem;
-  width: 17rem;
-  text-align: center;
-`;
-
-//pie any도 임시로 넣어둔거
-const MyResponsivePie = ({ data }: any) => (
-  <ResponsivePie
-    data={data}
-    margin={{ top: 0, right: 33, bottom: 60, left: 33 }}
-    activeOuterRadiusOffset={12}
-    colors={{ scheme: 'nivo' }}
-    borderColor={{
-      from: 'color',
-      modifiers: [['darker', 0]],
-    }}
-    enableArcLinkLabels={false}
-    arcLinkLabelsSkipAngle={10}
-    arcLinkLabelsTextColor='#333333'
-    arcLinkLabelsThickness={2}
-    arcLinkLabelsColor={{ from: 'color' }}
-    arcLabel='id'
-    arcLabelsRadiusOffset={0.55}
-    arcLabelsTextColor={{
-      from: 'color',
-      modifiers: [['darker', 2.7]],
-    }}
-    legends={[
-      {
-        anchor: 'bottom',
-        direction: 'row',
-        justify: false,
-        translateX: 1,
-        translateY: 1,
-        itemWidth: 50,
-        itemHeight: 20,
-        itemsSpacing: 0,
-        symbolSize: 10,
-        itemDirection: 'left-to-right',
-      },
-    ]}
-  />
-);

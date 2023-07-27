@@ -24,7 +24,7 @@ export default function LoginPage() {
       setUserId(id); // 꺼내온거 사용
 
       if (response.status === 200) {
-        navigate('/mypage');
+        navigate('/questionroom');
       }
     } catch (error) {
       alert('다시 작성해주세요');
