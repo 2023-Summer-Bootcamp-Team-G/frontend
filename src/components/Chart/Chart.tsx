@@ -3,53 +3,50 @@ import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { styled } from 'styled-components';
 
-const options: Highcharts.Options = {
-  title: {
-    text: '나를 동물로 표현하면 뭐야?',
-  },
-  tooltip: {
-    pointFormat: '{series.name}: <b>{point.percentage:.1f}개</b>',
-  },
+export interface ChartProps extends HighchartsReact.Props {
+  // title?: string; // Define the type for the title prop
+  serData: any;
+}
 
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
-      dataLabels: {
-        enabled: true,
-        format: '<b>{point.name}</b>: {point.percentage:.1f} 개',
+export default function Chart({ serData, ...props }: ChartProps) {
+  const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
+  const options: Highcharts.Options = {
+    title: {
+      text: '',
+    },
+    tooltip: {
+      pointFormat: '{point.y}명<br>{point.percentage:.f}%</b>', //마우스 올리면 들어나는곳
+    },
+
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: true,
+          format: '<b>{point.name}</b>',
+        },
       },
     },
-  },
-  series: [
-    {
-      name: 'keywords',
-      type: 'pie',
-      allowPointSelect: true,
-      keys: ['name', 'y', 'selected', 'sliced'],
-      data: [
-        ['Samsung', 27.79, true, true],
-        ['Apple', 27.34, false],
-        ['Xiaomi', 10.87, false],
-        ['Huawei', 8.48, false],
-        ['Oppo', 5.38, false],
-        ['Vivo', 4.17, false],
-        ['Realme', 2.57, false],
-        ['Unknown', 2.45, false],
-        ['Motorola', 2.22, false],
-        ['LG', 1.53, false],
-        ['Other', 7.2, false],
-      ],
-      showInLegend: true,
-    },
-  ],
-};
-
-export default function Chart(props: HighchartsReact.Props) {
-  const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
+    series: [
+      {
+        name: 'keywords',
+        type: 'pie',
+        allowPointSelect: true,
+        keys: ['name', 'y', 'selected', 'sliced'],
+        data: serData.pieChartData,
+        showInLegend: true,
+      },
+    ],
+  };
 
   return (
     <BoxLayout>
+      <div
+        style={{ fontSize: '25px', fontWeight: 'bold', marginBottom: '3rem' }}
+      >
+        {serData.title}
+      </div>
       <HighchartsReact
         highcharts={Highcharts}
         options={options}
@@ -61,9 +58,7 @@ export default function Chart(props: HighchartsReact.Props) {
 }
 
 const BoxLayout = styled.div`
-  /* margin: 5rem; */
-  padding: 4rem 6rem 4rem 6rem;
+  padding: 1rem 6rem 1rem 6rem;
   width: 60rem;
-  height: 32rem;
-  background: #d9d9d9;
+  height: 34rem;
 `;

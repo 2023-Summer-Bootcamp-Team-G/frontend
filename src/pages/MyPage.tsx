@@ -26,7 +26,7 @@ export default function MyPage() {
           nick_name: nickName,
         },
       });
-      console.log(response.data);
+
       setCharacters(response.data.characters);
     } catch (error) {
       console.error(error);
@@ -67,11 +67,17 @@ export default function MyPage() {
         </Top>
 
         <HorizontalLine />
+
         <BasicTabs onSubmit={getChar} />
       </BoxContainer>
     </Container>
   );
 }
+
+const LimitBox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 const Top = styled.div`
   display: flex;

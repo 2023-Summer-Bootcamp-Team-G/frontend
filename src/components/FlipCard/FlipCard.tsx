@@ -13,7 +13,6 @@ export default function FlipCard({ imageURL, keywords }: FlipCardProps) {
   const handleBoxClick = () => {
     setBoxChange((prevState) => !prevState);
   };
-  console.log('test' + keywords);
 
   return (
     <BoxLayout onClick={handleBoxClick}>

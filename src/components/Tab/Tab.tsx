@@ -9,6 +9,8 @@ import Button from '../Btn/Btn';
 import { useState, useEffect } from 'react';
 import { baseInstance } from '../../apis/config';
 import { userStore } from '../../stores/userStore';
+import Swipe from '../Swipe/Swipe';
+import { TestStore } from '../../stores/testStore';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -48,11 +50,62 @@ function a11yProps(index: number) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
+interface KeywordData {
+  [key: string]: [number, number];
+}
+
+interface ServerData {
+  keyword_count: Array<{ [index: string]: KeywordData }>;
+}
+
+interface ChartProps {
+  title: string;
+  pieChartData: [string, number, boolean][];
+}
 
 export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   const [value, setValue] = useState(0);
   const [characters, setCharacters] = useState<Character[]>([]);
   const { userId } = userStore();
+  const cnt = 0;
+
+  //test
+  const [serverData1, setServerData1] = useState<ServerData>({
+    keyword_count: [],
+  });
+  const { serData, setSerData } = TestStore();
+  const serverData: ServerData = serverData1;
+  const titles: string[] = [
+    '나를 동물로 표현하면?',
+    '난 어떤 분위기야?',
+    '나를 색으로 표현하면?',
+    '어떤 그림체가 어울려?',
+    '자주 들고 다니는 물건?',
+  ];
+  const getChart = async () => {
+    try {
+      const response = await baseInstance.get('/characters/chart', {
+        params: { user_id: userId },
+      });
+
+      console.log('response---data');
+      console.log(response.data);
+      setServerData1(response.data); //test
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const data: ChartProps[] = serverData.keyword_count.map((item, index) => {
+    const title = titles[index];
+    const keywordData = item[Object.keys(item)[0]];
+    const pieChartData: [string, number, boolean][] = Object.entries(
+      keywordData
+    ).map(([key, [count]]) => [key, count, false]);
+    // console.log('----------');
+    // console.log(pieChartData);
+    return { title, pieChartData };
+  });
+  //test
 
   const handleChange = (e: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -67,26 +120,34 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
             user_id: userId, //꺼내온거 사용
           },
         });
-        console.log(response.data);
         setCharacters(response.data.characters);
       } catch (error) {
         console.error(error);
       }
     };
-    const getChart = async () => {
-      try {
-        const response = await baseInstance.get('/characters/chart', {
-          params: { user_id: userId },
-        });
-        console.log(response.data.keyword_count);
-        console.log(typeof response.data.keyword_count);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCharacters();
+
     getChart();
+
+    //testzone
+
+    //zone
+
+    // // getCharacters();
   }, []);
+
+  //test
+  useEffect(() => {
+    console.log('------seerserreeesr-----');
+    console.log(serverData1);
+    console.log('server@@@@@@@ee');
+    console.log(serverData);
+    console.log('data---test#e##ee####');
+    console.log(serData);
+    console.log('data---etest');
+    console.log(data);
+
+    setSerData(data);
+  }, [serverData1]);
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -108,7 +169,9 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
         </BoxLayout>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={0}>
-        <Chart question={''}></Chart>
+        <BoxCenter>
+          <Swipe />
+        </BoxCenter>
       </CustomTabPanel>
     </Box>
   );
@@ -118,4 +181,9 @@ const BoxLayout = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+`;
+
+const BoxCenter = styled.div`
+  display: flex;
+  justify-content: center;
 `;
