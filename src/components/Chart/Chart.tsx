@@ -10,12 +10,15 @@ export interface ChartProps extends HighchartsReact.Props {
 
 export default function Chart({ serData, ...props }: ChartProps) {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
+  if (!serData || !serData.pieChartData) {
+    return null; // or render a loading state, an error message, or anything appropriate
+  }
   const options: Highcharts.Options = {
     title: {
       text: '',
     },
     tooltip: {
-      pointFormat: '{point.y}명<br>{point.percentage:.f}%</b>', //마우스 올리면 들어나는곳
+      pointFormat: '{point.y}명<br>{point.percentage:.0f}%</b>', //마우스 올리면 들어나는곳
     },
 
     plotOptions: {

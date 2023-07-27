@@ -18,7 +18,7 @@ export default function Swipe() {
   const { serData } = TestStore();
   console.log('swipeeeeeeeeeee');
   console.log(serData);
-  console.log(serData[0].title);
+  console.log(serData?.[0]?.title);
 
   return (
     <>
@@ -36,7 +36,7 @@ export default function Swipe() {
         modules={[Keyboard, Pagination, Navigation]}
         className='mySwiper'
       >
-        {/* <SwiperSlide>
+        <SwiperSlide>
           <Chart serData={serData[0]} />
         </SwiperSlide>
         <SwiperSlide>
@@ -50,7 +50,7 @@ export default function Swipe() {
         </SwiperSlide>
         <SwiperSlide>
           <Chart serData={serData[4]} />
-        </SwiperSlide> */}
+        </SwiperSlide>
         {/* <SwiperSlide>
           <Chart serData={serData[5]} />
         </SwiperSlide> */}
