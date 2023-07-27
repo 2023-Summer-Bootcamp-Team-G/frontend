@@ -5,6 +5,7 @@ import KeywordTag from '../KeywordTag/KeywordTag';
 type FlipCardProps = {
   imageURL: string;
   keywords: any;
+  // onSubmit: () => Promise<void>;
 };
 
 export default function FlipCard({ imageURL, keywords }: FlipCardProps) {
