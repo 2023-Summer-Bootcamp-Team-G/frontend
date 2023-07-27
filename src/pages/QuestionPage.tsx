@@ -29,7 +29,6 @@ export default function QuestionPage() {
   const [questions, setQuestions] = useState(initQuestions);
   const [addQ, setAddQ] = useState(initQuestions); // 고정 + 추가 질문 하나로 모인 배열
   const navigate = useNavigate();
-  const { setPollId } = usePollIdStore();
   const { userId } = userStore();
 
   const createQuestion = async () => {
@@ -37,9 +36,8 @@ export default function QuestionPage() {
 
     const response = await baseInstance.post('/questions', data);
 
-    setPollId(response.data.poll_id); // 꺼내온거 사용
-
-    if (response.status === 201) navigate('/answerroom');
+    if (response.status === 201)
+      navigate(`/answerroom/${response.data.poll_id}`);
   };
   console.log(userId);
   return (

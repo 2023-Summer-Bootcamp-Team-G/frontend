@@ -9,6 +9,8 @@ import Button from '../Btn/Btn';
 import { useState, useEffect } from 'react';
 import { baseInstance } from '../../apis/config';
 import { userStore } from '../../stores/userStore';
+import { Link, useNavigate } from 'react-router-dom';
+import { idStore } from '../../stores/id';
 import Swipe from '../Swipe/Swipe';
 import { TestStore } from '../../stores/testStore';
 
@@ -67,6 +69,8 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   const [value, setValue] = useState(0);
   const [characters, setCharacters] = useState<Character[]>([]);
   const { userId } = userStore();
+  const navigate = useNavigate();
+  const { detailId, setDetailId } = idStore();
 
   //test
   const [serverData1, setServerData1] = useState<ServerData>({
@@ -86,7 +90,6 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
       const response = await baseInstance.get('/characters/chart', {
         params: { user_id: userId },
       });
-
       console.log('response---data');
       console.log(response.data);
       setServerData1(response.data); //test
@@ -125,7 +128,7 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
 
   useEffect(() => {
     getChart();
-    // getCharacters();
+    getCharacters();
   }, []);
 
   //test
@@ -142,6 +145,10 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
     setSerData(data);
   }, [serverData1]);
 
+  const goDetails = (id: number) => {
+    navigate('/mypage/detail');
+    setDetailId(id);
+  };
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -154,14 +161,18 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
           <Tab label='Item Two' {...a11yProps(1)} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={1}>
+      <CustomTabPanel value={value} index={0}>
         <BoxLayout>
           {characters.slice(1).map((character) => (
-            <CharBox key={character.id} imageURL={character.result_url} />
+            <CharBox
+              key={character.id}
+              imageURL={character.result_url}
+              onClick={() => goDetails(character.id)}
+            />
           ))}
         </BoxLayout>
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={0}>
+      <CustomTabPanel value={value} index={1}>
         <BoxCenter>
           <Swipe />
         </BoxCenter>
@@ -173,7 +184,8 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
 const BoxLayout = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  gap: 1rem;
+  margin: 1.5rem;
 `;
 
 const BoxCenter = styled.div`

@@ -14,6 +14,37 @@ interface Character {
   nick_name: string;
 }
 
+const setMetaTags = ({
+  title = "It's me?!", // 기본 타이틀
+  description = '친구들의 답변으로 닮은 캐릭터를 만들어줘요!', // 기본 설명
+  imageUrl = 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 기본 사이트 이미지 경로
+}) => {
+  const titleTag = document.querySelector('meta[property="og:title"]'); // document.querySelector를 사용하여 index.html의 해당 메타 태그를 선택
+
+  // 해당하는 메타 태그가 없다면 document.querySelector는 null을 반환하게 되고, 그러고 .setAttribute 메서드를 호출하려 하면 오류가 발생
+  if (titleTag) {
+    // 따라서 if문으로 메타 태그가 존재하는지 확인한 후에 .setAttribute를 호출해야 함
+    titleTag.setAttribute('content', `${title}`);
+  }
+
+  const descriptionTag = document.querySelector(
+    'meta[property="og:description"]'
+  );
+  if (descriptionTag) {
+    descriptionTag.setAttribute('content', description);
+  }
+
+  const imageTag = document.querySelector('meta[property="og:image"]');
+  if (imageTag) {
+    imageTag.setAttribute('content', imageUrl);
+  }
+
+  const urlTag = document.querySelector('meta[property="og:url"]');
+  if (urlTag) {
+    urlTag.setAttribute('content', window.location.href);
+  }
+};
+
 export default function MyPage() {
   const [characters, setCharacters] = useState<Character[]>([]);
   const { userId, nickName } = userStore();
@@ -35,6 +66,11 @@ export default function MyPage() {
 
   useEffect(() => {
     getChar();
+    setMetaTags({
+      title: "It's me?! 마이페이지",
+      description: '친구들이 만들어준 캐릭터들을 확인해보세요!',
+      imageUrl: 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 배포하고나서 이미지 url 바꿔주기 // 일단 메인페이지 이미지 넣어놈
+    });
   }, []);
 
   return (
@@ -49,7 +85,7 @@ export default function MyPage() {
             </FlipCardLayout>
 
             <Link to='/answerroom'>
-              <Button title={'캐릭터 다시 만들래요'} />
+              {userId === '' ? null : <Button title={'캐릭터 다시 만들래요'} />}
             </Link>
           </CharLayout>
 
@@ -62,7 +98,9 @@ export default function MyPage() {
               ))}{' '} */}
               {/* 첫 번째 이미지를 제외하고 나머지 캐릭터들을 순회하며 FlipCard 컴포넌트에 전달 */}
             </FlipCardLayout>
-            <Button title={'중복 캐릭터 다시 만들기'} />
+            {userId === '' ? null : (
+              <Button title={'중복 캐릭터 다시 만들기'} />
+            )}
           </CharLayout>
         </Top>
 
