@@ -4,12 +4,10 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import CharBox from '../CharBox/CharBox';
 import styled from 'styled-components';
-import Chart from '../Chart/Chart';
-import Button from '../Btn/Btn';
 import { useState, useEffect } from 'react';
 import { baseInstance } from '../../apis/config';
 import { userStore } from '../../stores/userStore';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { idStore } from '../../stores/id';
 import Swipe from '../Swipe/Swipe';
 import { TestStore } from '../../stores/testStore';
@@ -70,7 +68,7 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   const [characters, setCharacters] = useState<Character[]>([]);
   const { userId, creatorId } = userStore();
   const navigate = useNavigate();
-  const { detailId, setDetailId } = idStore();
+  const { setDetailId } = idStore();
 
   //test
   const [serverData1, setServerData1] = useState<ServerData>({
@@ -122,8 +120,9 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   });
   //test
 
-  const handleChange = (e: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    console.log(event);
     onSubmit(); // 탭이 변경될 때 onSubmit 함수 호출
   };
 

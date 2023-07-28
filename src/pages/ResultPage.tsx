@@ -36,7 +36,7 @@ export default function ResultPage() {
   //이미지 키워드 API
   const { taskId } = taskIdStore();
   const { setUrls } = urlsStore(); // userStore에서 꺼내오기
-  const { keywords, setKeywords } = keywordsStore();
+  const { setKeywords } = keywordsStore();
 
   useEffect(() => {
     const getImages = async () => {

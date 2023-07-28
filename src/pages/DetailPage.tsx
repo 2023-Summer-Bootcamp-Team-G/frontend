@@ -8,13 +8,13 @@ import { baseInstance } from '../apis/config';
 import { idStore } from '../stores/id';
 
 export default function DetailPage() {
-  const { nickName, setNickName } = userStore();
+  const { nickName } = userStore();
   const [img, setImg] = useState('');
   const [anick, setAnick] = useState();
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [keyword, setKeyword] = useState([]);
-  const { detailId, setDetailId } = idStore();
+  const { detailId } = idStore();
 
   const getDetails = async () => {
     try {

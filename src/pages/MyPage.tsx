@@ -6,7 +6,7 @@ import BasicTabs from '../components/Tab/Tab';
 import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
 import { pollStore } from '../stores/poll';
@@ -62,7 +62,6 @@ export default function MyPage() {
   const [keyword, setKeyword] = useState<string[]>([]);
 
   const durl = dupliUrl || '';
-
   // 생성자
   const getChar = async () => {
     try {
@@ -124,6 +123,7 @@ export default function MyPage() {
       description: '친구들이 만들어준 캐릭터들을 확인해보세요!',
       imageUrl: 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 배포하고나서 이미지 url 바꿔주기 // 일단 메인페이지 이미지 넣어놈
     });
+    console.log(keyword);
   }, []);
   const [copied, setCopied] = useState(false); // 복사 여부 상태 관리
   const { link } = linkStore();
@@ -184,11 +184,6 @@ export default function MyPage() {
     </Container>
   );
 }
-
-const LimitBox = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 
 const Top = styled.div`
   display: flex;
