@@ -1,8 +1,6 @@
 import { styled } from 'styled-components';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
 import FlipCard from '../components/FlipCard/FlipCard';
-import CharBox from '../components/CharBox/CharBox';
-import Tab from '@mui/material/Tab';
 import BasicTabs from '../components/Tab/Tab';
 import { useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';

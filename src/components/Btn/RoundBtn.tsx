@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 
 type RoundButtonProps = {
   title: string;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void | Promise<void>;
 };
 
 export default function RoundButton({ title, onClick }: RoundButtonProps) {

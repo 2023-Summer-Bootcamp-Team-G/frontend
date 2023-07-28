@@ -2,15 +2,12 @@ import { styled } from 'styled-components';
 import AnswerInput from '../components/Input/AnswerInput';
 import RoundButton from '../components/Btn/RoundBtn';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
-import { usePollIdStore } from '../stores/pollId';
 import NickNameInput from '../components/Input/NickNameInput';
 import { userStore } from '../stores/userStore';
 import { taskIdStore } from '../stores/taskId';
-import { useRef } from 'react';
-import { useLocation } from 'react-router-dom';
 import { linkStore } from '../stores/link';
 
 const setMetaTags = ({
