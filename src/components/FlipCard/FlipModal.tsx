@@ -6,7 +6,6 @@ import { urlsStore } from '../../stores/urls';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { taskIdStore } from '../../stores/taskId';
 import { keywordsStore } from '../../stores/keywords';
-import { userStore } from '../../stores/userStore';
 
 type Props = {
   setModal: any;
@@ -17,7 +16,6 @@ export default function FlipModal({ setModal }: Props) {
   const { urls, index } = urlsStore();
   const navigate = useNavigate();
   const { keywords } = keywordsStore();
-  const { userId, creatorId } = userStore();
 
   const PickChar = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -25,11 +23,13 @@ export default function FlipModal({ setModal }: Props) {
     try {
       const response = await baseInstance.post('/characters/choice', data);
       if (response.status == 201) {
+
         {
           userId === ''
             ? navigate(`/mypage/${creatorId}`)
             : navigate(`/mypage/${userId}`);
         }
+
       }
     } catch (error) {
       console.error(error);
