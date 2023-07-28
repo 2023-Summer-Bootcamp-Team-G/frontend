@@ -78,17 +78,30 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   });
   const { serData, setSerData } = TestStore();
   const serverData: ServerData = serverData1;
+
   const titles: string[] = [
-    '나를 동물로 표현하면?',
-    '난 어떤 분위기야?',
-    '나를 색으로 표현하면?',
-    '어떤 그림체가 어울려?',
-    '자주 들고 다니는 물건?',
+    '나를 동물로 표현한다면 어떤 동물이야?',
+    '내가 자주 하고다니는 악세사리는?',
+    '나를 색으로 표현한다면 무슨 색이야?',
+    '나는 어떤 그림체가 어울려?',
+    '내가 자주 들고다니는 물건은 뭐야?',
+    '내가 자주 나타나는 장소는 어디야?',
   ];
   const getChart = async () => {
     try {
+      let params = {};
+
+      if (userId === '') {
+        params = {
+          user_id: creatorId,
+        };
+      } else {
+        params = {
+          user_id: userId,
+        };
+      }
       const response = await baseInstance.get('/characters/chart', {
-        params: { user_id: userId },
+        params: params,
       });
       console.log('response---data');
       console.log(response.data);
@@ -114,20 +127,28 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
     onSubmit(); // 탭이 변경될 때 onSubmit 함수 호출
   };
 
-  useEffect(() => {
-    const getCharacters = async () => {
-      try {
-        const response = await baseInstance.get('/characters', {
-          params: {
-            user_id: userId + creatorId, //꺼내온거 사용
-          },
-        });
-        console.log(response.data);
-        setCharacters(response.data.characters);
-      } catch (error) {
-        console.error(error);
+  const getCharacters = async () => {
+    try {
+      let params = {};
+
+      if (userId === '') {
+        params = {
+          user_id: creatorId,
+        };
+      } else {
+        params = {
+          user_id: userId,
+        };
       }
-    };
+      const response = await baseInstance.get('/characters', {
+        params: params,
+      });
+      console.log(response.data);
+      setCharacters(response.data.characters);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     getChart();
@@ -160,8 +181,8 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
           onChange={handleChange}
           aria-label='basic tabs example'
         >
-          <Tab label='Item One' {...a11yProps(0)} />
-          <Tab label='Item Two' {...a11yProps(1)} />
+          <Tab label='다른 사람들이 보는 나' {...a11yProps(0)} />
+          <Tab label='질문별 키워드 차트' {...a11yProps(1)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>

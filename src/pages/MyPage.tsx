@@ -6,7 +6,7 @@ import BasicTabs from '../components/Tab/Tab';
 import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
 import { pollStore } from '../stores/poll';
@@ -57,20 +57,30 @@ export default function MyPage() {
   const [characters, setCharacters] = useState<Character[]>([]);
   const { userId, nickName, creatorId } = userStore();
   const { poll } = pollStore();
-  const { userId, nickName } = userStore();
   const { taskId, setTaskId } = taskIdStore();
   const [dupliUrl, setDupliUrl] = useState<string>('');
   const [keyword, setKeyword] = useState<string[]>([]);
+
   const durl = dupliUrl || '';
 
   // 생성자
   const getChar = async () => {
     try {
+      let params = {};
+      console.log(userId);
+
+      if (userId === '') {
+        params = {
+          user_id: creatorId,
+        };
+      } else {
+        params = {
+          user_id: userId,
+        };
+      }
+
       const response = await baseInstance.get('/characters', {
-        params: {
-          user_id: userId + creatorId, //꺼내온거 사용
-          nick_name: nickName,
-        },
+        params: params,
       });
 
       setCharacters(response.data.characters);

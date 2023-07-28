@@ -12,7 +12,7 @@ import { pollStore } from '../stores/poll';
 export default function QuestionPage() {
   const initQuestions = [
     '나를 동물로 표현한다면 어떤 동물이야?',
-    '난 어떤 분위기야?',
+    '내가 자주 하고다니는 악세사리는?',
     '나를 색으로 표현한다면 무슨 색이야?',
     '나는 어떤 그림체가 어울려?',
     '내가 자주 들고다니는 물건은 뭐야?',

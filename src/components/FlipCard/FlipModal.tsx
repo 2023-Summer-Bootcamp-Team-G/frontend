@@ -25,7 +25,11 @@ export default function FlipModal({ setModal }: Props) {
     try {
       const response = await baseInstance.post('/characters/choice', data);
       if (response.status == 201) {
-        navigate(`/mypage/${userId}${creatorId}`);
+        {
+          userId === ''
+            ? navigate(`/mypage/${creatorId}`)
+            : navigate(`/mypage/${userId}`);
+        }
       }
     } catch (error) {
       console.error(error);

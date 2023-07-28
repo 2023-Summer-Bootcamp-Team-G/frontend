@@ -90,7 +90,7 @@ export default function AnswerPage() {
   const createChar = async () => {
     const json = {
       poll_id: poll_id,
-      creatorName: nickName + nick,
+      creatorName: nickName !== '' ? nickName : nick,
       answers: value,
     };
 
