@@ -15,9 +15,6 @@ import { TestStore } from '../../stores/testStore';
 
 export default function Swipe() {
   const { serData } = TestStore();
-  console.log('swipeeeeeeeeeee');
-  console.log(serData);
-  console.log(serData?.[0]?.title);
 
   return (
     <>

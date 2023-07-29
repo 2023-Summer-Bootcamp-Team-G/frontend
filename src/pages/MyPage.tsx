@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
 import { pollStore } from '../stores/poll';
+import { keywordsStore } from '../stores/keywords';
 
 interface Character {
   id: number;
@@ -60,6 +61,7 @@ export default function MyPage() {
   const { taskId, setTaskId } = taskIdStore();
   const [dupliUrl, setDupliUrl] = useState<string>('');
   const [keyword, setKeyword] = useState<string[]>([]);
+  const { keywords } = keywordsStore();
 
   const durl = dupliUrl || '';
   // 생성자
@@ -83,7 +85,6 @@ export default function MyPage() {
       });
 
       setCharacters(response.data.characters);
-      console.log(response.data.characters);
     } catch (error) {
       console.error(error);
     }
@@ -142,11 +143,14 @@ export default function MyPage() {
           <CharLayout>
             <Title>{nickName} 님 본인이 만든 캐릭터에요!</Title>
             <FlipCardLayout>
-              <FlipCard imageURL={characters[0]?.result_url} keywords={[]} />{' '}
+              <FlipCard
+                imageURL={characters[0]?.result_url}
+                keywords={keywords}
+              />
               {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
             </FlipCardLayout>
 
-            <Link to={`/answerroom/${poll}/${userId}`}>
+            <Link to={`/answerroom/${poll}`}>
               {userId === '' ? null : <Button title={'캐릭터 다시 만들래요'} />}
             </Link>
           </CharLayout>
