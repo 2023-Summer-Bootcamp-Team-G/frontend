@@ -101,8 +101,7 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
       const response = await baseInstance.get('/characters/chart', {
         params: params,
       });
-      console.log('response---data');
-      console.log(response.data);
+
       setServerData1(response.data); //test
     } catch (error) {
       console.log(error);
@@ -111,11 +110,23 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   const data: ChartProps[] = serverData.keyword_count.map((item, index) => {
     const title = titles[index];
     const keywordData = item[Object.keys(item)[0]];
+
+    // Check if keywordData is a valid object
+    if (typeof keywordData !== 'object' || keywordData === null) {
+      console.log(
+        `질문 ${index + 1}에 잘못된 keywordData가 발견되었습니다. 건너뜁니다...`
+      );
+      return { title, pieChartData: [] };
+    }
+
+    // Adjust for different keywordData formats
     const pieChartData: [string, number, boolean][] = Object.entries(
       keywordData
-    ).map(([key, [count]]) => [key, count, false]);
-    // console.log('----------');
-    // console.log(pieChartData);
+    ).map(([key, count]) => [
+      key,
+      typeof count === 'number' ? count : 0,
+      false,
+    ]);
     return { title, pieChartData };
   });
   //test
@@ -142,7 +153,6 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
       const response = await baseInstance.get('/characters', {
         params: params,
       });
-      console.log(response.data);
       setCharacters(response.data.characters);
     } catch (error) {
       console.error(error);
@@ -156,15 +166,6 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
 
   //test
   useEffect(() => {
-    console.log('------seerserreeesr-----');
-    console.log(serverData1);
-    console.log('server@@@@@@@ee');
-    console.log(serverData);
-    console.log('data---test#e##ee####');
-    console.log(serData);
-    console.log('data---etest');
-    console.log(data);
-
     setSerData(data);
   }, [serverData1]);
 

@@ -46,12 +46,11 @@ export default function AnswerPage() {
   const [value, setValue] = useState<string[]>([]);
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false); //모달 열리고 닫히고
-  const { userId, nickName, setCreatorId } = userStore();
+  const { userId, nickName, setCreatorId, setNickName } = userStore();
   const { setTaskId } = taskIdStore();
   const [nick, setNick] = useState(''); // 답변자 setNick 추후에 수정
-  const { poll_id, user_id } = useParams();
+  const { poll_id } = useParams();
   const { setLink } = linkStore();
-  const usr_id = user_id || '';
   const goBack = () => {
     navigate(-1);
   };
@@ -65,6 +64,8 @@ export default function AnswerPage() {
           },
         });
         setQuestions(response.data.questions);
+        setCreatorId(response.data.user_id);
+        setNickName(response.data.nick_name);
       } catch (error) {
         console.error(error);
       }
@@ -81,13 +82,12 @@ export default function AnswerPage() {
     if (nickName == '') {
       setModalOpen(true);
     }
-    setCreatorId(usr_id);
   }, []);
 
   const createChar = async () => {
     const json = {
       poll_id: poll_id,
-      creatorName: nickName !== '' ? nickName : nick,
+      creatorName: userId !== '' ? nickName : nick,
       answers: value,
     };
 

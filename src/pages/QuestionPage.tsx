@@ -38,7 +38,7 @@ export default function QuestionPage() {
     const response = await baseInstance.post('/questions', data);
 
     if (response.status === 201) setPoll(response.data.poll_id);
-    navigate(`/answerroom/${response.data.poll_id}/${userId}`);
+    navigate(`/answerroom/${response.data.poll_id}`);
   };
 
   return (

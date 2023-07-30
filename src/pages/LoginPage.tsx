@@ -4,28 +4,36 @@ import RoundButton from '../components/Btn/RoundBtn';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { opacityVariants } from '../constants/variants';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';
 import { userStore } from '../stores/userStore';
+import { pollStore } from '../stores/poll';
 
 export default function LoginPage() {
   const [id, setId] = useState('');
   const [passwd, setPasswd] = useState('');
   const navigate = useNavigate();
   const { setUserId, userId } = userStore(); // userStore에서 꺼내오기
+  const { setPoll } = pollStore();
+  const { setNickName } = userStore();
+
+  useEffect(() => {
+    if (id === '') {
+      console.log('hi');
+    } else {
+      navigate(`/mypage/${userId}`);
+    }
+  }, [userId]);
 
   const createUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const data = { user_id: id, password: passwd };
-    console.log(id);
     try {
       const response = await baseInstance.post('/login', data);
 
-      setUserId(id); // 꺼내온거 사용
-
-      if (response.status === 200) {
-        navigate(`/mypage/${userId}`);
-      }
+      setUserId(id);
+      setPoll(response.data.user_data.poll_id);
+      setNickName(response.data.user_data.nick_name);
     } catch (error) {
       alert('다시 작성해주세요');
       console.error(error);
