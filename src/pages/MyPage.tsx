@@ -6,11 +6,12 @@ import BasicTabs from '../components/Tab/Tab';
 import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
 import { pollStore } from '../stores/poll';
 import { keywordsStore } from '../stores/keywords';
+import useCheckAuth from '../hooks/useCheckAuth';
 import { color } from 'highcharts';
 
 interface Character {
@@ -18,11 +19,6 @@ interface Character {
   result_url: string;
   nick_name: string;
 }
-
-// type Task = {
-//   result_url: string;
-//   keyword: string;
-// }
 
 const setMetaTags = ({
   title = "It's me?!", // 기본 타이틀
@@ -143,6 +139,10 @@ export default function MyPage() {
       });
     }
   };
+
+  const authState = useCheckAuth();
+  const ls = JSON.parse(localStorage.getItem('user'));
+
   return (
     <>
       <Nav>

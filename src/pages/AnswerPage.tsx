@@ -107,13 +107,15 @@ export default function AnswerPage() {
     }
     const json = {
       poll_id: poll_id,
-      creatorName: nickName !== '' ? nickName : nick,
+      creatorName: userId !== '' ? nickName : nick,
       answers: [
         ...answers.slice(0, 4),
         ...answers.slice(-2),
         ...answers.slice(4, -2),
       ],
     };
+    console.log(userId);
+    console.log(nick);
 
     const response = await baseInstance.post('/characters', json);
     if (response.status === 201) {
