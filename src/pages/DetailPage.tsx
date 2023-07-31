@@ -9,9 +9,9 @@ import { idStore } from '../stores/id';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export default function DetailPage() {
-  const { nickName } = userStore();
+  const { nickName, creatorId } = userStore();
   const [img, setImg] = useState('');
-  const [anick, setAnick] = useState();
+  const [anick, setAnick] = useState<string>('');
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [keyword, setKeyword] = useState([]);
