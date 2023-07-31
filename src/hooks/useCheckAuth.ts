@@ -7,7 +7,7 @@ const useCheckAuth = (): boolean => {
   const ls = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
-    if (ls.state.userId) {
+    if (ls && ls.state && ls.state.userId) {
       setAuthState(true);
     } else {
       setAuthState(false);
