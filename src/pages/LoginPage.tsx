@@ -13,15 +13,13 @@ import { MouseEvent, useCallback, useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';
 import { userStore } from '../stores/userStore';
 import { pollStore } from '../stores/poll';
-import { useCheckAuth } from '../hooks/useCheckAuth';
 import SignBtn from '../components/Btn/SignBtn';
-
+import useCheckAuth from '../hooks/useCheckAuth';
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const { setNickName, setUserId, userId } = userStore(); // userStore에서 꺼내오기
   const { setPoll } = pollStore();
-
 
   // 닉네임, 아이디, 비밀번호, 비밀번호 확인
   const [id, setId] = useState<string>('');
@@ -34,7 +32,6 @@ export default function LoginPage() {
   // 유효성 검사
   const [isId, setIsId] = useState<boolean>(false);
   const [isPassword, setIsPassword] = useState<boolean>(false);
-
 
   useEffect(() => {
     if (id === '') {
@@ -76,7 +73,6 @@ export default function LoginPage() {
       setIdMessage('');
       setIsId(true);
     }
-
   }, []);
 
   // 비밀번호
