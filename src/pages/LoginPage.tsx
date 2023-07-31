@@ -109,87 +109,79 @@ export default function LoginPage() {
   );
 
   return (
-    <Container>
-      <BackLayout>
-        <Box>
-          <WhiteBox
-            variants={opacityVariants}
-            initial='initial'
-            animate='mount'
-          >
-            <h1 style={{ marginBottom: '4rem' }}>로그인</h1>
-            <form onSubmit={onSubmit}>
-              <FormBox>
-                <LoginInput
-                  title='아이디'
-                  placeholder='영문 + 숫자'
-                  value={id}
-                  // setValue={setId}
-                  type='text'
-                  onChange={onChangeId}
-                />
-                {id.length > 0 && (
-                  <span className={`message ${isId ? 'success' : 'error'}`}>
-                    {idMessage}
-                  </span>
-                )}
-              </FormBox>
-              <FormBox>
-                <LoginInput
-                  title='비밀번호'
-                  placeholder='영문+숫자 6자리 이상'
-                  value={pw}
-                  // setValue={setPw}
-                  type='password'
-                  onChange={onChangePassword}
-                />
-                {pw.length > 0 && (
-                  <span
-                    className={`message ${isPassword ? 'success' : 'error'}`}
-                  >
-                    {passwordMessage}
-                  </span>
-                )}
-              </FormBox>
-              <FormBox>
-                <LoginInput
-                  title='비밀번호 확인'
-                  placeholder='영문+숫자 6자리 이상'
-                  value={passwordConfirm}
-                  // setValue={setPasswordConfirm}
-                  type='password'
-                  onChange={onChangePasswordConfirm}
-                />
-                {passwordConfirm.length > 0 && (
-                  <span
-                    className={`message ${
-                      isPasswordConfirm ? 'success' : 'error'
-                    }`}
-                  >
-                    {passwordConfirmMessage}
-                  </span>
-                )}
-              </FormBox>
-            </form>
-            <SignBtn
-              title='로그인'
-              onClick={function (
-                e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
-              ): void | Promise<void> {
-                throw new Error('Function not implemented.');
-              }}
-              disabled={!(isId && isPassword && isPasswordConfirm)}
-            />
-            <br />
-            <StyledLink to='/signup'>회원가입 하러가기</StyledLink>
-          </WhiteBox>
-          <ImgLayout>
-            <Img1 src='https://i.postimg.cc/brLtCYTf/3.png' />
-            <Img2 src='https://i.postimg.cc/524P2jGL/2.png' />
-          </ImgLayout>
-        </Box>
-      </BackLayout>
-    </Container>
+    <BackLayout>
+      <Box>
+        <WhiteBox variants={opacityVariants} initial='initial' animate='mount'>
+          <h1 style={{ marginBottom: '4rem' }}>로그인</h1>
+          <form onSubmit={onSubmit}>
+            <FormBox>
+              <LoginInput
+                title='아이디'
+                placeholder='영문 + 숫자'
+                value={id}
+                // setValue={setId}
+                type='text'
+                onChange={onChangeId}
+              />
+              {id.length > 0 && (
+                <span className={`message ${isId ? 'success' : 'error'}`}>
+                  {idMessage}
+                </span>
+              )}
+            </FormBox>
+            <FormBox>
+              <LoginInput
+                title='비밀번호'
+                placeholder='영문+숫자 6자리 이상'
+                value={pw}
+                // setValue={setPw}
+                type='password'
+                onChange={onChangePassword}
+              />
+              {pw.length > 0 && (
+                <span className={`message ${isPassword ? 'success' : 'error'}`}>
+                  {passwordMessage}
+                </span>
+              )}
+            </FormBox>
+            <FormBox>
+              <LoginInput
+                title='비밀번호 확인'
+                placeholder='영문+숫자 6자리 이상'
+                value={passwordConfirm}
+                // setValue={setPasswordConfirm}
+                type='password'
+                onChange={onChangePasswordConfirm}
+              />
+              {passwordConfirm.length > 0 && (
+                <span
+                  className={`message ${
+                    isPasswordConfirm ? 'success' : 'error'
+                  }`}
+                >
+                  {passwordConfirmMessage}
+                </span>
+              )}
+            </FormBox>
+          </form>
+          <SignBtn
+            title='로그인'
+            onClick={function (
+              e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+            ): void | Promise<void> {
+              throw new Error('Function not implemented.');
+            }}
+            disabled={!(isId && isPassword && isPasswordConfirm)}
+          />
+          <br />
+          <StyledLink to='/signup'>회원가입 하러가기</StyledLink>
+        </WhiteBox>
+        <ImgLayout>
+          <Img1 src='https://i.postimg.cc/brLtCYTf/3.png' />
+          <Img2 src='https://i.postimg.cc/524P2jGL/2.png' />
+        </ImgLayout>
+      </Box>
+    </BackLayout>
   );
 }
 const StyledLink = styled(Link)`
@@ -253,10 +245,4 @@ const FormBox = styled.div`
       color: #ff2727;
     }
   }
-`;
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
 `;
