@@ -9,6 +9,8 @@ import NickNameInput from '../components/Input/NickNameInput';
 import { userStore } from '../stores/userStore';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
+import ImageList from '../components/choice/choice';
+import ColorBtn from '../components/choice/color';
 
 const setMetaTags = ({
   title = "It's me?!", // 기본 타이틀
@@ -40,9 +42,9 @@ const setMetaTags = ({
     urlTag.setAttribute('content', window.location.href);
   }
 };
-
+//-----------------------------------------------------------------------
 export default function AnswerPage() {
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState<string[]>([]);
   const [value, setValue] = useState<string[]>([]);
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false); //모달 열리고 닫히고
@@ -54,6 +56,15 @@ export default function AnswerPage() {
   const goBack = () => {
     navigate(-1);
   };
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const handleColorSelect = (name: string) => {
+    setSelectedColor(name);
+  };
+
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const handleImageSelect = (name: string) => {
+    setSelectedImage(name);
+  };
 
   useEffect(() => {
     const getQuestions = async () => {
@@ -63,9 +74,9 @@ export default function AnswerPage() {
             poll_id: poll_id, //꺼내온거 사용
           },
         });
-        setQuestions(response.data.questions);
-        setCreatorId(response.data.user_id);
-        setNickName(response.data.nick_name);
+        const data = response.data.questions;
+
+        setQuestions([...data.slice(0, 4), ...data.slice(6)]);
       } catch (error) {
         console.error(error);
       }
@@ -83,22 +94,34 @@ export default function AnswerPage() {
       setModalOpen(true);
     }
   }, []);
+  //-----------post-------------------
 
   const createChar = async () => {
+    const answers = [...value];
+    if (selectedColor) {
+      answers.push(selectedColor);
+    }
+    if (selectedImage) {
+      answers.push(selectedImage);
+    }
     const json = {
       poll_id: poll_id,
-      creatorName: userId !== '' ? nickName : nick,
-      answers: value,
+      creatorName: nickName !== '' ? nickName : nick,
+      answers: [
+        ...answers.slice(0, 4),
+        ...answers.slice(-2),
+        ...answers.slice(4, -2),
+      ],
     };
 
     const response = await baseInstance.post('/characters', json);
     if (response.status === 201) {
       navigate('/result');
-      console.log(response.data.task_id);
+      console.log(response.data);
       setTaskId(response.data.task_id);
     }
   };
-
+  //---------------return-------
   return (
     <Container>
       <BoxContainer
@@ -125,6 +148,9 @@ export default function AnswerPage() {
             setValue={setValue}
           />
         ))}
+
+        <ColorBtn onSelect={handleColorSelect} />
+        <ImageList onSelect={handleImageSelect} />
 
         <RButtonLayout>
           {userId === '' ? null : (
