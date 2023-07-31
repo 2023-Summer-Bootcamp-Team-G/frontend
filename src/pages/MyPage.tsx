@@ -6,11 +6,12 @@ import BasicTabs from '../components/Tab/Tab';
 import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
 import { pollStore } from '../stores/poll';
 import { keywordsStore } from '../stores/keywords';
+import { color } from 'highcharts';
 
 interface Character {
   id: number;
@@ -62,6 +63,12 @@ export default function MyPage() {
   const [dupliUrl, setDupliUrl] = useState<string>('');
   const [keyword, setKeyword] = useState<string[]>([]);
   const { keywords } = keywordsStore();
+  const navigate = useNavigate();
+
+  const handleLogoutClick = () => {
+    localStorage.removeItem('user');
+    navigate('/');
+  };
 
   const durl = dupliUrl || '';
   // 생성자
@@ -137,58 +144,107 @@ export default function MyPage() {
     }
   };
   return (
-    <Container>
-      <BoxContainer title={''}>
-        <Top>
-          <CharLayout>
-            <Title>{nickName} 님 본인이 만든 캐릭터에요!</Title>
-            <FlipCardLayout>
-              <FlipCard
-                imageURL={characters[0]?.result_url}
-                keywords={keywords}
-              />
-              {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
-            </FlipCardLayout>
-
-            <Wrapping>
-              <StyledLink to={`/answerroom/${poll}`}>
-                {userId === '' ? null : <Sbtn>다시 만들기</Sbtn>}
-              </StyledLink>
-              {userId !== '' && (
-                <Sbtn onClick={handleCopyClick} disabled={copied}>
-                  {copied ? '복사 완료!' : 'URL 복사하기'}
-                </Sbtn>
-              )}
-            </Wrapping>
-          </CharLayout>
-          <DuplicateCharLayout>
-            <Title>중복된 키워드로 만든 {nickName} 님이에요!</Title>
-            {dupliUrl === '' ? (
-              <img
+    <>
+      <Nav>
+        <Copy>
+          {userId !== '' && (
+            <div>
+              <span
+                className='material-symbols-rounded'
                 style={{
-                  width: '25rem',
-                  height: '25rem',
-                  marginBottom: '4.25rem',
+                  WebkitTransform: 'rotate(120deg)',
+                  transform: 'rotate(120deg)',
+                  color: 'white',
                 }}
-                src='https://i.postimg.cc/G22H5fH9/Group-374.png'
-              />
-            ) : (
+              >
+                link
+              </span>
+              <CopyButton
+                style={{ color: 'white', fontSize: '1.2rem' }}
+                onClick={handleCopyClick}
+                disabled={copied}
+              >
+                {copied ? 'URL 복사하기' : '질문지 공유'}
+              </CopyButton>
+            </div>
+          )}
+        </Copy>
+        <Logout>
+          <span
+            className='material-symbols-rounded'
+            style={{
+              color: 'white',
+              marginLeft: '1rem',
+            }}
+          >
+            account_circle
+          </span>
+          <LogoutBtn
+            style={{
+              textDecoration: 'none',
+              color: 'white',
+              fontSize: '1.2rem',
+            }}
+            onClick={handleLogoutClick}
+          >
+            로그아웃
+          </LogoutBtn>
+        </Logout>
+      </Nav>
+
+      <Container>
+        <BoxContainer title={''}>
+          <Top>
+            <CharLayout>
+              <Title>{nickName} 님 본인이 만든 캐릭터에요!</Title>
               <FlipCardLayout>
-                <FlipCard imageURL={durl} keywords={[]} />{' '}
+                <FlipCard
+                  imageURL={characters[0]?.result_url}
+                  keywords={keywords}
+                />
+                {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
               </FlipCardLayout>
-            )}
 
-            {userId === '' ? null : (
-              <Button1 onClick={a}> 중복 캐릭터 만들기</Button1>
-            )}
-          </DuplicateCharLayout>
-        </Top>
+              <Wrapping>
+                <StyledLink to={`/answerroom/${poll}`}>
+                  {userId === '' ? null : <Sbtn>다시 만들기</Sbtn>}
+                </StyledLink>
+                {userId !== '' && (
+                  <Sbtn onClick={handleCopyClick} disabled={copied}>
+                    {copied ? '복사 완료!' : 'URL 복사하기'}
+                  </Sbtn>
+                )}
+              </Wrapping>
+            </CharLayout>
+            <DuplicateCharLayout>
+              <Title>중복된 키워드로 만든 {nickName} 님이에요!</Title>
+              {dupliUrl === '' ? (
+                <img
+                  style={{
+                    width: '25rem',
+                    height: '25rem',
+                    marginBottom: '4.25rem',
+                  }}
+                  src='https://i.postimg.cc/G22H5fH9/Group-374.png'
+                />
+              ) : (
+                <FlipCardLayout>
+                  <FlipCard imageURL={durl} keywords={[]} />{' '}
+                </FlipCardLayout>
+              )}
 
-        <HorizontalLine />
+              {userId === '' ? null : (
+                <Button1 onClick={a}> 중복 캐릭터 만들기</Button1>
+              )}
+            </DuplicateCharLayout>
+          </Top>
 
-        <BasicTabs onSubmit={getChar} />
-      </BoxContainer>
-    </Container>
+          <HorizontalLine />
+
+          <BasicTabs onSubmit={getChar} />
+        </BoxContainer>
+      </Container>
+    </>
   );
 }
 
@@ -198,6 +254,7 @@ const Top = styled.div`
   justify-content: center;
   flex-direction: row;
   justify-content: space-between;
+  position: relative;
 `;
 
 const CharLayout = styled.div`
@@ -280,4 +337,23 @@ const Wrapping = styled.div`
   justify-content: center;
   flex-direction: row;
   gap: 1rem;
+`;
+const Nav = styled.button`
+  display: flex;
+  align-content: right;
+  position: absolute;
+  right: 11rem;
+  top: 3rem;
+`;
+const CopyButton = styled.button`
+  align-items: center;
+`;
+const LogoutBtn = styled.button``;
+const Logout = styled.button`
+  display: flex;
+  justify-content: center;
+`;
+const Copy = styled.button`
+  margin-right: 1rem;
+  align-items: center;
 `;
