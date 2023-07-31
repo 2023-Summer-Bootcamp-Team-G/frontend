@@ -6,7 +6,7 @@ import { userStore } from '../stores/userStore';
 import { useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';
 import { idStore } from '../stores/id';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function DetailPage() {
   const { nickName } = userStore();

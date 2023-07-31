@@ -1,8 +1,7 @@
 import { styled } from 'styled-components';
 import LoginInput from '../components/Input/LoginInput';
-import RoundButton from '../components/Btn/RoundBtn';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { MouseEvent, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { baseInstance } from '../apis/config';
 import { userStore } from '../stores/userStore';
 import { motion } from 'framer-motion';
@@ -10,7 +9,6 @@ import { opacityVariants } from '../constants/variants';
 import useCheckAuth from '../hooks/useCheckAuth';
 import { AxiosError } from 'axios';
 import SignBtn from '../components/Btn/SignBtn';
-
 
 export default function SignUpPage() {
   const navigate = useNavigate();
@@ -86,7 +84,6 @@ export default function SignUpPage() {
       setIdMessage('');
       setIsId(true);
     }
-
   }, []);
 
   // 비밀번호
@@ -125,7 +122,7 @@ export default function SignUpPage() {
   );
 
   const authState = useCheckAuth();
-  const ls = JSON.parse(localStorage.getItem('user'));
+  const ls = JSON.parse(localStorage.getItem('user') || 'null');
   if (authState) {
     return <Navigate to={`/mypage/${ls.state.userId}`} />;
   }

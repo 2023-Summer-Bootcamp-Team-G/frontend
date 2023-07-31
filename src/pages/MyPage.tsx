@@ -1,18 +1,16 @@
 import { styled } from 'styled-components';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
 import FlipCard from '../components/FlipCard/FlipCard';
-import Button from '../components/Btn/Btn';
+
 import BasicTabs from '../components/Tab/Tab';
 import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
-import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
 import { pollStore } from '../stores/poll';
 import { keywordsStore } from '../stores/keywords';
-import useCheckAuth from '../hooks/useCheckAuth';
-import { color } from 'highcharts';
 
 interface Character {
   id: number;
@@ -53,7 +51,7 @@ const setMetaTags = ({
 
 export default function MyPage() {
   const [characters, setCharacters] = useState<Character[]>([]);
-  const { userId, nickName, setNickName, creatorId } = userStore();
+  const { userId, nickName, setNickName } = userStore();
   const { poll } = pollStore();
   const { taskId, setTaskId } = taskIdStore();
   const [dupliUrl, setDupliUrl] = useState<string>('');

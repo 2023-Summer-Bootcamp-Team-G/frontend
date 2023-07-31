@@ -6,7 +6,7 @@ import CharBox from '../CharBox/CharBox';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { baseInstance } from '../../apis/config';
-import { userStore } from '../../stores/userStore';
+
 import { useNavigate, useParams } from 'react-router-dom';
 import { idStore } from '../../stores/id';
 import Swipe from '../Swipe/Swipe';
@@ -74,7 +74,7 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   const [serverData1, setServerData1] = useState<ServerData>({
     keyword_count: [],
   });
-  const { serData, setSerData } = TestStore();
+  const { setSerData } = TestStore();
   const serverData: ServerData = serverData1;
 
   const titles: string[] = [

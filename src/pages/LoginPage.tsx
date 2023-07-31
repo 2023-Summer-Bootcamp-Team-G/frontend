@@ -1,15 +1,10 @@
 import { styled } from 'styled-components';
 import LoginInput from '../components/Input/LoginInput';
-import RoundButton from '../components/Btn/RoundBtn';
-import {
-  Link,
-  Navigate,
-  useNavigate,
-  useOutletContext,
-} from 'react-router-dom';
+
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { opacityVariants } from '../constants/variants';
-import { MouseEvent, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';
 import { userStore } from '../stores/userStore';
 import { pollStore } from '../stores/poll';
