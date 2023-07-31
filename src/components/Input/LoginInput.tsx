@@ -1,19 +1,22 @@
+import { ChangeEvent } from 'react';
 import { styled } from 'styled-components';
 
 type TextProps = {
   title: string;
   value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  // setValue: React.Dispatch<React.SetStateAction<string>>;
   placeholder: string;
   type: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 export default function LoginInput({
   title,
   value,
   type,
-  setValue,
+  // setValue,
   placeholder,
+  onChange,
 }: TextProps) {
   return (
     <LoginInputLayout>
@@ -21,9 +24,7 @@ export default function LoginInput({
       <Input
         value={value}
         type={type}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setValue(e.target.value);
-        }}
+        onChange={onChange}
         onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
           if (event.key === 'Enter') {
             console.log('다시 찾으러 올게');
@@ -43,7 +44,7 @@ const LoginInputLayout = styled.div`
 const Label = styled.label`
   color: #2c2c2c;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-style: normal;
   font-weight: 700;
   margin-bottom: 1.3rem;
@@ -54,12 +55,12 @@ const Input = styled.input`
   all: unset;
   display: flex;
   align-items: center;
-  width: 35rem;
-  height: 4.5rem;
+  width: 28rem;
+  height: 3rem;
   border-radius: 0.875rem;
   background: #f0f0f0;
   color: black;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-style: normal;
   font-weight: 400;
   padding-left: 1.55rem;
