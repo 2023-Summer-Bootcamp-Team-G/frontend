@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { baseInstance } from '../../apis/config';
 import { userStore } from '../../stores/userStore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { idStore } from '../../stores/id';
 import Swipe from '../Swipe/Swipe';
 import { TestStore } from '../../stores/testStore';
@@ -66,9 +66,9 @@ interface ChartProps {
 export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   const [value, setValue] = useState(0);
   const [characters, setCharacters] = useState<Character[]>([]);
-  const { userId, creatorId } = userStore();
   const navigate = useNavigate();
   const { setDetailId } = idStore();
+  const { user_id } = useParams();
 
   //test
   const [serverData1, setServerData1] = useState<ServerData>({
@@ -87,19 +87,8 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   ];
   const getChart = async () => {
     try {
-      let params = {};
-
-      if (userId === '') {
-        params = {
-          user_id: creatorId,
-        };
-      } else {
-        params = {
-          user_id: userId,
-        };
-      }
       const response = await baseInstance.get('/characters/chart', {
-        params: params,
+        params: { user_id: user_id },
       });
 
       setServerData1(response.data); //test
@@ -139,19 +128,8 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
 
   const getCharacters = async () => {
     try {
-      let params = {};
-
-      if (userId === '') {
-        params = {
-          user_id: creatorId,
-        };
-      } else {
-        params = {
-          user_id: userId,
-        };
-      }
       const response = await baseInstance.get('/characters', {
-        params: params,
+        params: { user_id: user_id },
       });
       setCharacters(response.data.characters);
     } catch (error) {

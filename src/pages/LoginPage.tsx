@@ -50,7 +50,7 @@ export default function LoginPage() {
 
         setUserId(id);
         setPoll(response.data.user_data.poll_id);
-        setNickName(response.data.user_data.nick_name);
+        setNickName(response.data.user_data.nick_name); //필요 없는듯
       } catch (error) {
         alert('다시 작성해주세요');
         console.error(error);
