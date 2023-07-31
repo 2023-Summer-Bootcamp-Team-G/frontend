@@ -1,13 +1,16 @@
 import { styled } from 'styled-components';
 import LoginInput from '../components/Input/LoginInput';
+import RoundButton from '../components/Btn/RoundBtn';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { MouseEvent, useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { baseInstance } from '../apis/config';
 import { userStore } from '../stores/userStore';
 import { motion } from 'framer-motion';
 import { opacityVariants } from '../constants/variants';
+import useCheckAuth from '../hooks/useCheckAuth';
 import { AxiosError } from 'axios';
 import SignBtn from '../components/Btn/SignBtn';
+
 
 export default function SignUpPage() {
   const navigate = useNavigate();
@@ -84,6 +87,7 @@ export default function SignUpPage() {
       setIdMessage('올바른 아이디 형식이에요 : )');
       setIsId(true);
     }
+
   }, []);
 
   // 비밀번호
@@ -123,6 +127,11 @@ export default function SignUpPage() {
     [pw]
   );
 
+  const authState = useCheckAuth();
+  const ls = JSON.parse(localStorage.getItem('user'));
+  if (authState) {
+    return <Navigate to={`/mypage/${ls.state.userId}`} />;
+  }
   return (
     <BackLayout>
       <Box>

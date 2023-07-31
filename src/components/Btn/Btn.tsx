@@ -19,7 +19,6 @@ const Btn = styled.button`
   color: #fff;
   text-align: center;
   font-size: 1.75rem;
-  font-style: normal;
   font-weight: 800;
 
   /*네모 박스*/

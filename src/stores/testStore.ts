@@ -18,7 +18,7 @@ export const TestStore = create<Props>(
       setSerData: (data: any[]) => set({ serData: data }),
     }),
     {
-      name: 'user',
+      name: 'chartdata',
     }
   )
 );

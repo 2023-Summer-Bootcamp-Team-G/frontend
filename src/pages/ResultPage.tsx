@@ -13,7 +13,6 @@ import { userStore } from '../stores/userStore';
 export default function ResultPage() {
   //모달
   const [modal, setModal] = useState(false);
-  const { urls, setIndex } = urlsStore();
   const { nickName } = userStore();
 
   const showModal = (index: any) => {
@@ -35,7 +34,7 @@ export default function ResultPage() {
 
   //이미지 키워드 API
   const { taskId } = taskIdStore();
-  const { setUrls } = urlsStore(); // userStore에서 꺼내오기
+  const { urls, setUrls, setIndex } = urlsStore(); // userStore에서 꺼내오기
   const { setKeywords } = keywordsStore();
 
   useEffect(() => {
