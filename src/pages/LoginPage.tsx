@@ -94,10 +94,19 @@ export default function LoginPage() {
   );
 
   const authState = useCheckAuth();
-  const ls = JSON.parse(localStorage.getItem('user'));
-  if (authState) {
-    return <Navigate to={`/mypage/${ls.state.userId}`} />;
+  // const ls = JSON.parse(localStorage.getItem('user'));
+
+  const ls = localStorage.getItem('user');
+  if (ls !== null) {
+    const user: any = JSON.parse(ls);
+    if (authState) {
+      return <Navigate to={`/mypage/${user.state.userId}`} />;
+    }
+  } else {
+    // localStorage에 'user' 키가 없거나 값이 null인 경우에 대한 처리를 여기서 수행합니다.
+    <Navigate to={`/login`} />;
   }
+
   return (
     <BackLayout>
       <Box>
