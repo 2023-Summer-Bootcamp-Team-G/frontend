@@ -10,10 +10,12 @@ export interface ChartProps extends HighchartsReact.Props {
 
 export default function Chart({ serData, ...props }: ChartProps) {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
+
   if (!serData || !serData.pieChartData) {
     return null; // or render a loading state, an error message, or anything appropriate
   }
   const options: Highcharts.Options = {
+    credits: { enabled: false },
     title: {
       text: '',
     },
@@ -24,6 +26,7 @@ export default function Chart({ serData, ...props }: ChartProps) {
     plotOptions: {
       pie: {
         allowPointSelect: true,
+        size: '100%', //pie 크기
         cursor: 'pointer',
         dataLabels: {
           enabled: true,
@@ -31,6 +34,7 @@ export default function Chart({ serData, ...props }: ChartProps) {
         },
       },
     },
+
     series: [
       {
         name: 'keywords',
