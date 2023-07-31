@@ -154,9 +154,11 @@ export default function MyPage() {
               <StyledLink to={`/answerroom/${poll}`}>
                 {userId === '' ? null : <Sbtn>다시 만들기</Sbtn>}
               </StyledLink>
-              <Sbtn onClick={handleCopyClick} disabled={copied}>
-                {copied ? '복사 완료!' : 'URL 복사하기'}
-              </Sbtn>
+              {userId !== '' && (
+                <Sbtn onClick={handleCopyClick} disabled={copied}>
+                  {copied ? '복사 완료!' : 'URL 복사하기'}
+                </Sbtn>
+              )}
             </Wrapping>
           </CharLayout>
           <DuplicateCharLayout>

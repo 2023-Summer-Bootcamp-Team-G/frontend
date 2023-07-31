@@ -2,11 +2,12 @@ import { styled } from 'styled-components';
 import LoginInput from '../components/Input/LoginInput';
 import RoundButton from '../components/Btn/RoundBtn';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { baseInstance } from '../apis/config';
 import { userStore } from '../stores/userStore';
 import { motion } from 'framer-motion';
 import { opacityVariants } from '../constants/variants';
+import useCheckAuth from '../hooks/useCheckAuth';
 
 export default function SignUpPage() {
   const [nickname, setNickname] = useState('');
@@ -34,7 +35,11 @@ export default function SignUpPage() {
       console.error(error);
     }
   };
-
+  const authState = useCheckAuth();
+  const ls = JSON.parse(localStorage.getItem('user'));
+  if (authState) {
+    return <Navigate to={`/mypage/${ls.state.userId}`} />;
+  }
   return (
     <BackLayout>
       <Box>

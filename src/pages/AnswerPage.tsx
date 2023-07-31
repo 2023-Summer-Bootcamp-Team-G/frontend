@@ -75,7 +75,8 @@ export default function AnswerPage() {
           },
         });
         const data = response.data.questions;
-
+        setCreatorId(response.data.user_id);
+        setNickName(response.data.nick_name);
         setQuestions([...data.slice(0, 4), ...data.slice(6)]);
       } catch (error) {
         console.error(error);

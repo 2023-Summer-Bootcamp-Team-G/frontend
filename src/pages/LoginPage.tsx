@@ -1,13 +1,19 @@
 import { styled } from 'styled-components';
 import LoginInput from '../components/Input/LoginInput';
 import RoundButton from '../components/Btn/RoundBtn';
-import { Link, useNavigate } from 'react-router-dom';
+import {
+  Link,
+  Navigate,
+  useNavigate,
+  useOutletContext,
+} from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { opacityVariants } from '../constants/variants';
 import { useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';
 import { userStore } from '../stores/userStore';
 import { pollStore } from '../stores/poll';
+import { useCheckAuth } from '../hooks/useCheckAuth';
 
 export default function LoginPage() {
   const [id, setId] = useState('');
@@ -16,6 +22,7 @@ export default function LoginPage() {
   const { setUserId, userId } = userStore(); // userStore에서 꺼내오기
   const { setPoll } = pollStore();
   const { setNickName } = userStore();
+  const authState = useCheckAuth();
 
   useEffect(() => {
     if (id === '') {
@@ -39,6 +46,11 @@ export default function LoginPage() {
       console.error(error);
     }
   };
+  const authState = useCheckAuth();
+  const ls = JSON.parse(localStorage.getItem('user'));
+  if (authState) {
+    return <Navigate to={`/mypage/${ls.state.userId}`} />;
+  }
 
   return (
     <BackLayout>
