@@ -2,13 +2,19 @@ import { styled } from 'styled-components';
 
 type SignBtnProps = {
   title: string;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void | Promise<void>;
+  onClick: any;
   disabled?: boolean;
 };
 
 export default function SignBtn({ title, onClick, disabled }: SignBtnProps) {
   return (
-    <SGtn onClick={onClick} disabled>
+    <SGtn
+      onClick={() => {
+        if (disabled === false) {
+          onClick;
+        } else console.log('no input ');
+      }}
+    >
       {title}
     </SGtn>
   );
