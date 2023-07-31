@@ -6,7 +6,7 @@ import BasicTabs from '../components/Tab/Tab';
 import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
-import { Link, Navigate, useNavigate,useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
 import { pollStore } from '../stores/poll';
@@ -65,7 +65,6 @@ export default function MyPage() {
     localStorage.removeItem('user');
     navigate('/');
   };
-
 
   const durl = dupliUrl || '';
   // 생성자
@@ -130,57 +129,60 @@ export default function MyPage() {
     }
   };
 
-  const authState = useCheckAuth();
-  const ls = JSON.parse(localStorage.getItem('user'));
+  // const authState = useCheckAuth();
+  const ls = JSON.parse(localStorage.getItem('user') || 'null');
 
   return (
     <>
-      <Nav>
-        <Copy>
-          {userId !== '' && (
-            <div>
-              <span
-                className='material-symbols-rounded'
-                style={{
-                  WebkitTransform: 'rotate(120deg)',
-                  transform: 'rotate(120deg)',
-                  color: 'white',
-                }}
-              >
-                link
-              </span>
-              <CopyButton
-                style={{ color: 'white', fontSize: '1.2rem' }}
-                onClick={handleCopyClick}
-                disabled={copied}
-              >
-                {copied ? 'URL 복사하기' : '질문지 공유'}
-              </CopyButton>
-            </div>
-          )}
-        </Copy>
-        <Logout>
-          <span
-            className='material-symbols-rounded'
-            style={{
-              color: 'white',
-              marginLeft: '1rem',
-            }}
-          >
-            account_circle
-          </span>
-          <LogoutBtn
-            style={{
-              textDecoration: 'none',
-              color: 'white',
-              fontSize: '1.2rem',
-            }}
-            onClick={handleLogoutClick}
-          >
-            로그아웃
-          </LogoutBtn>
-        </Logout>
-      </Nav>
+      {ls.state.userId === user_id ? (
+        <Nav>
+          <Copy>
+            {userId !== '' && (
+              <div>
+                <span
+                  className='material-symbols-rounded'
+                  style={{
+                    WebkitTransform: 'rotate(120deg)',
+                    transform: 'rotate(120deg)',
+                    color: 'white',
+                  }}
+                >
+                  link
+                </span>
+                <CopyButton
+                  style={{ color: 'white', fontSize: '1.2rem' }}
+                  onClick={handleCopyClick}
+                  disabled={copied}
+                >
+                  {copied ? 'URL 복사하기' : '질문지 공유'}
+                </CopyButton>
+              </div>
+            )}
+          </Copy>
+          <Logout>
+            <span
+              className='material-symbols-rounded'
+              style={{
+                color: 'white',
+                marginLeft: '1rem',
+              }}
+            >
+              account_circle
+            </span>
+
+            <LogoutBtn
+              style={{
+                textDecoration: 'none',
+                color: 'white',
+                fontSize: '1.2rem',
+              }}
+              onClick={handleLogoutClick}
+            >
+              로그아웃
+            </LogoutBtn>
+          </Logout>
+        </Nav>
+      ) : null}
 
       <Container>
         <BoxContainer title={''}>
@@ -197,9 +199,10 @@ export default function MyPage() {
 
               <Wrapping>
                 <StyledLink to={`/answerroom/${poll}`}>
-                  {ls.state.userId === user_id ? <Sbtn>다시 만들기</Sbtn> : null}
+                  {ls.state.userId === user_id ? (
+                    <Sbtn>다시 만들기</Sbtn>
+                  ) : null}
                 </StyledLink>
-                
               </Wrapping>
             </CharLayout>
             <DuplicateCharLayout>
@@ -220,8 +223,8 @@ export default function MyPage() {
               )}
 
               {ls.state.userId === user_id ? (
-              <Button1 onClick={a}> 중복 캐릭터 만들기</Button1>
-            ) : null}
+                <Button1 onClick={a}> 중복 캐릭터 만들기</Button1>
+              ) : null}
             </DuplicateCharLayout>
           </Top>
 
