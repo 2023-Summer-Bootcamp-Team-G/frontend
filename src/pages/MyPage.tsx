@@ -6,7 +6,7 @@ import BasicTabs from '../components/Tab/Tab';
 import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
 import { pollStore } from '../stores/poll';
@@ -56,35 +56,27 @@ const setMetaTags = ({
 
 export default function MyPage() {
   const [characters, setCharacters] = useState<Character[]>([]);
-  const { userId, nickName, creatorId } = userStore();
+  const { userId, nickName, setNickName, creatorId } = userStore();
   const { poll } = pollStore();
   const { taskId, setTaskId } = taskIdStore();
   const [dupliUrl, setDupliUrl] = useState<string>('');
   const [keyword, setKeyword] = useState<string[]>([]);
   const { keywords } = keywordsStore();
+  const { user_id } = useParams();
+
+  const ls = JSON.parse(localStorage.getItem('user'));
 
   const durl = dupliUrl || '';
   // 생성자
   const getChar = async () => {
     try {
-      let params = {};
-      console.log(userId);
-
-      if (userId === '') {
-        params = {
-          user_id: creatorId,
-        };
-      } else {
-        params = {
-          user_id: userId,
-        };
-      }
-
       const response = await baseInstance.get('/characters', {
-        params: params,
+        params: { user_id: user_id },
       });
 
       setCharacters(response.data.characters);
+      console.log('temp', response.data.nick_name);
+      setNickName(response.data.nick_name);
     } catch (error) {
       console.error(error);
     }
@@ -152,9 +144,9 @@ export default function MyPage() {
 
             <Wrapping>
               <StyledLink to={`/answerroom/${poll}`}>
-                {userId === '' ? null : <Sbtn>다시 만들기</Sbtn>}
+                {ls.state.userId === user_id ? <Sbtn>다시 만들기</Sbtn> : null}
               </StyledLink>
-              {userId !== '' && (
+              {ls.state.userId === user_id && (
                 <Sbtn onClick={handleCopyClick} disabled={copied}>
                   {copied ? '복사 완료!' : 'URL 복사하기'}
                 </Sbtn>
@@ -178,9 +170,9 @@ export default function MyPage() {
               </FlipCardLayout>
             )}
 
-            {userId === '' ? null : (
+            {ls.state.userId === user_id ? (
               <Button1 onClick={a}> 중복 캐릭터 만들기</Button1>
-            )}
+            ) : null}
           </DuplicateCharLayout>
         </Top>
 
