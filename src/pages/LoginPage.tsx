@@ -94,10 +94,11 @@ export default function LoginPage() {
   );
 
   const authState = useCheckAuth();
-  const ls = JSON.parse(localStorage.getItem('user'));
+  const ls = JSON.parse(localStorage.getItem('user') || 'null');
   if (authState) {
     return <Navigate to={`/mypage/${ls.state.userId}`} />;
   }
+
   return (
     <BackLayout>
       <Box>
