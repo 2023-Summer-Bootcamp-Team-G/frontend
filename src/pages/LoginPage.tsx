@@ -26,18 +26,14 @@ export default function LoginPage() {
   // 닉네임, 아이디, 비밀번호, 비밀번호 확인
   const [id, setId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
-  const [passwordConfirm, setPasswordConfirm] = useState<string>('');
 
   // 오류메시지 상태저장
   const [idMessage, setIdMessage] = useState<string>('');
   const [passwordMessage, setPasswordMessage] = useState<string>('');
-  const [passwordConfirmMessage, setPasswordConfirmMessage] =
-    useState<string>('');
 
   // 유효성 검사
   const [isId, setIsId] = useState<boolean>(false);
   const [isPassword, setIsPassword] = useState<boolean>(false);
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(false);
 
 
   useEffect(() => {
@@ -101,23 +97,6 @@ export default function LoginPage() {
     []
   );
 
-  // 비밀번호 확인
-  const onChangePasswordConfirm = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const passwordConfirmCurrent = e.target.value;
-      setPasswordConfirm(passwordConfirmCurrent);
-
-      if (pw === passwordConfirmCurrent) {
-        setPasswordConfirmMessage('비밀번호가 일치합니다.');
-        setIsPasswordConfirm(true);
-      } else {
-        setPasswordConfirmMessage('비밀번호가 일치하지 않습니다!');
-        setIsPasswordConfirm(false);
-      }
-    },
-    [pw]
-  );
-
   const authState = useCheckAuth();
   const ls = JSON.parse(localStorage.getItem('user'));
   if (authState) {
@@ -159,37 +138,14 @@ export default function LoginPage() {
                 </span>
               )}
             </FormBox>
-            <FormBox>
-              <LoginInput
-                title='비밀번호 확인'
-                placeholder='영문+숫자 6자리 이상'
-                value={passwordConfirm}
-                // setValue={setPasswordConfirm}
-                type='password'
-                onChange={onChangePasswordConfirm}
-              />
-              {passwordConfirm.length > 0 && (
-                <span
-                  className={`message ${
-                    isPasswordConfirm ? 'success' : 'error'
-                  }`}
-                >
-                  {passwordConfirmMessage}
-                </span>
-              )}
-            </FormBox>
+            <SignBtn
+              title='로그인'
+              onClick={onSubmit}
+              disabled={!(isId && isPassword)}
+            />
+            <br />
+            <StyledLink to='/signup'>회원가입 하러가기</StyledLink>
           </form>
-          <SignBtn
-            title='로그인'
-            onClick={function (
-              e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
-            ): void | Promise<void> {
-              throw new Error('Function not implemented.');
-            }}
-            disabled={!(isId && isPassword && isPasswordConfirm)}
-          />
-          <br />
-          <StyledLink to='/signup'>회원가입 하러가기</StyledLink>
         </WhiteBox>
         <ImgLayout>
           <Img1 src='https://i.postimg.cc/brLtCYTf/3.png' />
@@ -241,6 +197,15 @@ const WhiteBox = styled(motion.div)`
   align-items: center;
   justify-content: center;
   position: relative;
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* position: absolute; */
+    width: 100%;
+    margin-bottom: 2rem;
+  }
 `;
 const FormBox = styled.div`
   position: relative;

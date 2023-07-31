@@ -30,7 +30,6 @@ export default function SignUpPage() {
     useState<string>('');
 
   // 유효성 검사
-  const [isNickName, setIsNickName] = useState<boolean>(false);
   const [isId, setIsId] = useState<boolean>(false);
   const [isPassword, setIsPassword] = useState<boolean>(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(false);
@@ -84,7 +83,7 @@ export default function SignUpPage() {
       setIdMessage('영문+숫자 조합으로 입력해주세요!');
       setIsId(false);
     } else {
-      setIdMessage('올바른 아이디 형식이에요 : )');
+      setIdMessage('');
       setIsId(true);
     }
 
@@ -101,7 +100,7 @@ export default function SignUpPage() {
         setPasswordMessage('영문+숫자 조합으로 6자리 이상 입력해주세요!');
         setIsPassword(false);
       } else {
-        setPasswordMessage('안전한 비밀번호에요 : )');
+        setPasswordMessage('');
         setIsPassword(true);
       }
     },
@@ -115,12 +114,10 @@ export default function SignUpPage() {
       setPasswordConfirm(passwordConfirmCurrent);
 
       if (pw === passwordConfirmCurrent) {
-        setPasswordConfirmMessage('비밀번호가 일치합니다.');
+        setPasswordConfirmMessage('비밀번호가 일치합니다!');
         setIsPasswordConfirm(true);
       } else {
-        setPasswordConfirmMessage(
-          '비밀번호가 일치하지 않습니다. 다시 확인해 주세요.'
-        );
+        setPasswordConfirmMessage('비밀번호가 일치하지 않습니다.');
         setIsPasswordConfirm(false);
       }
     },
@@ -195,16 +192,12 @@ export default function SignUpPage() {
                 </span>
               )}
             </FormBox>
+            <SignBtn
+              title='회원가입'
+              onClick={onSubmit}
+              disabled={!(isId && isPassword && isPasswordConfirm)}
+            />
           </form>
-          <SignBtn
-            title='회원가입'
-            onClick={function (
-              e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
-            ): void | Promise<void> {
-              throw new Error('Function not implemented.');
-            }}
-            disabled={!(isId && isPassword && isPasswordConfirm)}
-          />
         </WhiteBox>
         <ImgLayout>
           <Img1 src='https://i.postimg.cc/brLtCYTf/3.png' />
@@ -254,6 +247,15 @@ const WhiteBox = styled(motion.div)`
   align-items: center;
   justify-content: center;
   position: relative;
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* position: absolute; */
+    width: 100%;
+    margin-bottom: 2rem;
+  }
 `;
 const FormBox = styled.div`
   position: relative;
