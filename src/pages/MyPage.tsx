@@ -150,12 +150,18 @@ export default function MyPage() {
               {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
             </FlipCardLayout>
 
-            <Link to={`/answerroom/${poll}`}>
-              {userId === '' ? null : <Button title={'캐릭터 다시 만들래요'} />}
-            </Link>
+            <Wrapping>
+              <StyledLink to={`/answerroom/${poll}`}>
+                {userId === '' ? null : <Sbtn>다시 만들기</Sbtn>}
+              </StyledLink>
+              {userId !== '' && (
+                <Sbtn onClick={handleCopyClick} disabled={copied}>
+                  {copied ? '복사 완료!' : 'URL 복사하기'}
+                </Sbtn>
+              )}
+            </Wrapping>
           </CharLayout>
-
-          <CharLayout>
+          <DuplicateCharLayout>
             <Title>중복된 키워드로 만든 {nickName} 님이에요!</Title>
             {dupliUrl === '' ? (
               <img
@@ -175,10 +181,7 @@ export default function MyPage() {
             {userId === '' ? null : (
               <Button1 onClick={a}> 중복 캐릭터 만들기</Button1>
             )}
-            <CopyButton onClick={handleCopyClick} disabled={copied}>
-              {copied ? '복사 완료!' : 'URL 복사하기'}
-            </CopyButton>
-          </CharLayout>
+          </DuplicateCharLayout>
         </Top>
 
         <HorizontalLine />
@@ -198,6 +201,11 @@ const Top = styled.div`
 `;
 
 const CharLayout = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
+const DuplicateCharLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -224,7 +232,6 @@ const HorizontalLine = styled.div`
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
   height: 100%;
 `;
 const Button1 = styled.button`
@@ -245,4 +252,32 @@ const Button1 = styled.button`
     box-shadow: 5px 6px 4px rgba(0, 0, 0, 0.25);
   }
 `;
-const CopyButton = styled.button``;
+
+const Sbtn = styled.button`
+  /* 글자 */
+  color: #fff;
+  text-align: center;
+  font-size: 1.75rem;
+  font-style: normal;
+  font-weight: 800;
+
+  /*네모 박스*/
+  width: 12rem;
+  height: 4.125rem;
+  border-radius: 0.5625rem;
+  background: #222;
+  display: inline-block;
+  &:hover {
+    box-shadow: 5px 6px 4px rgba(0, 0, 0, 0.25);
+  }
+`;
+const StyledLink = styled(Link)`
+  display: inline-block;
+  width: 12rem;
+`;
+const Wrapping = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 1rem;
+`;

@@ -1,19 +1,27 @@
 import { styled } from 'styled-components';
 import LoginInput from '../components/Input/LoginInput';
 import RoundButton from '../components/Btn/RoundBtn';
-import { Link, useNavigate } from 'react-router-dom';
+import {
+  Link,
+  Navigate,
+  useNavigate,
+  useOutletContext,
+} from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { opacityVariants } from '../constants/variants';
 import { MouseEvent, useCallback, useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';
 import { userStore } from '../stores/userStore';
 import { pollStore } from '../stores/poll';
+import { useCheckAuth } from '../hooks/useCheckAuth';
 import SignBtn from '../components/Btn/SignBtn';
+
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const { setNickName, setUserId, userId } = userStore(); // userStore에서 꺼내오기
   const { setPoll } = pollStore();
+
 
   // 닉네임, 아이디, 비밀번호, 비밀번호 확인
   const [id, setId] = useState<string>('');
@@ -26,6 +34,7 @@ export default function LoginPage() {
   // 유효성 검사
   const [isId, setIsId] = useState<boolean>(false);
   const [isPassword, setIsPassword] = useState<boolean>(false);
+
 
   useEffect(() => {
     if (id === '') {
@@ -67,6 +76,7 @@ export default function LoginPage() {
       setIdMessage('');
       setIsId(true);
     }
+
   }, []);
 
   // 비밀번호
@@ -87,6 +97,11 @@ export default function LoginPage() {
     []
   );
 
+  const authState = useCheckAuth();
+  const ls = JSON.parse(localStorage.getItem('user'));
+  if (authState) {
+    return <Navigate to={`/mypage/${ls.state.userId}`} />;
+  }
   return (
     <BackLayout>
       <Box>
