@@ -4,7 +4,7 @@ import RoundButton from '../components/Btn/RoundBtn';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
 import { useNavigate, useParams } from 'react-router-dom';
 import { baseInstance } from '../apis/config';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import NickNameInput from '../components/Input/NickNameInput';
 import { userStore } from '../stores/userStore';
 import { taskIdStore } from '../stores/taskId';
@@ -45,7 +45,13 @@ const setMetaTags = ({
 //-----------------------------------------------------------------------
 export default function AnswerPage() {
   const [questions, setQuestions] = useState<string[]>([]);
-  const [value, setValue] = useState<string[]>([]);
+  // const [value, setValue] = useState<string[]>([]);
+  // questions.length 만큼의 길이를 가진 새 배열을 생성하고, 모든 요소를 null로 채워서 value의 초기 상태로 설정
+  // const [value, setValue] = useState<Array<string | null>>(
+  //   new Array(questions.length).fill(null)
+  // );
+  const [value, setValue] = useState<Array<string | null>>([]); // 초기에 빈 배열로 설정
+
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false); //모달 열리고 닫히고
   const { userId, nickName, setCreatorId, setNickName } = userStore();
@@ -53,6 +59,10 @@ export default function AnswerPage() {
   const [nick, setNick] = useState(''); // 답변자 setNick 추후에 수정
   const { poll_id } = useParams();
   const { setLink } = linkStore();
+
+  // 유효성 검사
+  const [isAnswer, setIsAnswer] = useState<boolean>(false);
+
   const goBack = () => {
     navigate(-1);
   };
@@ -65,6 +75,23 @@ export default function AnswerPage() {
   const handleImageSelect = (name: string) => {
     setSelectedImage(name);
   };
+
+  // useEffect를 이용해서 value 배열의 변화를 감지, 배열의 모든 요소가 존재하는지 검사
+  // value 배열의 모든 요소가 비어있지 않으면 isAnswer를 true로
+  // questions 배열이 변경될 때마다 value 배열도 변경
+  useEffect(() => {
+    setValue(new Array(questions.length).fill(null));
+  }, [questions]);
+
+  // value 배열이 변경될 때마다 isAnswer 상태를 변경
+  useEffect(() => {
+    setIsAnswer(value.every((v: string | null) => v != null && v !== ''));
+  }, [value]);
+
+  // 유효성 검사에 실패할 경우 alert을 띄우는 함수
+  const showAlert = useCallback(() => {
+    alert('질문에 모두 답변해주세요!');
+  }, []);
 
   useEffect(() => {
     const getQuestions = async () => {
@@ -98,6 +125,12 @@ export default function AnswerPage() {
   //-----------post-------------------
 
   const createChar = async () => {
+    // 만약 value 배열의 모든 요소가 비어있지 않다면 캐릭터 생성을 진행하고, 그렇지 않다면 showAlert를 호출하고 함수를 종료합니다.
+    if (!isAnswer) {
+      showAlert();
+      return;
+    }
+
     const answers = [...value];
     if (selectedColor) {
       answers.push(selectedColor);
