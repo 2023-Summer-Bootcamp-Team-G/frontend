@@ -14,6 +14,8 @@ export default function Chart({ serData, ...props }: ChartProps) {
     return null; // or render a loading state, an error message, or anything appropriate
   }
   const options: Highcharts.Options = {
+    colors: ['#FBFFB9', '#FDD692', '#EC7357', '#754F44', '#FFEEE4'],
+    credits: { enabled: false },
     title: {
       text: '',
     },

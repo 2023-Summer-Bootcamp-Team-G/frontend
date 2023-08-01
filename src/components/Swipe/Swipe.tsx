@@ -47,9 +47,9 @@ export default function Swipe() {
         <SwiperSlide>
           <Chart serData={serData[4]} />
         </SwiperSlide>
-        {/* <SwiperSlide>
+        <SwiperSlide>
           <Chart serData={serData[5]} />
-        </SwiperSlide> */}
+        </SwiperSlide>
       </Swiper>
     </>
   );

@@ -7,7 +7,6 @@ import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
 import { pollStore } from '../stores/poll';
 
@@ -53,15 +52,17 @@ export default function MyPage() {
   const [characters, setCharacters] = useState<Character[]>([]);
   const { userId, nickName, setNickName } = userStore();
   const { poll } = pollStore();
-  const { taskId, setTaskId } = taskIdStore();
-  const [dupliUrl, setDupliUrl] = useState<string>('');
-  const [keyword, setKeyword] = useState<string[]>([]);
+  const [dupltask, setDuplTask] = useState(''); //중복 task_id
+  const [dupliUrl, setDupliUrl] = useState<string>(); //중복 이미지 url
+  const [keyword, setKeyword] = useState<string[]>([]); //중복 키워드
   const { user_id } = useParams();
   const navigate = useNavigate();
   const handleLogoutClick = () => {
     localStorage.removeItem('user');
     navigate('/');
   };
+  const [loading, setLoading] = useState(true);
+  const shouldContinue = true;
 
   const durl = dupliUrl || '';
   // 생성자
@@ -72,39 +73,72 @@ export default function MyPage() {
       });
 
       setCharacters(response.data.characters);
-      console.log('temp', response.data.nick_name);
+
       setNickName(response.data.nick_name);
     } catch (error) {
       console.error(error);
     }
   };
 
-  // 중복
-  function a() {
-    createDuplicate();
-    getImages();
-  }
-
+  // ------------------------------------------------중복
   const createDuplicate = async () => {
-    const data = { user_id: userId };
-
+    const data = { user_id: user_id };
     const response = await baseInstance.post('/characters/duplicate', data);
-    console.log(response.data);
-    setTaskId(response.data.task_id);
+    setDuplTask(response.data.task_id); //중복 taskid설정
   };
+
+  useEffect(() => {
+    getImages();
+  }, [dupltask]);
 
   const getImages = async () => {
-    try {
-      const response = await baseInstance.get(`/characters/urls/${taskId}`);
+    // try {
+    //   const response = await baseInstance.get(`/characters/urls/${dupltask}`);
+    //   if (response.status === 200) {
+    //     setDupliUrl(response.data.result_url); //중복
+    //     setKeyword(response.data.keyword);
 
-      setDupliUrl(response.data.result_url[0]);
-      setKeyword(response.data.keyword);
-      console.log(dupliUrl);
-      console.log(response.data.keyword);
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+
+    // }
+    try {
+      while (shouldContinue) {
+        const response = await baseInstance.get(`/characters/urls/${dupltask}`);
+        const statusCode = response.status;
+        const resultUrl = response.data.result_url;
+        const keyword = response.data.keyword;
+
+        if (statusCode === 202) {
+          // 대기 중이므로 재시도
+          await new Promise((resolve) => setTimeout(resolve, 4000)); // 4초 후에 다시 폴링
+        } else if (statusCode === 200) {
+          // 폴링 완료
+          setDupliUrl(resultUrl); //중복
+          setKeyword(keyword);
+          setLoading(false);
+          break;
+        } else {
+          // 문제 발생
+          // setLoading(false);
+          throw new Error(
+            `Failed to fetch URLs and keywords. Status code: ${statusCode}`
+          );
+        }
+      }
     } catch (error) {
+      // 에러 처리
       console.error(error);
+      // alert으로 에러 메시지를 알려줄 수도 있습니다.
     }
   };
+
+  function handleButtonClick() {
+    createDuplicate();
+  }
+
+  //-------------------------------------------------중복
 
   useEffect(() => {
     getChar();
@@ -113,8 +147,8 @@ export default function MyPage() {
       description: '친구들이 만들어준 캐릭터들을 확인해보세요!',
       imageUrl: 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 배포하고나서 이미지 url 바꿔주기 // 일단 메인페이지 이미지 넣어놈
     });
-    console.log(keyword);
   }, []);
+
   const [copied, setCopied] = useState(false); // 복사 여부 상태 관리
   const { link } = linkStore();
 
@@ -204,7 +238,7 @@ export default function MyPage() {
             </CharLayout>
             <DuplicateCharLayout>
               <Title>중복된 키워드로 만든 {nickName} 님이에요!</Title>
-              {dupliUrl === '' ? (
+              {/* {dupliUrl === '' ? (
                 <img
                   style={{
                     width: '25rem',
@@ -213,14 +247,21 @@ export default function MyPage() {
                   }}
                   src='https://i.postimg.cc/G22H5fH9/Group-374.png'
                 />
+              ) : ( */}
+              {loading ? (
+                <div>loading...</div>
               ) : (
                 <FlipCardLayout>
-                  <FlipCard imageURL={durl} keywords={[]} />{' '}
+                  <FlipCard imageURL={durl} keywords={keyword} />{' '}
                 </FlipCardLayout>
               )}
 
+              {/* )} */}
               {ls.state.userId === user_id ? (
-                <Button1 onClick={a}> 중복 캐릭터 만들기</Button1>
+                <Button1 onClick={handleButtonClick}>
+                  {' '}
+                  중복 캐릭터 만들기
+                </Button1>
               ) : null}
             </DuplicateCharLayout>
           </Top>
