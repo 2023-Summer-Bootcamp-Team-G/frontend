@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const BASE_URL =
-  import.meta.env.MODE === 'production'
+  import.meta.env.MODE === 'development'
     ? '/api'
     : 'http://3.35.88.150:8000/api';
 
