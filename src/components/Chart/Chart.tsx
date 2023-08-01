@@ -10,9 +10,11 @@ export interface ChartProps extends HighchartsReact.Props {
 
 export default function Chart({ serData, ...props }: ChartProps) {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
+
   if (!serData || !serData.pieChartData) {
     return null; // or render a loading state, an error message, or anything appropriate
   }
+
   const options: Highcharts.Options = {
     colors: ['#FBFFB9', '#FDD692', '#EC7357', '#754F44', '#FFEEE4'],
     credits: { enabled: false },
@@ -41,6 +43,7 @@ export default function Chart({ serData, ...props }: ChartProps) {
         keys: ['name', 'y', 'selected', 'sliced'],
         data: serData.pieChartData,
         showInLegend: true,
+        animation: { duration: 1500 },
       },
     ],
   };

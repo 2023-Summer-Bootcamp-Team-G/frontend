@@ -32,24 +32,11 @@ export default function Swipe() {
         modules={[Keyboard, Pagination, Navigation]}
         className='mySwiper'
       >
-        <SwiperSlide>
-          <Chart serData={serData[0]} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Chart serData={serData[1]} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Chart serData={serData[2]} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Chart serData={serData[3]} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Chart serData={serData[4]} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Chart serData={serData[5]} />
-        </SwiperSlide>
+        {serData.map((data: any, index: number) => (
+          <SwiperSlide key={index}>
+            <Chart serData={data} />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </>
   );

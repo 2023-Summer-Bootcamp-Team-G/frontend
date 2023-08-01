@@ -9,13 +9,7 @@ import { userStore } from '../stores/userStore';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { linkStore } from '../stores/link';
 import { pollStore } from '../stores/poll';
-
-interface Character {
-  id: number;
-  result_url: string;
-  nick_name: string;
-  keyword?: string[];
-}
+//character type 선언해주기
 
 const setMetaTags = ({
   title = "It's me?!", // 기본 타이틀
@@ -49,7 +43,8 @@ const setMetaTags = ({
 };
 
 export default function MyPage() {
-  const [characters, setCharacters] = useState<Character[]>([]);
+  const [characters, setCharacters] = useState();
+  const [duplCharacters, setDuplCharacters] = useState();
   const { userId, nickName, setNickName } = userStore();
   const { poll } = pollStore();
   const [dupltask, setDuplTask] = useState(''); //중복 task_id
@@ -65,14 +60,15 @@ export default function MyPage() {
   const shouldContinue = true;
 
   const durl = dupliUrl || '';
-  // 생성자
+  // --------------------------------------------- 생성자
   const getChar = async () => {
     try {
       const response = await baseInstance.get('/characters', {
         params: { user_id: user_id },
       });
 
-      setCharacters(response.data.characters);
+      setCharacters(response.data.my_character);
+      setDuplCharacters(response.data.duplicate_character);
 
       setNickName(response.data.nick_name);
     } catch (error) {
@@ -88,36 +84,27 @@ export default function MyPage() {
   };
 
   useEffect(() => {
+    console.log(dupltask);
     getImages();
   }, [dupltask]);
 
   const getImages = async () => {
-    // try {
-    //   const response = await baseInstance.get(`/characters/urls/${dupltask}`);
-    //   if (response.status === 200) {
-    //     setDupliUrl(response.data.result_url); //중복
-    //     setKeyword(response.data.keyword);
-
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-
-    // }
     try {
       while (shouldContinue) {
         const response = await baseInstance.get(`/characters/urls/${dupltask}`);
         const statusCode = response.status;
-        const resultUrl = response.data.result_url;
-        const keyword = response.data.keyword;
+        // const resultUrl = response.data.result_url;
+        // const keyword = response.data.keyword;
 
         if (statusCode === 202) {
           // 대기 중이므로 재시도
           await new Promise((resolve) => setTimeout(resolve, 4000)); // 4초 후에 다시 폴링
         } else if (statusCode === 200) {
+          console.log('fin');
           // 폴링 완료
-          setDupliUrl(resultUrl); //중복
-          setKeyword(keyword);
-          setLoading(false);
+          // setDupliUrl(resultUrl); //중복
+          // setKeyword(keyword);
+          // setLoading(false);
           break;
         } else {
           // 문제 발생
@@ -222,8 +209,8 @@ export default function MyPage() {
               <Title>{nickName} 님 본인이 만든 캐릭터에요!</Title>
               <FlipCardLayout>
                 <FlipCard
-                  imageURL={characters[0]?.result_url}
-                  keywords={characters[0]?.keyword}
+                  imageURL={characters?.result_url}
+                  keywords={characters?.keyword}
                 />
                 {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
               </FlipCardLayout>
@@ -248,13 +235,13 @@ export default function MyPage() {
                   src='https://i.postimg.cc/G22H5fH9/Group-374.png'
                 />
               ) : ( */}
-              {loading ? (
-                <div>loading...</div>
-              ) : (
-                <FlipCardLayout>
-                  <FlipCard imageURL={durl} keywords={keyword} />{' '}
-                </FlipCardLayout>
-              )}
+
+              <FlipCardLayout>
+                <FlipCard
+                  imageURL={duplCharacters?.result_url}
+                  keywords={duplCharacters?.keyword}
+                />{' '}
+              </FlipCardLayout>
 
               {/* )} */}
               {ls.state.userId === user_id ? (
