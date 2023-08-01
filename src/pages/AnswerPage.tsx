@@ -45,11 +45,6 @@ const setMetaTags = ({
 //-----------------------------------------------------------------------
 export default function AnswerPage() {
   const [questions, setQuestions] = useState<string[]>([]);
-  // const [value, setValue] = useState<string[]>([]);
-  // questions.length 만큼의 길이를 가진 새 배열을 생성하고, 모든 요소를 null로 채워서 value의 초기 상태로 설정
-  // const [value, setValue] = useState<Array<string | null>>(
-  //   new Array(questions.length).fill(null)
-  // );
   const [value, setValue] = useState<Array<string | null>>([]); // 초기에 빈 배열로 설정
 
   const navigate = useNavigate();
@@ -125,19 +120,21 @@ export default function AnswerPage() {
   //-----------post-------------------
 
   const createChar = async () => {
-    // 만약 value 배열의 모든 요소가 비어있지 않다면 캐릭터 생성을 진행하고, 그렇지 않다면 showAlert를 호출하고 함수를 종료합니다.
-    if (!isAnswer) {
+    // 만약 value 배열의 모든 요소가 비어있지 않고, selectedColor와 selectedImage가 모두 null이 아니라면
+    // 캐릭터 생성을 진행하고, 그렇지 않다면 showAlert를 호출하고 함수를 종료합니다.
+    if (!isAnswer || !selectedColor || !selectedImage) {
       showAlert();
       return;
     }
 
-    const answers = [...value];
-    if (selectedColor) {
-      answers.push(selectedColor);
-    }
-    if (selectedImage) {
-      answers.push(selectedImage);
-    }
+    const answers = [...value, selectedColor, selectedImage];
+    // const answers = [...value];
+    // if (selectedColor) {
+    //   answers.push(selectedColor);
+    // }
+    // if (selectedImage) {
+    //   answers.push(selectedImage);
+    // }
     const json = {
       poll_id: poll_id,
       creatorName: userId !== '' ? nickName : nick,
