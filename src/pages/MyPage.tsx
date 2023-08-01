@@ -10,12 +10,12 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
 import { pollStore } from '../stores/poll';
-import { keywordsStore } from '../stores/keywords';
 
 interface Character {
   id: number;
   result_url: string;
   nick_name: string;
+  keyword?: string[];
 }
 
 const setMetaTags = ({
@@ -56,7 +56,6 @@ export default function MyPage() {
   const { taskId, setTaskId } = taskIdStore();
   const [dupliUrl, setDupliUrl] = useState<string>('');
   const [keyword, setKeyword] = useState<string[]>([]);
-  const { keywords } = keywordsStore();
   const { user_id } = useParams();
   const navigate = useNavigate();
   const handleLogoutClick = () => {
@@ -190,7 +189,7 @@ export default function MyPage() {
               <FlipCardLayout>
                 <FlipCard
                   imageURL={characters[0]?.result_url}
-                  keywords={keywords}
+                  keywords={characters[0]?.keyword}
                 />
                 {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
               </FlipCardLayout>

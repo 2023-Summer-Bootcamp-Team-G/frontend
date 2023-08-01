@@ -4,7 +4,7 @@ import KeywordTag from '../KeywordTag/KeywordTag';
 
 type FlipCardProps = {
   imageURL: string;
-  keywords: any;
+  keywords: string[] | undefined;
   // onSubmit: () => Promise<void>;
 };
 
@@ -25,7 +25,7 @@ export default function FlipCard({ imageURL, keywords }: FlipCardProps) {
         />
       </CharBox>
       <TagBox boxChange={boxChange}>
-        {keywords.map((keyword: any, index: number) => (
+        {keywords?.map((keyword: any, index: number) => (
           <KeywordTag key={index} title={keyword} />
         ))}
       </TagBox>
