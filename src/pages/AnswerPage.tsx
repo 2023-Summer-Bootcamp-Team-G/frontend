@@ -113,7 +113,7 @@ export default function AnswerPage() {
       imageUrl: 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 배포하고나서 이미지 url 바꿔주기 // 일단 메인페이지 이미지 넣어놈
     });
 
-    if (nickName == '') {
+    if (userId == '') {
       setModalOpen(true);
     }
   }, []);
