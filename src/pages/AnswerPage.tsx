@@ -15,7 +15,7 @@ import ColorBtn from '../components/choice/color';
 const setMetaTags = ({
   title = "It's me?!", // 기본 타이틀
   description = '친구들의 답변으로 닮은 캐릭터를 만들어줘요!', // 기본 설명
-  imageUrl = 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 기본 사이트 이미지 경로
+  imageUrl = 'https://i.postimg.cc/5yHTm09w/Main.png', // 기본 사이트 이미지 경로
 }) => {
   const titleTag = document.querySelector('meta[property="og:title"]'); // document.querySelector를 사용하여 index.html의 해당 메타 태그를 선택
 
@@ -110,7 +110,7 @@ export default function AnswerPage() {
     setMetaTags({
       title: "It's me?! 질문 list",
       description: '친구가 질문에 답변해주기를 요청하고 있어요!',
-      imageUrl: 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 배포하고나서 이미지 url 바꿔주기 // 일단 메인페이지 이미지 넣어놈
+      imageUrl: 'https://i.postimg.cc/5yHTm09w/Main.png', // 배포하고나서 이미지 url 바꿔주기 // 일단 메인페이지 이미지 넣어놈
     });
 
     if (userId == '') {
