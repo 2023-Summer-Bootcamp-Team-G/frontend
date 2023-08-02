@@ -3,12 +3,12 @@ import BoxContainer from '../components/BoxContainer/BoxContainer';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import FlipModal from '../components/FlipCard/FlipModal';
-import { baseInstance } from '../apis/config';
 import Loading from '../components/Loading/Loading';
 import { urlsStore } from '../stores/urls';
 import { keywordsStore } from '../stores/keywords';
 import { taskIdStore } from '../stores/taskId';
 import { userStore } from '../stores/userStore';
+import { getImages } from '../utils/utils';
 import Container from '../styles/Container';
 
 export default function ResultPage() {
@@ -27,30 +27,19 @@ export default function ResultPage() {
   //로딩스피너
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 0);
-  }, []);
-
   //이미지 키워드 API
   const { taskId } = taskIdStore();
   const { urls, setUrls, setIndex } = urlsStore(); // userStore에서 꺼내오기
   const { setKeywords } = keywordsStore();
 
   useEffect(() => {
-    const getImages = async () => {
-      try {
-        const response = await baseInstance.get(`/characters/urls/${taskId}`);
-
-        setUrls(response.data.result_url);
-        console.log(response.data.result_url);
-        setKeywords(response.data.keyword);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getImages();
+    getImages(taskId).then((data) => {
+      setUrls(data.result_url);
+      setKeywords(data.keyword);
+      setLoading(false);
+    }).catch((error) => {
+      console.error(error);
+    });
   }, []);
 
   return (

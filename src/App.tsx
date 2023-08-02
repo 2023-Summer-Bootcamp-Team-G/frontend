@@ -10,6 +10,9 @@ import MyPage from './pages/MyPage';
 import ResultPage from './pages/ResultPage';
 import ErrorPage from './pages/ErrorPage';
 
+import * as tf from './utils/debug'; // 테스트 용도
+(window as any).tf = tf;
+
 function App() {
   return (
     <>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import styled from 'styled-components';
 
 type ButtonProps = {
@@ -11,35 +11,68 @@ interface StyledButtonProps {
   color: string;
 }
 
+// const ColorButton: React.FC<
+//   ButtonProps & { clicked: boolean; onClick: () => void }
+// > = ({ color, clicked, onClick }) => {
+//   const Button = styled.button<StyledButtonProps>`
+//     width: 3.125rem;
+//     height: 3.125rem;
+//     background: ${(props) => props.color};
+//     background: ${(props) =>
+//       props.clicked
+//         ? `url('${
+//             props.color === '#ffff'
+//               ? 'https://i.postimg.cc/Vvy6fV8W/Pngtree-check-mark-icon-3566306.png'
+//               : 'https://i.postimg.cc/W3vtGydY/Pngtree-correct-icon-4490392.png'
+//           }') center center / cover no-repeat, ${props.color}`
+//         : props.color};
+//     border: ${(props) =>
+//       props.color === '#ffff' ? 'solid 0.08rem gray' : 'none'};
+//     box-shadow: ${(props) =>
+//       props.clicked ? '2px 2px 1px 1px rgba(0, 0, 0, 0.25)' : 'none'};
+//     &:active {
+//       filter: brightness(80%);
+//     }
+//     &:hover {
+//       box-shadow: 2px 2px 1px 1px rgba(0, 0, 0, 0.25);
+//     }
+//   `;
+
+//   return <Button color={color} onClick={onClick} clicked={clicked} />;
+// };
+
+const StyledColorButton = styled.button.withConfig({
+  shouldForwardProp: (prop) => !['clicked'].includes(prop),
+}) <StyledButtonProps>`
+  width: 3.125rem;
+  height: 3.125rem;
+  background: ${(props) => props.color};
+  background: ${(props) =>
+    props.clicked
+      ? `url('${props.color === '#ffff'
+        ? 'https://i.postimg.cc/Vvy6fV8W/Pngtree-check-mark-icon-3566306.png'
+        : 'https://i.postimg.cc/W3vtGydY/Pngtree-correct-icon-4490392.png'
+      }') center center / cover no-repeat, ${props.color}`
+      : props.color};
+  border: ${(props) =>
+    props.color === '#ffff' ? 'solid 0.08rem gray' : 'none'};
+  box-shadow: ${(props) =>
+    props.clicked ? '2px 2px 1px 1px rgba(0, 0, 0, 0.25)' : 'none'};
+  &:active {
+    filter: brightness(80%);
+  }
+  &:hover {
+    box-shadow: 2px 2px 1px 1px rgba(0, 0, 0, 0.25);
+  }
+`;
+
 const ColorButton: React.FC<
   ButtonProps & { clicked: boolean; onClick: () => void }
-> = ({ color, clicked, onClick }) => {
-  const Button = styled.button<StyledButtonProps>`
-    width: 3.125rem;
-    height: 3.125rem;
-    background: ${(props) => props.color};
-    background: ${(props) =>
-      props.clicked
-        ? `url('${
-            props.color === '#ffff'
-              ? 'https://i.postimg.cc/Vvy6fV8W/Pngtree-check-mark-icon-3566306.png'
-              : 'https://i.postimg.cc/W3vtGydY/Pngtree-correct-icon-4490392.png'
-          }') center center / cover no-repeat, ${props.color}`
-        : props.color};
-    border: ${(props) =>
-      props.color === '#ffff' ? 'solid 0.08rem gray' : 'none'};
-    box-shadow: ${(props) =>
-      props.clicked ? '2px 2px 1px 1px rgba(0, 0, 0, 0.25)' : 'none'};
-    &:active {
-      filter: brightness(80%);
-    }
-    &:hover {
-      box-shadow: 2px 2px 1px 1px rgba(0, 0, 0, 0.25);
-    }
-  `;
-
-  return <Button color={color} onClick={onClick} clicked={clicked} />;
-};
+> = memo(({ color, clicked, onClick }) => {
+  return (
+    <StyledColorButton color={color} onClick={onClick} clicked={clicked} />
+  );
+});
 
 export default function ColorBtn({
   onSelect,

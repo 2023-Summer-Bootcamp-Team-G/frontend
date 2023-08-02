@@ -11,6 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { idStore } from '../../stores/id';
 import Swipe from '../Swipe/Swipe';
 import { TestStore } from '../../stores/testStore';
+import { isLoggedIn } from '../../utils/utils';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -88,7 +89,7 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   const getChart = async () => {
     try {
       const response = await baseInstance.get('/characters/chart', {
-        params: { user_id: user_id },
+        params: isLoggedIn() ? {} : { user_id: user_id },
       });
 
       setServerData1(response.data); //test
@@ -129,7 +130,7 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   const getCharacters = async () => {
     try {
       const response = await baseInstance.get('/characters', {
-        params: { user_id: user_id },
+        params: isLoggedIn() ? {} : { user_id: user_id },
       });
       setCharacters(response.data.characters);
     } catch (error) {

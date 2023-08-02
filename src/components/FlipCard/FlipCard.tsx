@@ -18,11 +18,15 @@ export default function FlipCard({ imageURL, keywords }: FlipCardProps) {
   return (
     <BoxLayout onClick={handleBoxClick}>
       <CharBox boxChange={boxChange}>
-        <img
+        {imageURL ? <img
           style={{ width: '25rem', height: '25rem', borderRadius: '0.63rem' }}
           src={imageURL}
-          alt='UserChar'
-        />
+        /> :
+          <img
+            style={{ width: '25rem', height: '25rem', borderRadius: '0.63rem' }}
+            src='https://i.postimg.cc/G22H5fH9/Group-374.png'
+          />
+        }
       </CharBox>
       <TagBox boxChange={boxChange}>
         {keywords?.map((keyword: any, index: number) => (

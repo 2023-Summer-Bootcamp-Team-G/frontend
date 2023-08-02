@@ -64,6 +64,7 @@ export default function AnswerPage() {
   };
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const handleColorSelect = (name: string) => {
+    console.log(name);
     setSelectedColor(name);
   };
 
