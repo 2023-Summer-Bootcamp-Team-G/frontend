@@ -317,9 +317,9 @@ const FlipCardLayout = styled.div`
 const HorizontalLine = styled.div`
   width: 75rem;
   height: 1px;
-  background-color: #000;
+  background-color: 'transparent';
   margin-top: 1.25rem;
-  margin-bottom: 2.5rem;
+  /* margin-bottom: 2.5rem; */
 `;
 
 const Button1 = styled.button`

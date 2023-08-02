@@ -43,3 +43,17 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* Navigation Buttons 색상 변경 */
+.swiper-button-next,
+.swiper-button-prev {
+  color: darkgray;
+}
+
+/* Pagination Bullets 색상 변경 */
+.swiper-pagination-bullet-active {
+  background: rgb(149, 149, 149);
+}
+.swiper-pagination {
+  color: #ececec;
+}

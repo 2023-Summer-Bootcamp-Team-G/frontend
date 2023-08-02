@@ -16,7 +16,29 @@ export default function Chart({ serData, ...props }: ChartProps) {
   }
 
   const options: Highcharts.Options = {
-    colors: ['#FBFFB9', '#FDD692', '#EC7357', '#754F44', '#FFEEE4'],
+    colors: [
+      '#FFF380',
+      '#f9d088',
+      '#EC7357',
+      '#C27664',
+      '#FF6D60',
+      '#f9b028',
+      '#FFDB58',
+      '#754F44',
+      '#73A9AD',
+      '#025464',
+      '#99A98F',
+      '#C9DBB2',
+      '#9CA777',
+      '#ABC4AA',
+      '#7C9070',
+      '#539165',
+      '#183A1D',
+      '#4F200D',
+      '#B99B6B',
+      '#A9907E',
+      '#675D50',
+    ],
     credits: { enabled: false },
     title: {
       text: '',
