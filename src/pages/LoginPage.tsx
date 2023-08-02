@@ -132,7 +132,8 @@ export default function LoginPage() {
             </FormBox>
             <SignBtn
               title='로그인'
-              onClick={onSubmit}
+              type='submit'
+              // onClick={onSubmit}
               disabled={!(isId && isPassword)}
             />
             <br />

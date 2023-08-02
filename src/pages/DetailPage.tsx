@@ -44,7 +44,7 @@ export default function DetailPage() {
   }, []);
 
   return (
-    <>
+    <Container>
       <CloseButton onClick={goBack}>
         <span
           style={{ position: 'absolute' }}
@@ -64,7 +64,7 @@ export default function DetailPage() {
           ))}
         </Layout>
       </BoxContainer>
-    </>
+    </Container>
   );
 }
 
@@ -92,4 +92,10 @@ const CloseButton = styled.button`
   left: 82rem;
   top: 8rem;
   cursor: pointer;
+`;
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 `;

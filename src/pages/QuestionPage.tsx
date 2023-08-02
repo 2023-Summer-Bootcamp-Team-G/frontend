@@ -12,19 +12,19 @@ import { pollStore } from '../stores/poll';
 export default function QuestionPage() {
   const initQuestions = [
     '나를 동물로 표현한다면 어떤 동물이야?',
-    '내가 자주 하고다니는 악세사리는?',
+    '내가 자주 하고다니는 악세사리 혹은 옷은?',
     '내가 자주 들고다니는 물건은 뭐야?',
     '내가 자주 나타나는 장소는 어디야?',
-    '내가 자주 들고다니는 물건은 뭐야?',
-    '내가 자주 나타나는 장소는 어디야?',
+    '나를 색으로 표현한다면 무슨 색이야?',
+    '나는 어떤 그림체가 어울려?',
   ];
   const initQuestionSrc = [
     'https://i.postimg.cc/BZHxwHHJ/bear.png',
     'https://i.postimg.cc/ydvzVkSx/emoji-smiling-face-with-sunglasses.png',
     'https://i.postimg.cc/qBWpg656/emoji-books.png',
     'https://i.postimg.cc/sX2N4Kvf/emoji-house-with-garden.png',
-    'https://i.postimg.cc/qBWpg656/emoji-books.png',
-    'https://i.postimg.cc/sX2N4Kvf/emoji-house-with-garden.png',
+    'https://i.postimg.cc/LX4r020p/image-9.png',
+    'https://i.postimg.cc/yYqz74DF/image-10.png',
   ];
   const [questions] = useState(initQuestions);
   const [addQ, setAddQ] = useState(initQuestions); // 고정 + 추가 질문 하나로 모인 배열

@@ -106,7 +106,6 @@ const PicLayout = styled.div`
   margin: auto;
 `;
 const Pic = styled(motion.div)`
-  background: blue;
   width: 16.875rem;
   height: 16.875rem;
   border-radius: 0.63rem;
