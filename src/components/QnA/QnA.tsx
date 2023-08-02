@@ -36,7 +36,7 @@ const Answer = styled.div`
   display: flex;
   align-items: center;
   width: 62.5rem;
-  height: 4.5rem;
+  min-height: 3.5rem;
   border-radius: 0.875rem;
   background: #f0f0f0;
   color: black;
@@ -45,4 +45,5 @@ const Answer = styled.div`
   font-weight: 400;
   margin-left: 1.5rem;
   padding-left: 1.55rem;
+  padding: 0.6rem 0.4rem 0.6rem 1.55rem;
 `;
