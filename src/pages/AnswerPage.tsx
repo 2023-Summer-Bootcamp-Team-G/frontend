@@ -9,8 +9,8 @@ import NickNameInput from '../components/Input/NickNameInput';
 import { userStore } from '../stores/userStore';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
-import ImageList from '../components/Choice/Choice';
-import ColorBtn from '../components/Choice/Color';
+import ImageList from '../components/Choice/choice';
+import ColorBtn from '../components/Choice/color';
 import Container from '../styles/Container';
 
 const setMetaTags = ({

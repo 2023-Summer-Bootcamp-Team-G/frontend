@@ -59,7 +59,7 @@ const TA = styled(TextAreaAutoSize)`
   display: flex;
   align-items: center;
   width: 55rem;
-  min-height: 4rem;
+  min-height: 2.5rem;
   border-radius: 0.875rem;
   background: #f0f0f0;
   color: black;
