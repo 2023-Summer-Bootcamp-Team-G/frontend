@@ -7,8 +7,8 @@ import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { linkStore } from '../stores/link';
 import { pollStore } from '../stores/poll';
+import { getImages, isLoggedIn } from '../utils/utils';
 
 import Container from '../styles/Container';
 import BoxInDog from '../components/Loading/BoxInDog';
@@ -60,24 +60,20 @@ export default function MyPage() {
     useState<DuplCharacterData | null>();
   const { userId, nickName, setNickName } = userStore();
   const { poll } = pollStore();
-  const [dupltask, setDuplTask] = useState(''); //중복 task_id
+  // const [dupltask, setDuplTask] = useState(''); //중복 task_id
   const { user_id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const shouldContinue = true;
 
   // --------------------------------------------- 생성자
   const getChar = async () => {
     try {
       const response = await baseInstance.get('/characters', {
-        params: { user_id: user_id },
+        params: isLoggedIn() ? {} : { user_id: user_id },
       });
       setCharacters(response.data.characters);
-
       setMyCharacters(response.data.my_character);
-
       setDuplCharacters(response.data.duplicate_character);
-
       setNickName(response.data.nick_name);
     } catch (error) {
       console.error(error);
@@ -89,51 +85,32 @@ export default function MyPage() {
     const data = { user_id: user_id };
     try {
       const response = await baseInstance.post('/characters/duplicate', data);
-      setDuplTask(response.data.task_id); // 중복 taskid 설정
+
+      setLoading(true);
+
+      getImages(response.data.task_id).then((data) => {
+        setDuplCharacters({ result_url: data.result_url, keyword: data.keyword });
+        setLoading(false);
+      }).catch((error) => {
+        console.error(error);
+        alert('이미지 생성에 실패했어요!');
+      });
     } catch (error) {
       alert('답변이 아직 다 모이지 않았어요!');
     }
   };
 
-  useEffect(() => {
-    getImages();
-  }, [dupltask]);
+  // useEffect(() => {
+  //   // setLoading(true);
 
-  const getImages = async () => {
-    try {
-      while (shouldContinue) {
-        const response = await baseInstance.get(`/characters/urls/${dupltask}`);
-        const statusCode = response.status;
-        setLoading(true);
-
-        if (statusCode === 202) {
-          // 대기 중이므로 재시도
-          await new Promise((resolve) => setTimeout(resolve, 4000)); // 4초 후에 다시 폴링
-        } else if (statusCode === 200) {
-          baseInstance
-            .get('/characters', {
-              params: { user_id: user_id },
-            })
-            .then((response) => {
-              setDuplCharacters(response.data.duplicate_character);
-              setLoading(false);
-            })
-            .catch((error) => {
-              console.log(error);
-              alert('이미지 생성에 실패했어요!');
-            });
-          break;
-        } else {
-          throw new Error(
-            `Failed to fetch URLs and keywords. Status code: ${statusCode}`
-          );
-        }
-      }
-    } catch (error) {
-      // 에러 처리
-      console.error(error);
-    }
-  };
+  //   // getImages(dupltask).then((data) => {
+  //   //   setDuplCharacters({ result_url: data.result_url, keyword: data.keyword });
+  //   //   setLoading(false);
+  //   // }).catch((error) => {
+  //   //   console.error(error);
+  //   //   alert('이미지 생성에 실패했어요!');
+  //   // });
+  // }, [dupltask]);
 
   function handleButtonClick() {
     if (characters?.length === 0) {
@@ -153,9 +130,11 @@ export default function MyPage() {
   }, []);
 
   const [copied, setCopied] = useState(false); // 복사 여부 상태 관리
-  const { link } = linkStore();
 
   const handleCopyClick = () => {
+    const location = window.location
+    const link = `${location.protocol}//${location.host}/answerroom/${poll}`;
+
     if (link) {
       navigator.clipboard.writeText(link).then(() => {
         setCopied(true);
@@ -338,9 +317,9 @@ const FlipCardLayout = styled.div`
 const HorizontalLine = styled.div`
   width: 75rem;
   height: 1px;
-  background-color: #000;
+  background-color: 'transparent';
   margin-top: 1.25rem;
-  margin-bottom: 2.5rem;
+  /* margin-bottom: 2.5rem; */
 `;
 
 const Button1 = styled.button`
