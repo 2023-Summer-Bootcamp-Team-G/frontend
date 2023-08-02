@@ -235,7 +235,7 @@ const BackLayout = styled.div`
 `;
 const WhiteBox = styled(motion.div)`
   width: 36rem;
-  height: 43rem;
+  height: 50rem;
   margin-top: 3rem;
   margin-left: 9rem;
   background: white;
@@ -252,7 +252,7 @@ const WhiteBox = styled(motion.div)`
     justify-content: center;
     /* position: absolute; */
     width: 100%;
-    margin-bottom: 2rem;
+    /* margin-bottom: 1rem; */
   }
 `;
 const FormBox = styled.div`

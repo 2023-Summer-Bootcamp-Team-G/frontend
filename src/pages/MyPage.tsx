@@ -12,8 +12,8 @@ import { pollStore } from '../stores/poll';
 
 import Lottie from 'lottie-react';
 import loadingLottie from '../assets/animation_lkt9dpm7.json';
+import Container from '../styles/Container';
 //character type 선언해주기
-
 
 const setMetaTags = ({
   title = "It's me?!", // 기본 타이틀
@@ -67,8 +67,6 @@ export default function MyPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const shouldContinue = true;
-
-
 
   // --------------------------------------------- 생성자
   const getChar = async () => {
@@ -369,11 +367,7 @@ const HorizontalLine = styled.div`
   margin-top: 1.25rem;
   margin-bottom: 2.5rem;
 `;
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 100%;
-`;
+
 const Button1 = styled.button`
   /* 글자 */
   color: #fff;
