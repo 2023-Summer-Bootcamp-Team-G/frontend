@@ -11,41 +11,11 @@ interface StyledButtonProps {
   color: string;
 }
 
-// const ColorButton: React.FC<
-//   ButtonProps & { clicked: boolean; onClick: () => void }
-// > = ({ color, clicked, onClick }) => {
-//   const Button = styled.button<StyledButtonProps>`
-//     width: 3.125rem;
-//     height: 3.125rem;
-//     background: ${(props) => props.color};
-//     background: ${(props) =>
-//       props.clicked
-//         ? `url('${
-//             props.color === '#ffff'
-//               ? 'https://i.postimg.cc/Vvy6fV8W/Pngtree-check-mark-icon-3566306.png'
-//               : 'https://i.postimg.cc/W3vtGydY/Pngtree-correct-icon-4490392.png'
-//           }') center center / cover no-repeat, ${props.color}`
-//         : props.color};
-//     border: ${(props) =>
-//       props.color === '#ffff' ? 'solid 0.08rem gray' : 'none'};
-//     box-shadow: ${(props) =>
-//       props.clicked ? '2px 2px 1px 1px rgba(0, 0, 0, 0.25)' : 'none'};
-//     &:active {
-//       filter: brightness(80%);
-//     }
-//     &:hover {
-//       box-shadow: 2px 2px 1px 1px rgba(0, 0, 0, 0.25);
-//     }
-//   `;
-
-//   return <Button color={color} onClick={onClick} clicked={clicked} />;
-// };
-
 const StyledColorButton = styled.button.withConfig({
   shouldForwardProp: (prop) => !['clicked'].includes(prop),
 }) <StyledButtonProps>`
-  width: 3.125rem;
-  height: 3.125rem;
+  width: 2.8rem;
+    height: 2.8rem;
   background: ${(props) => props.color};
   background: ${(props) =>
     props.clicked
@@ -67,12 +37,12 @@ const StyledColorButton = styled.button.withConfig({
 `;
 
 const ColorButton: React.FC<
-  ButtonProps & { clicked: boolean; onClick: () => void }
-> = memo(({ color, clicked, onClick }) => {
+  ButtonProps & { clicked: boolean; onClick: () => void }> = memo(({ color, clicked, onClick }) => {
   return (
     <StyledColorButton color={color} onClick={onClick} clicked={clicked} />
   );
 });
+
 
 export default function ColorBtn({
   onSelect,
@@ -121,11 +91,11 @@ export default function ColorBtn({
 const ColorLayout = styled.div`
   display: flex;
   justify-content: space-around;
-  margin: 2rem;
+  margin: 0 5rem;
   margin-bottom: 2.5rem;
 `;
 const Title = styled.div`
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-style: normal;
   margin-bottom: 1.3rem;
   margin-left: 2rem;

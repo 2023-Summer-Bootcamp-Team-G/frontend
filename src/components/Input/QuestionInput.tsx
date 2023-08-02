@@ -48,8 +48,8 @@ export default function QuestionInput({ value1, setValue }: Props) {
 }
 
 const Button = styled.button`
-  width: 62.5rem;
-  height: 4.5rem;
+  width: 55rem;
+  height: 4rem;
   border-radius: 0.875rem;
   background: #f0f0f0;
   padding-left: 0.81rem;
@@ -59,15 +59,15 @@ const Button = styled.button`
 `;
 const Input = styled.input`
   all: unset;
-  width: 62.5rem;
-  height: 4.5rem;
+  width: 55rem;
+  height: 4rem;
   padding-left: 0.81rem;
   border-radius: 0.875rem;
   background: #f0f0f0;
   display: flex;
   align-items: center;
   color: #000;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 400;
   &:not(:last-child) {
     margin-bottom: 1.23rem;

@@ -78,17 +78,18 @@ export default function QuestionPage() {
 }
 
 const HorizontalLine = styled.div`
-  width: 100%;
+  width: 90%;
   height: 1px;
   background-color: #000;
   margin-top: 1.25rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1.75rem;
+  margin-left: 3.5rem;
 `;
 const CardLayout = styled.div`
   display: flex;
   flex-direction: row;
   padding: 1.25rem 1.25rem;
-  width: 75rem;
+  width: 66rem;
   flex-wrap: wrap;
 `;
 const TextLayout = styled.div`
@@ -96,7 +97,7 @@ const TextLayout = styled.div`
   flex-direction: row;
 `;
 const Text = styled.div`
-  font-size: 2.25rem;
+  font-size: 1.5rem;
   font-style: normal;
   font-weight: 700;
   margin-left: 3.31rem;
@@ -106,7 +107,7 @@ const Text2 = styled.div`
   font-size: 1.25rem;
   font-weight: 400;
   text-align: center;
-  padding: 0.78rem 0 0 1.25rem;
+  padding: 0.3rem 0 0 1.25rem;
 `;
 const QuestionLayout = styled.div`
   display: flex;

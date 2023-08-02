@@ -9,8 +9,8 @@ import NickNameInput from '../components/Input/NickNameInput';
 import { userStore } from '../stores/userStore';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
-import ImageList from '../components/choice/choice';
-import ColorBtn from '../components/choice/color';
+import ImageList from '../components/Choice/Choice';
+import ColorBtn from '../components/Choice/Color';
 import Container from '../styles/Container';
 
 const setMetaTags = ({
@@ -219,11 +219,12 @@ const ModalBackdrop = styled.div`
 `;
 
 const HorizontalLine = styled.div`
-  width: 100%;
+  width: 90%;
   height: 1px;
   background-color: #000;
   margin-top: 1.25rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.75rem;
+  margin-left: 3.5rem;
 `;
 
 const RButtonLayout = styled.div`
