@@ -9,6 +9,7 @@ import { urlsStore } from '../stores/urls';
 import { keywordsStore } from '../stores/keywords';
 import { taskIdStore } from '../stores/taskId';
 import { userStore } from '../stores/userStore';
+import Container from '../styles/Container';
 
 export default function ResultPage() {
   //모달
@@ -53,37 +54,39 @@ export default function ResultPage() {
   }, []);
 
   return (
-    <>
-      <BoxContainer title={`내가 생각한 ${nickName}의 모습이에요!`}>
-        <HorizontalLine />
+    <Container>
+      <>
+        <BoxContainer title={`내가 생각한 ${nickName}의 모습이에요!`}>
+          <HorizontalLine />
 
-        {loading === true ? (
-          <ModalBackdrop>
-            <Loading title='캐릭터를 만들고 있어요!' />
+          {loading === true ? (
+            <ModalBackdrop>
+              <Loading title='캐릭터를 만들고 있어요!' />
+            </ModalBackdrop>
+          ) : null}
+
+          <PicLayout>
+            {urls.map((src: any, index: number) => (
+              <Pic
+                key={index}
+                style={{ backgroundImage: `url(${src})` }}
+                whileHover={{ scale: [null, 1.3, 1.2] }}
+                transition={{ duration: 0.3 }}
+                onClick={() => showModal(index)}
+              />
+            ))}
+          </PicLayout>
+        </BoxContainer>
+
+        {modal && (
+          <ModalBackdrop onClick={closeModal}>
+            <Box onClick={(e: any) => e.stopPropagation()}>
+              <FlipModal setModal={setModal} />
+            </Box>
           </ModalBackdrop>
-        ) : null}
-
-        <PicLayout>
-          {urls.map((src: any, index: number) => (
-            <Pic
-              key={index}
-              style={{ backgroundImage: `url(${src})` }}
-              whileHover={{ scale: [null, 1.3, 1.2] }}
-              transition={{ duration: 0.3 }}
-              onClick={() => showModal(index)}
-            />
-          ))}
-        </PicLayout>
-      </BoxContainer>
-
-      {modal && (
-        <ModalBackdrop onClick={closeModal}>
-          <Box onClick={(e: any) => e.stopPropagation()}>
-            <FlipModal setModal={setModal} />
-          </Box>
-        </ModalBackdrop>
-      )}
-    </>
+        )}
+      </>
+    </Container>
   );
 }
 
@@ -130,9 +133,3 @@ const ModalBackdrop = styled.div`
 const Box = styled.div`
   pointer-events: auto;
 `;
-// const Container = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 100%;
-// `;

@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { baseInstance } from '../apis/config';
 import { userStore } from '../stores/userStore';
 import { pollStore } from '../stores/poll';
+import Container from '../styles/Container';
 
 export default function QuestionPage() {
   const initQuestions = [
@@ -112,10 +113,4 @@ const QuestionLayout = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
 `;
