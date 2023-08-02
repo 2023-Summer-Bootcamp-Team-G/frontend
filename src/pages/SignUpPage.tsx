@@ -191,7 +191,8 @@ export default function SignUpPage() {
             </FormBox>
             <SignBtn
               title='회원가입'
-              onClick={onSubmit}
+              type='submit'
+              // onClick={onSubmit}
               disabled={!(isId && isPassword && isPasswordConfirm)}
             />
           </form>

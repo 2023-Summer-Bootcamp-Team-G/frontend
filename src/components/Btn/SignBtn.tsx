@@ -2,19 +2,27 @@ import { styled } from 'styled-components';
 
 type SignBtnProps = {
   title: string;
-  onClick: any;
+  // onClick: any;
+  onClick?: () => void;
   disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
 };
 
-export default function SignBtn({ title, onClick, disabled }: SignBtnProps) {
+export default function SignBtn({
+  title,
+  onClick,
+  disabled,
+  type,
+}: SignBtnProps) {
   return (
-    <SGtn
-      onClick={() => {
-        if (disabled === false) {
-          onClick;
-        } else console.log('no input ');
-      }}
-    >
+    // <SGtn
+    //   onClick={() => {
+    //     if (disabled === false) {
+    //       onClick;
+    //     } else console.log('no input ');
+    //   }}
+    // >
+    <SGtn type={type} onClick={onClick} disabled={disabled}>
       {title}
     </SGtn>
   );

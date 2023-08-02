@@ -13,6 +13,7 @@ export default function AnswerInput({
   id,
   value,
   setValue,
+  placeholder,
 }: TextProps) {
   const handleInputChange = (id: number, input: string) => {
     const updatedInputs = [...value]; //상태를 직접 변경하는건 안 좋다 들음, 복사해서 사용하는 이유
@@ -28,6 +29,7 @@ export default function AnswerInput({
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           handleInputChange(id, e.target.value)
         }
+        placeholder={placeholder}
       ></Input>
     </AnswerInputLayout>
   );

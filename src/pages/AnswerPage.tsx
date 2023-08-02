@@ -15,7 +15,7 @@ import ColorBtn from '../components/choice/color';
 const setMetaTags = ({
   title = "It's me?!", // 기본 타이틀
   description = '친구들의 답변으로 닮은 캐릭터를 만들어줘요!', // 기본 설명
-  imageUrl = 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 기본 사이트 이미지 경로
+  imageUrl = 'https://i.postimg.cc/5yHTm09w/Main.png', // 기본 사이트 이미지 경로
 }) => {
   const titleTag = document.querySelector('meta[property="og:title"]'); // document.querySelector를 사용하여 index.html의 해당 메타 태그를 선택
 
@@ -110,7 +110,7 @@ export default function AnswerPage() {
     setMetaTags({
       title: "It's me?! 질문 list",
       description: '친구가 질문에 답변해주기를 요청하고 있어요!',
-      imageUrl: 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 배포하고나서 이미지 url 바꿔주기 // 일단 메인페이지 이미지 넣어놈
+      imageUrl: 'https://i.postimg.cc/5yHTm09w/Main.png', // 배포하고나서 이미지 url 바꿔주기 // 일단 메인페이지 이미지 넣어놈
     });
 
     if (userId == '') {
@@ -154,6 +154,15 @@ export default function AnswerPage() {
       setTaskId(response.data.task_id);
     }
   };
+
+  const placeholders = [
+    'ex. 호랑이를 닮았어! ',
+    'ex. "후드티를 자주 입어!" or "팔찌를 자주 해!" ',
+    'ex. 맥북을 자주 들고 다니지?',
+    'ex. 카페에서 자주 나타나!',
+  ];
+  console.log('test' + placeholders);
+
   //---------------return-------
   return (
     <Container>
@@ -176,7 +185,7 @@ export default function AnswerPage() {
             key={index}
             id={index}
             question={questionTitle}
-            placeholder={''}
+            placeholder={placeholders[index]}
             value={value}
             setValue={setValue}
           />

@@ -22,7 +22,7 @@ interface Character {
 const setMetaTags = ({
   title = "It's me?!", // 기본 타이틀
   description = '친구들의 답변으로 닮은 캐릭터를 만들어줘요!', // 기본 설명
-  imageUrl = 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 기본 사이트 이미지 경로
+  imageUrl = 'https://i.postimg.cc/5yHTm09w/Main.png', // 기본 사이트 이미지 경로
 }) => {
   const titleTag = document.querySelector('meta[property="og:title"]'); // document.querySelector를 사용하여 index.html의 해당 메타 태그를 선택
 
@@ -59,10 +59,6 @@ export default function MyPage() {
   const [keyword, setKeyword] = useState<string[]>([]);
   const { user_id } = useParams();
   const navigate = useNavigate();
-  const handleLogoutClick = () => {
-    localStorage.removeItem('user');
-    navigate('/');
-  };
 
   const durl = dupliUrl || '';
   // 생성자
@@ -112,10 +108,11 @@ export default function MyPage() {
     setMetaTags({
       title: "It's me?! 마이페이지",
       description: '친구들이 만들어준 캐릭터들을 확인해보세요!',
-      imageUrl: 'https://i.postimg.cc/HWZ9LPN2/It-s-me.png', // 배포하고나서 이미지 url 바꿔주기 // 일단 메인페이지 이미지 넣어놈
+      imageUrl: 'https://i.postimg.cc/5yHTm09w/Main.png', // 배포하고나서 이미지 url 바꿔주기 // 일단 메인페이지 이미지 넣어놈
     });
     console.log(keyword);
   }, []);
+
   const [copied, setCopied] = useState(false); // 복사 여부 상태 관리
   const { link } = linkStore();
 
@@ -127,60 +124,82 @@ export default function MyPage() {
     }
   };
 
+  const handleLogoutClick = () => {
+    localStorage.removeItem('user');
+    navigate('/');
+  };
+
+  const handleHomeClick = () => {
+    navigate('/');
+  };
+
   // const authState = useCheckAuth();
   const ls = JSON.parse(localStorage.getItem('user') || 'null');
 
   return (
     <>
-      {ls.state.userId === user_id ? (
-        <Nav>
-          <Copy>
-            {userId !== '' && (
-              <div>
-                <span
-                  className='material-symbols-rounded'
-                  style={{
-                    WebkitTransform: 'rotate(120deg)',
-                    transform: 'rotate(120deg)',
-                    color: 'white',
-                  }}
-                >
-                  link
-                </span>
-                <CopyButton
-                  style={{ color: 'white', fontSize: '1.2rem' }}
-                  onClick={handleCopyClick}
-                  disabled={copied}
-                >
-                  {copied ? 'URL 복사하기' : '질문지 공유'}
-                </CopyButton>
-              </div>
-            )}
-          </Copy>
-          <Logout>
-            <span
-              className='material-symbols-rounded'
-              style={{
-                color: 'white',
-                marginLeft: '1rem',
-              }}
-            >
-              account_circle
-            </span>
+      <Nav>
+        <Home>
+          <span className='material-symbols-rounded' style={{ color: 'white' }}>
+            home
+          </span>
+          <HomeBtn
+            style={{ color: 'white', fontSize: '1.2rem' }}
+            onClick={handleHomeClick}
+          >
+            메인페이지
+          </HomeBtn>
+        </Home>
+        {ls.state.userId === user_id ? (
+          <>
+            <Copy>
+              {userId !== '' && (
+                <div>
+                  <span
+                    className='material-symbols-rounded'
+                    style={{
+                      WebkitTransform: 'rotate(120deg)',
+                      transform: 'rotate(120deg)',
+                      color: 'white',
+                    }}
+                  >
+                    link
+                  </span>
+                  <CopyButton
+                    style={{ color: 'white', fontSize: '1.2rem' }}
+                    onClick={handleCopyClick}
+                    disabled={copied}
+                  >
+                    {copied ? '복사 완료!' : '질문지 공유'}
+                  </CopyButton>
+                </div>
+              )}
+            </Copy>
+            <Logout>
+              <span
+                className='material-symbols-rounded'
+                style={{
+                  color: 'white',
+                  // marginLeft: '1rem',
+                }}
+              >
+                account_circle
+              </span>
 
-            <LogoutBtn
-              style={{
-                textDecoration: 'none',
-                color: 'white',
-                fontSize: '1.2rem',
-              }}
-              onClick={handleLogoutClick}
-            >
-              로그아웃
-            </LogoutBtn>
-          </Logout>
-        </Nav>
-      ) : null}
+              <LogoutBtn
+                style={{
+                  textDecoration: 'none',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                }}
+                onClick={handleLogoutClick}
+              >
+                로그아웃
+              </LogoutBtn>
+            </Logout>
+          </>
+        ) : null}
+      </Nav>
 
       <Container>
         <BoxContainer title={''}>
@@ -332,6 +351,10 @@ const Nav = styled.button`
   right: 11rem;
   top: 3rem;
 `;
+const Copy = styled.button`
+  margin-right: 1rem;
+  align-items: center;
+`;
 const CopyButton = styled.button`
   align-items: center;
 `;
@@ -340,7 +363,10 @@ const Logout = styled.button`
   display: flex;
   justify-content: center;
 `;
-const Copy = styled.button`
+const Home = styled.button`
+  display: flex;
   margin-right: 1rem;
-  align-items: center;
+`;
+const HomeBtn = styled.button`
+  display: flex;
 `;
