@@ -145,13 +145,11 @@ export default function AnswerPage() {
         ...answers.slice(4, -2),
       ],
     };
-    console.log(userId);
-    console.log(nick);
 
     const response = await baseInstance.post('/characters', json);
     if (response.status === 201) {
       navigate('/result');
-      console.log(response.data);
+
       setTaskId(response.data.task_id);
     }
   };
@@ -162,7 +160,6 @@ export default function AnswerPage() {
     'ex. 맥북을 자주 들고 다니지?',
     'ex. 카페에서 자주 나타나!',
   ];
-  console.log('test' + placeholders);
 
   //---------------return-------
   return (

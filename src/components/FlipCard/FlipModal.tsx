@@ -29,8 +29,6 @@ export default function FlipModal({ setModal }: Props) {
           userId === ''
             ? navigate(`/mypage/${creatorId}`)
             : navigate(`/mypage/${userId}`);
-          console.log('creatorid' + creatorId);
-          console.log('userId' + userId);
         }
       }
     } catch (error) {

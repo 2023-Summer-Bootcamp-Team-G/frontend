@@ -8,6 +8,7 @@ import DetailPage from './pages/DetailPage';
 import QuestionPage from './pages/QuestionPage';
 import MyPage from './pages/MyPage';
 import ResultPage from './pages/ResultPage';
+import ErrorPage from './pages/ErrorPage';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
         <Route path='/result' element={<ResultPage />} />
         <Route path='/mypage/:user_id' element={<MyPage />} />
         <Route path='/mypage/detail' element={<DetailPage />} />
-        <Route path='*' element={<>error page</>} />
+        <Route path='*' element={<ErrorPage />} />
       </Routes>
     </>
   );

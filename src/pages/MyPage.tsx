@@ -96,7 +96,6 @@ export default function MyPage() {
   };
 
   useEffect(() => {
-    console.log(dupltask);
     getImages();
   }, [dupltask]);
 
