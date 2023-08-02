@@ -7,17 +7,13 @@ import { baseInstance } from '../apis/config';
 import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
 import { pollStore } from '../stores/poll';
-import { color } from 'highcharts';
 
-interface Character {
-  id: number;
-  result_url: string;
-  nick_name: string;
-  keyword?: string[];
-}
+import Lottie from 'lottie-react';
+import loadingLottie from '../assets/animation_lkt9dpm7.json';
+//character type 선언해주기
+
 
 const setMetaTags = ({
   title = "It's me?!", // 기본 타이틀
@@ -49,59 +45,108 @@ const setMetaTags = ({
     urlTag.setAttribute('content', window.location.href);
   }
 };
+type CharacterData = {
+  result_url: string;
+  keyword: string[];
+};
+
+type DuplCharacterData = {
+  result_url: string;
+  keyword: string[];
+};
 
 export default function MyPage() {
-  const [characters, setCharacters] = useState<Character[]>([]);
+  const [characters, setCharacters] = useState<string[]>([]);
+  const [myCharacters, setMyCharacters] = useState<CharacterData | null>(null);
+  const [duplCharacters, setDuplCharacters] =
+    useState<DuplCharacterData | null>();
   const { userId, nickName, setNickName } = userStore();
   const { poll } = pollStore();
-  const { taskId, setTaskId } = taskIdStore();
-  const [dupliUrl, setDupliUrl] = useState<string>('');
-  const [keyword, setKeyword] = useState<string[]>([]);
+  const [dupltask, setDuplTask] = useState(''); //중복 task_id
   const { user_id } = useParams();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const shouldContinue = true;
 
-  const durl = dupliUrl || '';
-  // 생성자
+
+
+  // --------------------------------------------- 생성자
   const getChar = async () => {
     try {
       const response = await baseInstance.get('/characters', {
         params: { user_id: user_id },
       });
-
       setCharacters(response.data.characters);
-      console.log('temp', response.data.nick_name);
+
+      setMyCharacters(response.data.my_character);
+
+      setDuplCharacters(response.data.duplicate_character);
+
       setNickName(response.data.nick_name);
     } catch (error) {
       console.error(error);
     }
   };
 
-  // 중복
-  function a() {
-    createDuplicate();
-    getImages();
-  }
-
+  // ------------------------------------------------중복
   const createDuplicate = async () => {
-    const data = { user_id: userId };
-
-    const response = await baseInstance.post('/characters/duplicate', data);
-    console.log(response.data);
-    setTaskId(response.data.task_id);
+    const data = { user_id: user_id };
+    try {
+      const response = await baseInstance.post('/characters/duplicate', data);
+      setDuplTask(response.data.task_id); // 중복 taskid 설정
+    } catch (error) {
+      alert('답변이 아직 다 모이지 않았어요!');
+    }
   };
+
+  useEffect(() => {
+    console.log(dupltask);
+    getImages();
+  }, [dupltask]);
 
   const getImages = async () => {
     try {
-      const response = await baseInstance.get(`/characters/urls/${taskId}`);
+      while (shouldContinue) {
+        const response = await baseInstance.get(`/characters/urls/${dupltask}`);
+        const statusCode = response.status;
+        setLoading(true);
 
-      setDupliUrl(response.data.result_url[0]);
-      setKeyword(response.data.keyword);
-      console.log(dupliUrl);
-      console.log(response.data.keyword);
+        if (statusCode === 202) {
+          // 대기 중이므로 재시도
+          await new Promise((resolve) => setTimeout(resolve, 4000)); // 4초 후에 다시 폴링
+        } else if (statusCode === 200) {
+          baseInstance
+            .get('/characters', {
+              params: { user_id: user_id },
+            })
+            .then((response) => {
+              setDuplCharacters(response.data.duplicate_character);
+              setLoading(false);
+            })
+            .catch((error) => {
+              console.log(error);
+              alert('이미지 생성에 실패했어요!');
+            });
+          break;
+        } else {
+          throw new Error(
+            `Failed to fetch URLs and keywords. Status code: ${statusCode}`
+          );
+        }
+      }
     } catch (error) {
+      // 에러 처리
       console.error(error);
     }
   };
+
+  function handleButtonClick() {
+    if (characters?.length === 0) {
+      alert('답변이 아직 다 모이지 않았어요!');
+    } else createDuplicate();
+  }
+
+  //-------------------------------------------------중복
 
   useEffect(() => {
     getChar();
@@ -110,7 +155,6 @@ export default function MyPage() {
       description: '친구들이 만들어준 캐릭터들을 확인해보세요!',
       imageUrl: 'https://i.postimg.cc/5yHTm09w/Main.png', // 배포하고나서 이미지 url 바꿔주기 // 일단 메인페이지 이미지 넣어놈
     });
-    console.log(keyword);
   }, []);
 
   const [copied, setCopied] = useState(false); // 복사 여부 상태 관리
@@ -208,8 +252,8 @@ export default function MyPage() {
               <Title>{nickName} 님 본인이 만든 캐릭터에요!</Title>
               <FlipCardLayout>
                 <FlipCard
-                  imageURL={characters[0]?.result_url}
-                  keywords={characters[0]?.keyword}
+                  imageURL={myCharacters?.result_url}
+                  keywords={myCharacters?.keyword}
                 />
                 {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
               </FlipCardLayout>
@@ -224,7 +268,24 @@ export default function MyPage() {
             </CharLayout>
             <DuplicateCharLayout>
               <Title>중복된 키워드로 만든 {nickName} 님이에요!</Title>
-              {dupliUrl === '' ? (
+
+              {duplCharacters ? (
+                loading ? (
+                  <LoadingBox>
+                    <LoadingText>loading...</LoadingText>
+                    <Lottie animationData={loadingLottie} />
+                  </LoadingBox>
+                ) : (
+                  <FlipCardLayout>
+                    <FlipCard
+                      imageURL={duplCharacters.result_url}
+                      keywords={duplCharacters.keyword}
+                    />
+                  </FlipCardLayout>
+                )
+              ) : loading ? (
+                <div>loading,,,</div>
+              ) : (
                 <img
                   style={{
                     width: '25rem',
@@ -233,26 +294,42 @@ export default function MyPage() {
                   }}
                   src='https://i.postimg.cc/G22H5fH9/Group-374.png'
                 />
-              ) : (
-                <FlipCardLayout>
-                  <FlipCard imageURL={durl} keywords={[]} />{' '}
-                </FlipCardLayout>
               )}
 
               {ls.state.userId === user_id ? (
-                <Button1 onClick={a}> 중복 캐릭터 만들기</Button1>
+                <Button1 onClick={handleButtonClick}>
+                  {' '}
+                  중복 캐릭터 만들기
+                </Button1>
               ) : null}
             </DuplicateCharLayout>
           </Top>
-
           <HorizontalLine />
-
           <BasicTabs onSubmit={getChar} />
         </BoxContainer>
       </Container>
     </>
   );
 }
+const LoadingText = styled.div`
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  font-weight: bold;
+  top: 77%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  font-family: 'CookieRun-Regular';
+`;
+const LoadingBox = styled.div`
+  width: 28rem;
+  height: 26.875rem;
+  position: relative;
+  margin-bottom: 2.6rem;
+`;
 
 const Top = styled.div`
   display: flex;
@@ -325,7 +402,7 @@ const Sbtn = styled.button`
   font-weight: 800;
 
   /*네모 박스*/
-  width: 12rem;
+  width: 22.1875rem;
   height: 4.125rem;
   border-radius: 0.5625rem;
   background: #222;
@@ -336,7 +413,6 @@ const Sbtn = styled.button`
 `;
 const StyledLink = styled(Link)`
   display: inline-block;
-  width: 12rem;
 `;
 const Wrapping = styled.div`
   display: flex;
