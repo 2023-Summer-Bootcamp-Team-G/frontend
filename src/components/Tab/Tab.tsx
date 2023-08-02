@@ -170,7 +170,7 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
       </Box>
       <CustomTabPanel value={value} index={0}>
         <BoxLayout>
-          {characters.slice(1).map((character) => (
+          {characters.map((character) => (
             <CharBox
               key={character.id}
               imageURL={character.result_url}

@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import KeywordTag from '../KeywordTag/KeywordTag';
 
 type FlipCardProps = {
-  imageURL: string;
+  imageURL: string | undefined;
   keywords: string[] | undefined;
   // onSubmit: () => Promise<void>;
 };
