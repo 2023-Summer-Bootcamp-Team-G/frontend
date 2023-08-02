@@ -8,6 +8,7 @@ import DetailPage from './pages/DetailPage';
 import QuestionPage from './pages/QuestionPage';
 import MyPage from './pages/MyPage';
 import ResultPage from './pages/ResultPage';
+import ErrorPage from './pages/ErrorPage';
 
 import * as tf from './utils/debug'; // 테스트 용도
 (window as any).tf = tf;
@@ -25,7 +26,7 @@ function App() {
         <Route path='/result' element={<ResultPage />} />
         <Route path='/mypage/:user_id' element={<MyPage />} />
         <Route path='/mypage/detail' element={<DetailPage />} />
-        <Route path='*' element={<>error page</>} />
+        <Route path='*' element={<ErrorPage />} />
       </Routes>
     </>
   );

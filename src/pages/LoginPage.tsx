@@ -56,7 +56,6 @@ export default function LoginPage() {
 
   // 아이디
   const onChangeId = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('test');
     const IdRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{0,25}$/;
     const IdCurrent = e.target.value;
     setId(IdCurrent);

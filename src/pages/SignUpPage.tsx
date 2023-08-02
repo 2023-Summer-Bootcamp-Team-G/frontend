@@ -72,7 +72,6 @@ export default function SignUpPage() {
 
   // 아이디
   const onChangeId = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('test');
     const IdRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{0,25}$/;
     const IdCurrent = e.target.value;
     setId(IdCurrent);
@@ -235,7 +234,7 @@ const BackLayout = styled.div`
 `;
 const WhiteBox = styled(motion.div)`
   width: 36rem;
-  height: 43rem;
+  height: 50rem;
   margin-top: 3rem;
   margin-left: 9rem;
   background: white;
@@ -252,7 +251,7 @@ const WhiteBox = styled(motion.div)`
     justify-content: center;
     /* position: absolute; */
     width: 100%;
-    margin-bottom: 2rem;
+    /* margin-bottom: 1rem; */
   }
 `;
 const FormBox = styled.div`

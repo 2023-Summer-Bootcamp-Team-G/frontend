@@ -11,6 +11,7 @@ import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
 import ImageList from '../components/choice/choice';
 import ColorBtn from '../components/choice/color';
+import Container from '../styles/Container';
 
 const setMetaTags = ({
   title = "It's me?!", // 기본 타이틀
@@ -145,13 +146,11 @@ export default function AnswerPage() {
         ...answers.slice(4, -2),
       ],
     };
-    console.log(userId);
-    console.log(nick);
 
     const response = await baseInstance.post('/characters', json);
     if (response.status === 201) {
       navigate('/result');
-      console.log(response.data);
+
       setTaskId(response.data.task_id);
     }
   };
@@ -162,7 +161,6 @@ export default function AnswerPage() {
     'ex. 맥북을 자주 들고 다니지?',
     'ex. 카페에서 자주 나타나!',
   ];
-  // console.log('test' + placeholders);
 
   //---------------return-------
   return (
@@ -218,13 +216,6 @@ const ModalBackdrop = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-`;
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
 `;
 
 const HorizontalLine = styled.div`

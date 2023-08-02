@@ -10,10 +10,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { pollStore } from '../stores/poll';
 import { getImages, isLoggedIn } from '../utils/utils';
 
-import Lottie from 'lottie-react';
-import loadingLottie from '../assets/animation_lkt9dpm7.json';
-//character type 선언해주기
-
+import Container from '../styles/Container';
+import BoxInDog from '../components/Loading/BoxInDog';
 
 const setMetaTags = ({
   title = "It's me?!", // 기본 타이틀
@@ -247,10 +245,7 @@ export default function MyPage() {
 
               {duplCharacters ? (
                 loading ? (
-                  <LoadingBox>
-                    <LoadingText>loading...</LoadingText>
-                    <Lottie animationData={loadingLottie} />
-                  </LoadingBox>
+                  <BoxInDog />
                 ) : (
                   <FlipCardLayout>
                     <FlipCard
@@ -260,7 +255,7 @@ export default function MyPage() {
                   </FlipCardLayout>
                 )
               ) : loading ? (
-                <div>loading,,,</div>
+                <BoxInDog />
               ) : (
                 <img
                   style={{
@@ -287,25 +282,6 @@ export default function MyPage() {
     </>
   );
 }
-const LoadingText = styled.div`
-  font-size: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  font-weight: bold;
-  top: 77%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  font-family: 'CookieRun-Regular';
-`;
-const LoadingBox = styled.div`
-  width: 28rem;
-  height: 26.875rem;
-  position: relative;
-  margin-bottom: 2.6rem;
-`;
 
 const Top = styled.div`
   display: flex;
@@ -345,11 +321,7 @@ const HorizontalLine = styled.div`
   margin-top: 1.25rem;
   margin-bottom: 2.5rem;
 `;
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 100%;
-`;
+
 const Button1 = styled.button`
   /* 글자 */
   color: #fff;
