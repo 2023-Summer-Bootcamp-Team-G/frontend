@@ -10,7 +10,7 @@ export default function QuestionCard({ question, src }: QuestionCardProps) {
     <RectangleLayout>
       <Rectangle>
         <ImageContainer>
-          <img src={src} />
+          <img src={src} style={{ height: '4.5rem', width: '4.5rem' }} />
         </ImageContainer>
         <Text>{question}</Text>
       </Rectangle>
@@ -21,24 +21,24 @@ export default function QuestionCard({ question, src }: QuestionCardProps) {
 const RectangleLayout = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   margin: 0.75rem 2.56rem 1.25rem 2.56rem;
 `;
 
 const ImageContainer = styled.div`
-  height: 6.25rem;
-  width: 6.25rem;
-  position: absolute;
-  top: -3.125rem;
-  left: 6.25rem;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  margin-top: -17rem;
 `;
 
 const Rectangle = styled.div`
   /* Rectangle */
-  position: relative;
-  width: 18.75rem;
-  height: 18.75rem;
+  display: flex;
+  width: 16rem;
+  height: 16rem;
+  justify-content: center;
+  align-items: center;
   background: #fafafa;
   box-shadow: 6px 6px 10px 6px rgba(0, 0, 0, 0.25);
   border-radius: 0.625rem;
@@ -48,12 +48,10 @@ const Rectangle = styled.div`
 const Text = styled.div`
   /* 질문 내용 */
   position: absolute;
-  width: 15.625rem;
+  width: 13rem;
   height: 4.75rem;
-  left: 1.5rem;
-  top: 7.69rem;
   font-style: normal;
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   text-align: center;
 `;

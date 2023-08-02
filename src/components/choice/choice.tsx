@@ -59,7 +59,7 @@ export default function ImageList({
 }
 
 const Title = styled.div`
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-style: normal;
   margin-bottom: 1.3rem;
   margin-left: 2rem;
@@ -69,7 +69,7 @@ const ImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0.5rem;
+  margin: 0.5rem 1rem;
 `;
 
 const ImageContainer = styled.div`
@@ -79,8 +79,8 @@ const ImageContainer = styled.div`
 `;
 
 const ImageBox = styled.div<{ src: string; selected: boolean }>`
-  width: 11.25rem;
-  height: 11.25rem;
+  width: 9rem;
+  height: 9rem;
   border-radius: 0.625rem;
   background-image: url(${(props) => props.src});
   background-size: cover;
@@ -98,5 +98,5 @@ const ImageName = styled.p`
   font-size: 1rem;
   color: black;
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
 `;

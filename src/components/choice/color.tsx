@@ -15,8 +15,8 @@ const ColorButton: React.FC<
   ButtonProps & { clicked: boolean; onClick: () => void }
 > = ({ color, clicked, onClick }) => {
   const Button = styled.button<StyledButtonProps>`
-    width: 3.125rem;
-    height: 3.125rem;
+    width: 2.8rem;
+    height: 2.8rem;
     background: ${(props) => props.color};
     background: ${(props) =>
       props.clicked
@@ -88,11 +88,11 @@ export default function ColorBtn({
 const ColorLayout = styled.div`
   display: flex;
   justify-content: space-around;
-  margin: 2rem;
+  margin: 0 5rem;
   margin-bottom: 2.5rem;
 `;
 const Title = styled.div`
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-style: normal;
   margin-bottom: 1.3rem;
   margin-left: 2rem;

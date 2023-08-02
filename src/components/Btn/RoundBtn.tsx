@@ -13,13 +13,13 @@ const RBtn = styled.button`
   /* 글자 */
   color: #fff;
   text-align: center;
-  font-size: 1.75rem;
+  font-size: 1.25rem;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
 
   /*네모 박스*/
-  padding: 0.8rem 5.6rem;
+  padding: 0.8rem 3rem;
   border-radius: 5rem;
   background: #2c2c2c;
   display: inline-block;
