@@ -17,12 +17,20 @@ export default function NickNameInput({ setNick, setModalOpen }: Props) {
       setModalOpen(false); //modal창 닫기
     }
   };
-  console.log(value);
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handler();
+    }
+  };
   return (
     <Layout>
       <Title>친구가 볼 닉네임을 써주세요!</Title>
       <InputBox>
-        <Input value={value} onChange={(e: any) => setValue(e.target.value)} />
+        <Input
+          value={value}
+          onChange={(e: any) => setValue(e.target.value)}
+          onKeyPress={handleKeyPress}
+        />
         <InputButton onClick={handler}>확인</InputButton>
       </InputBox>
       <Image />

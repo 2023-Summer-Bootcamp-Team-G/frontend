@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import LoadingSpinner from './Spinner';
+import BoxInDog from './BoxInDog';
 
 type TitleProps = {
   title: string;
@@ -8,8 +8,7 @@ export default function Loading({ title }: TitleProps) {
   return (
     <SpinnerLayout>
       <Title>{title}</Title>
-      <LoadingSpinner />
-      <Image />
+      <BoxInDog />
     </SpinnerLayout>
   );
 }
@@ -30,16 +29,7 @@ const Title = styled.p`
   font-style: normal;
   font-weight: 400;
   text-align: center;
-  padding-top: 4.31rem;
-  margin-bottom: 2rem;
-`;
-
-const Image = styled.div`
-  width: 27.9375rem;
-  height: 23.5rem;
-  background-image: url('https://i.postimg.cc/y8rZLC5w/1.png');
-  background-size: cover;
-  background-position: center;
-  justify-content: center;
-  align-items: center;
+  padding-top: 3.31rem;
+  margin-bottom: 1rem;
+  font-family: 'CookieRun-Regular';
 `;
