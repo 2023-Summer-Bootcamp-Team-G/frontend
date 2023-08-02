@@ -154,6 +154,15 @@ export default function AnswerPage() {
       setTaskId(response.data.task_id);
     }
   };
+
+  const placeholders = [
+    'ex. 호랑이를 닮았어! ',
+    'ex. "후드티를 자주 입어!" or "팔찌를 자주 해!" ',
+    'ex. 맥북을 자주 들고 다니지?',
+    'ex. 카페에서 자주 나타나!',
+  ];
+  console.log('test' + placeholders);
+
   //---------------return-------
   return (
     <Container>
@@ -176,7 +185,7 @@ export default function AnswerPage() {
             key={index}
             id={index}
             question={questionTitle}
-            placeholder={''}
+            placeholder={placeholders[index]}
             value={value}
             setValue={setValue}
           />
