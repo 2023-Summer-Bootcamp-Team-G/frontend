@@ -9,7 +9,7 @@ import QuestionPage from './pages/QuestionPage';
 import MyPage from './pages/MyPage';
 import ResultPage from './pages/ResultPage';
 
-import * as tf from './utils/testFunction'; // 테스트 용도
+import * as tf from './utils/debug'; // 테스트 용도
 (window as any).tf = tf;
 
 function App() {

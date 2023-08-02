@@ -63,6 +63,7 @@ export default function AnswerPage() {
   };
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const handleColorSelect = (name: string) => {
+    console.log(name);
     setSelectedColor(name);
   };
 
@@ -161,7 +162,7 @@ export default function AnswerPage() {
     'ex. 맥북을 자주 들고 다니지?',
     'ex. 카페에서 자주 나타나!',
   ];
-  console.log('test' + placeholders);
+  // console.log('test' + placeholders);
 
   //---------------return-------
   return (

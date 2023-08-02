@@ -1,7 +1,3 @@
-export const logHello = () => {
-    console.log('안녕하세요!');
-};
-
 export const getLocalStorageValue = () => {
     const values: { [key: string]: string } = {};
 
@@ -32,7 +28,7 @@ export const getAllCookies = (): { [key: string]: string } => {
     return cookies;
 };
 
-export const testFunction = () => {
+export const getStores = () => {
     const localStorageValue = getLocalStorageValue();
     const cookieValue = getAllCookies();
 
@@ -40,18 +36,17 @@ export const testFunction = () => {
     console.log('쿠키 값:', cookieValue);
 };
 
-export const clearLocalStorageAndCookies = () => {
-    // Clear local storage
+export const clearStores = () => {
     localStorage.clear();
 
-    // Clear all cookies
-    const cookies = document.cookie.split(";");
+    // // Clear all cookies
+    // const cookies = document.cookie.split(";");
 
-    for (const cookie of cookies) {
-        const cookieParts = cookie.split("=");
-        const cookieName = cookieParts[0].trim();
-        document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    }
+    // for (const cookie of cookies) {
+    //     const cookieParts = cookie.split("=");
+    //     const cookieName = cookieParts[0].trim();
+    //     document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    // }
 };
 
 
