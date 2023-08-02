@@ -26,11 +26,11 @@ export default function ResultPage() {
   //로딩스피너
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 0);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 0);
+  // }, []);
 
   //이미지 키워드 API
   const { taskId } = taskIdStore();
@@ -40,13 +40,31 @@ export default function ResultPage() {
   useEffect(() => {
     const getImages = async () => {
       try {
-        const response = await baseInstance.get(`/characters/urls/${taskId}`);
+        while (true) {
+          const response = await baseInstance.get(`/characters/urls/${taskId}`);
+          const statusCode = response.status;
+          const resultUrl = response.data.result_url;
+          const keyword = response.data.keyword;
 
-        setUrls(response.data.result_url);
-        console.log(response.data.result_url);
-        setKeywords(response.data.keyword);
+          if (statusCode === 202) {
+            // 대기 중이므로 재시도
+            await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 후에 다시 폴링
+          } else if (statusCode === 200) {
+            // 폴링 완료
+            setLoading(false);
+            setUrls(resultUrl);
+            setKeywords(keyword);
+            break;
+          } else {
+            // 문제 발생
+            // setLoading(false);
+            throw new Error(`Failed to fetch URLs and keywords. Status code: ${statusCode}`);
+          }
+        }
       } catch (error) {
+        // 에러 처리
         console.error(error);
+        // alert으로 에러 메시지를 알려줄 수도 있습니다.
       }
     };
     getImages();

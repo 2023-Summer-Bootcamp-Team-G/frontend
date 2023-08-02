@@ -7,11 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://3.35.88.150:8000',
-        // changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/api/, '/api/'),
-        // secure: false,
-        // ws: true,
+        // target: 'http://3.35.88.150:8000',
+        target: 'http://localhost:8000',
       },
     },
   },

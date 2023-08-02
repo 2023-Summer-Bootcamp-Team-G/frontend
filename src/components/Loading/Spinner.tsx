@@ -41,7 +41,7 @@ export default function CircularWithValueLabel() {
       setProgress((prevProgress) =>
         prevProgress >= 100 ? 0 : prevProgress + 10
       );
-    }, 800);
+    }, 1400);
     return () => {
       clearInterval(timer);
     };

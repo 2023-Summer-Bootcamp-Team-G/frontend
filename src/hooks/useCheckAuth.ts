@@ -16,3 +16,8 @@ const useCheckAuth = (): boolean => {
 };
 
 export default useCheckAuth;
+
+export const useCheckAuth2 = (): boolean => {
+  const ls = JSON.parse(localStorage.getItem('user') || 'null');
+  return ls && ls.state && ls.state.userId;
+};

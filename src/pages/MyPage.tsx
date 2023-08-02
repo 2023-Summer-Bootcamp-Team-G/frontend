@@ -10,6 +10,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
 import { pollStore } from '../stores/poll';
+import { useCheckAuth2 } from '../hooks/useCheckAuth';
 
 interface Character {
   id: number;
@@ -68,9 +69,9 @@ export default function MyPage() {
   const getChar = async () => {
     try {
       const response = await baseInstance.get('/characters', {
-        params: { user_id: user_id },
+        params: useCheckAuth2() ? {} : { user_id: user_id },
       });
-
+      
       setCharacters(response.data.characters);
       console.log('temp', response.data.nick_name);
       setNickName(response.data.nick_name);

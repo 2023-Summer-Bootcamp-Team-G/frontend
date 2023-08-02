@@ -7,8 +7,11 @@ import AnswerPage from './pages/AnswerPage';
 import DetailPage from './pages/DetailPage';
 import QuestionPage from './pages/QuestionPage';
 import MyPage from './pages/MyPage';
-import YourPage from './pages/YourPage';
+// import YourPage from './pages/YourPage';
 import ResultPage from './pages/ResultPage';
+
+import * as tf from './utils/testFunction'; // 테스트 용도
+(window as any).tf = tf;
 
 function App() {
   return (
@@ -22,7 +25,7 @@ function App() {
         <Route path='/answerroom/:poll_id' element={<AnswerPage />} />
         <Route path='/result' element={<ResultPage />} />
         <Route path='/mypage/:user_id' element={<MyPage />} />
-        <Route path='/yourpage' element={<YourPage />} />
+        {/* <Route path='/yourpage' element={<YourPage />} /> */}
         <Route path='/mypage/detail' element={<DetailPage />} />
         <Route path='*' element={<>error page</>} />
       </Routes>
