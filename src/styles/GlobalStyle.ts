@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
   }
 
   li {
@@ -19,11 +20,11 @@ const GlobalStyle = createGlobalStyle`
     all: unset;
     cursor: pointer;
   }
-
   body {
   font-family: 'Noto Sans KR', sans-serif;
   background: linear-gradient(#b4520b, #ffc301);
 }
+
 
 @font-face {
     font-family: 'CookieRun-Regular';

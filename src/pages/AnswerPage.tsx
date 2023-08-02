@@ -11,6 +11,7 @@ import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
 import ImageList from '../components/choice/choice';
 import ColorBtn from '../components/choice/color';
+import Container from '../styles/Container';
 
 const setMetaTags = ({
   title = "It's me?!", // 기본 타이틀
@@ -217,13 +218,6 @@ const ModalBackdrop = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-`;
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
 `;
 
 const HorizontalLine = styled.div`

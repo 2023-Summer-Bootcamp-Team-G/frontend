@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';
 import { idStore } from '../stores/id';
 import { useNavigate } from 'react-router-dom';
+import Container from '../styles/Container';
 
 export default function DetailPage() {
   const { nickName } = userStore();
@@ -92,10 +93,4 @@ const CloseButton = styled.button`
   left: 82rem;
   top: 8rem;
   cursor: pointer;
-`;
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
 `;
