@@ -21,12 +21,12 @@ const Box = styled.div`
   border-radius: 3.75rem 3.75rem 0 0;
   height: 100%;
   min-height: 90vh;
-  min-width: 75rem;
+  width: 70rem;
   padding: 1.88rem;
 `;
 
 const Title = styled.p`
-  font-size: 2.25rem;
+  font-size: 1.75rem;
   white-space: pre-line;
   text-align: center;
 `;
