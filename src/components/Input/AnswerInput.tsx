@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import TextAreaAutoSize from 'react-textarea-autosize';
 
 type TextProps = {
   question: string;
@@ -24,13 +25,14 @@ export default function AnswerInput({
   return (
     <AnswerInputLayout>
       <Label>{question}</Label>
-      <Input
+      <TA
+        cacheMeasurements
         value={value[id]}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          handleInputChange(id, e.target.value)
-        }
+        onChange={(
+          e: React.ChangeEvent<HTMLTextAreaElement> // Update the event type here
+        ) => handleInputChange(id, e.target.value)}
         placeholder={placeholder}
-      ></Input>
+      ></TA>
     </AnswerInputLayout>
   );
 }
@@ -52,12 +54,12 @@ const Label = styled.label`
   display: flex;
 `;
 
-const Input = styled.input`
+const TA = styled(TextAreaAutoSize)`
   all: unset;
   display: flex;
   align-items: center;
   width: 55rem;
-  height: 4rem;
+  min-height: 4rem;
   border-radius: 0.875rem;
   background: #f0f0f0;
   color: black;
@@ -66,6 +68,7 @@ const Input = styled.input`
   font-weight: 400;
   margin-left: 1.8rem;
   padding-left: 1.55rem;
+  padding: 1rem 0.4rem 0.5rem 1.55rem;
   &::placeholder {
     color: silver;
   }
