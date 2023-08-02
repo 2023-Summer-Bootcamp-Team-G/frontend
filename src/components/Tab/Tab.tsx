@@ -6,7 +6,6 @@ import CharBox from '../CharBox/CharBox';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { baseInstance } from '../../apis/config';
-
 import { useNavigate, useParams } from 'react-router-dom';
 import { idStore } from '../../stores/id';
 import Swipe from '../Swipe/Swipe';
@@ -152,6 +151,7 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
     navigate('/mypage/detail');
     setDetailId(id);
   };
+
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -159,9 +159,41 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
           value={value}
           onChange={handleChange}
           aria-label='basic tabs example'
+          color='warning'
+          indicatorColor='secondary'
+          TabIndicatorProps={{ style: { background: '#fa7100' } }}
         >
-          <Tab label='다른 사람들이 보는 나' {...a11yProps(0)} />
-          <Tab label='질문별 키워드 차트' {...a11yProps(1)} />
+          <Tab
+            label='다른 사람들이 보는 나'
+            {...a11yProps(0)}
+            sx={{
+              px: 1,
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              color: 'gray',
+              padding: '1.2rem',
+              '&.Mui-selected': {
+                backgroundColor: 'transparent',
+
+                color: '#F87217',
+              },
+            }}
+          />
+          <Tab
+            label='질문별 키워드 차트'
+            {...a11yProps(1)}
+            sx={{
+              px: 1,
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              color: 'gray',
+              padding: '1.2rem',
+              '&.Mui-selected': {
+                backgroundColor: 'transparent',
+                color: '#F87217',
+              },
+            }}
+          />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
