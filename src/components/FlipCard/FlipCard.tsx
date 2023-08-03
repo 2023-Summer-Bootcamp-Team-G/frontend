@@ -56,8 +56,8 @@ const CharBox = styled.div<{ boxChange: boolean }>`
   left: 0;
   z-index: ${(props) => (props.boxChange ? 2 : 1)}; //z 순서 바꿔주기
   transform: translate(
-    ${(props) => (props.boxChange ? 0 : '3rem')},
-    ${(props) => (props.boxChange ? 0 : '1rem')}
+    ${(props) => (props.boxChange ? 0 : '1.75rem')},
+    ${(props) => (props.boxChange ? 0 : '1.25rem')}
   ); // x, y 이동하게 하는거. x = 0 -> 3.875, y = 0 -> 1.875
   transition: transform 1s; //이동 시간
 `;
@@ -68,12 +68,12 @@ const TagBox = styled.div<{ boxChange: boolean }>`
   background: linear-gradient(#ffda64, #fe9854);
   border-radius: 0.63rem;
   position: absolute;
-  bottom: 0;
+  bottom: 0.5rem;
   right: 0;
   z-index: ${(props) => (props.boxChange ? 1 : 2)};
   transform: translate(
-    ${(props) => (props.boxChange ? 0 : '-3rem')},
-    ${(props) => (props.boxChange ? 0 : '-1rem')}
+    ${(props) => (props.boxChange ? 0 : '-1.75rem')},
+    ${(props) => (props.boxChange ? 0 : '-1.25rem')}
   );
   transition: transform 1s;
   overflow: hidden;
