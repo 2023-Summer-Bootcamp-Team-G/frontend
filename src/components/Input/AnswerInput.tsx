@@ -32,7 +32,7 @@ export default function AnswerInput({
           e: React.ChangeEvent<HTMLTextAreaElement> // Update the event type here
         ) => handleInputChange(id, e.target.value)}
         placeholder={placeholder}
-      ></TA>
+      />
     </AnswerInputLayout>
   );
 }
@@ -42,9 +42,6 @@ const AnswerInputLayout = styled.div`
   &:not(:last-child) {
     margin-bottom: 2rem;
   }
-  /* 부모 컨테이너가 세로로 커지도록 설정 */
-  display: flex;
-  flex-direction: column;
 `;
 
 const Label = styled.label`
@@ -78,5 +75,4 @@ const TA = styled(TextAreaAutoSize)`
   &:focus::placeholder {
     color: transparent;
   }
-  overflow: hidden;
 `;

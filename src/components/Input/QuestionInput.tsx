@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
+import TextAreaAutoSize from 'react-textarea-autosize';
 
 type Props = {
   value1: any;
@@ -32,10 +33,11 @@ export default function QuestionInput({ value1, setValue }: Props) {
   return (
     <>
       {questions.map((index) => (
-        <Input
+        <TA
+          cacheMeasurements
           key={index}
           value={inputs[index]} //반복문 내에서 구분을 할 수 있게 inputs배열에서 인덱스로 순서대로 가져옴
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             handleInputChange(index, e.target.value)
           }
         />
@@ -54,14 +56,16 @@ const Button = styled.button`
   background: #f0f0f0;
   padding-left: 0.81rem;
   text-align: center;
-
   margin-bottom: 1rem; //걍 테스트하면서 보려고
 `;
-const Input = styled.input`
+
+const TA = styled(TextAreaAutoSize)`
   all: unset;
   width: 55rem;
-  height: 4rem;
+  min-height: 2.7rem;
   padding-left: 0.81rem;
+  padding-bottom: 0.5rem;
+  padding-top: 0.9rem;
   border-radius: 0.875rem;
   background: #f0f0f0;
   display: flex;
@@ -72,4 +76,5 @@ const Input = styled.input`
   &:not(:last-child) {
     margin-bottom: 1.23rem;
   }
+  overflow: hidden;
 `;
