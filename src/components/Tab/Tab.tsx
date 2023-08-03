@@ -198,13 +198,24 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
       </Box>
       <CustomTabPanel value={value} index={0}>
         <BoxLayout>
-          {characters.map((character) => (
-            <CharBox
-              key={character.id}
-              imageURL={character.result_url}
-              onClick={() => goDetails(character.id)}
-            />
-          ))}
+          {characters.length === 0 ? (
+            <div
+              style={{
+                margin: '7rem auto',
+                textAlign: 'center',
+              }}
+            >
+              캐릭터가 아직 모이지 않았어요!
+            </div>
+          ) : (
+            characters.map((character) => (
+              <CharBox
+                key={character.id}
+                imageURL={character.result_url}
+                onClick={() => goDetails(character.id)}
+              />
+            ))
+          )}
         </BoxLayout>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>

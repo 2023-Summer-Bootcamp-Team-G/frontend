@@ -328,9 +328,9 @@ export default function MyPage() {
               ) : (
                 <img
                   style={{
-                    width: '25rem',
-                    height: '25rem',
-                    marginBottom: '4.25rem',
+                    width: '20.8215rem',
+                    height: '20.8215rem',
+                    marginBottom: '3.5rem',
                   }}
                   src='https://i.postimg.cc/G22H5fH9/Group-374.png'
                 />
