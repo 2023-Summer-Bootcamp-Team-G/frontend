@@ -159,6 +159,54 @@ export default function MyPage() {
   // const authState = useCheckAuth();
   const ls = JSON.parse(localStorage.getItem('user') || 'null');
 
+  const downloadImage = () => {
+    if (!myCharacters) {
+      alert('캐릭터가 생성되지 않았습니다.');
+      return;
+    }
+
+    const imageURL = myCharacters?.result_url;
+    if (!imageURL) {
+      alert('이미지 URL이 존재하지 않습니다.');
+      return;
+    }
+
+    // 이미지 다운로드 로직 구현
+    const link = document.createElement('a'); // 새로운 anchor 엘리먼트 생성
+    link.href = imageURL; // 이미지 URL 설정 (myCharacters 객체의 result_url 사용)
+
+    const fileName = 'downloaded_image.jpg'; // 다운로드될 파일 이름 (확장자명 포함)
+    link.download = fileName; // 다운로드될 파일 이름 설정
+
+    document.body.appendChild(link); // anchor 엘리먼트를 body에 추가
+    link.click(); // 클릭 이벤트 발생시켜 다운로드 실행
+
+    // anchor 엘리먼트를 추가하고 삭제하여 메모리 누수 방지
+    document.body.removeChild(link);
+  };
+  const downloadDuplicateImage = () => {
+    if (!duplCharacters) {
+      alert('중복된 캐릭터가 생성되지 않았습니다.');
+      return;
+    }
+
+    const imageURL = duplCharacters.result_url;
+    if (!imageURL) {
+      alert('이미지 URL이 존재하지 않습니다.');
+      return;
+    }
+
+    const link = document.createElement('a');
+    link.href = imageURL;
+    const fileName = 'duplicate_character.jpg';
+    link.download = fileName;
+
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+  };
+
   return (
     <>
       <Nav>
@@ -240,6 +288,25 @@ export default function MyPage() {
                     <Sbtn>다시 만들기</Sbtn>
                   ) : null}
                 </StyledLink>
+                <DownloadButton
+                  onClick={downloadImage}
+                  style={{
+                    background: '#222222',
+                    width: '2.8rem',
+                    height: '2.8rem',
+                    borderRadius: '0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <span
+                    className='material-symbols-rounded'
+                    style={{ fontSize: '2rem', color: 'white' }}
+                  >
+                    download
+                  </span>
+                </DownloadButton>
               </Wrapping>
             </CharLayout>
             <DuplicateCharLayout>
@@ -268,10 +335,30 @@ export default function MyPage() {
                   src='https://i.postimg.cc/G22H5fH9/Group-374.png'
                 />
               )}
-
-              {ls.state.userId === user_id ? (
-                <Button1 onClick={handleButtonClick}>중복 캐릭터</Button1>
-              ) : null}
+              <Wrapping>
+                {ls.state.userId === user_id ? (
+                  <Button1 onClick={handleButtonClick}>중복 캐릭터</Button1>
+                ) : null}
+                <DownloadButton
+                  onClick={downloadDuplicateImage}
+                  style={{
+                    background: '#222222',
+                    width: '2.8rem',
+                    height: '2.8rem',
+                    borderRadius: '0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <span
+                    className='material-symbols-rounded'
+                    style={{ fontSize: '2rem', color: 'white' }}
+                  >
+                    download
+                  </span>
+                </DownloadButton>
+              </Wrapping>
             </DuplicateCharLayout>
           </Top>
           <HorizontalLine />
@@ -325,13 +412,14 @@ const Button1 = styled.button`
   /* 글자 */
   color: #fff;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
 
   /*네모 박스*/
   width: 15rem;
-  height: 3.5rem;
+  height: 3rem;
+  margin-right: 1.5rem;
   border-radius: 0.5625rem;
   background: #222;
   display: inline-block;
@@ -344,13 +432,14 @@ const Sbtn = styled.button`
   /* 글자 */
   color: #fff;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
 
   /*네모 박스*/
   width: 15rem;
-  height: 3.5rem;
+  height: 3rem;
+  margin-right: 1.5rem;
   border-radius: 0.5625rem;
   background: #222;
   display: inline-block;
@@ -365,7 +454,7 @@ const Wrapping = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: row;
-  gap: 1rem;
+  align-items: center;
 `;
 
 const Nav = styled.div`
@@ -406,4 +495,11 @@ const LogoutBtn = styled.button`
 const Logout = styled.button`
   display: flex;
   justify-content: center;
+`;
+const DownloadButton = styled.button`
+  width: 1rem;
+  height: 1rem;
+  position: relative;
+
+  cursor: pointer;
 `;
