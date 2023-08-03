@@ -38,7 +38,7 @@ export default function AnswerInput({
 }
 
 const AnswerInputLayout = styled.div`
-  margin-left: 2rem;
+  margin-left: 4.5rem;
   &:not(:last-child) {
     margin-bottom: 2rem;
   }
@@ -66,8 +66,9 @@ const TA = styled(TextAreaAutoSize)`
   font-size: 1.25rem;
   font-style: normal;
   font-weight: 400;
-  margin-left: 1.8rem;
-  padding-left: 1.55rem;
+  /* margin-left: 1.8rem; */
+  margin-right: 1.8rem;
+  /* padding-left: 1.55rem; */
   padding: 1rem 0.4rem 0.5rem 1.55rem;
   &::placeholder {
     color: silver;
