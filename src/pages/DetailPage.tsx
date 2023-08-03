@@ -8,8 +8,6 @@ import { baseInstance } from '../apis/config';
 import { idStore } from '../stores/id';
 import { useNavigate } from 'react-router-dom';
 import Container from '../styles/Container';
-import { color } from 'highcharts';
-import { width } from '@mui/system';
 
 export default function DetailPage() {
   const { nickName } = userStore();
@@ -61,41 +59,38 @@ export default function DetailPage() {
 
   return (
     <Container>
-      <DownloadButton
-        onClick={downloadImage}
-        style={{
-          background: '#222222',
-          width: '2.8rem',
-          height: '2.8rem',
-          borderRadius: '0.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <span
-          className='material-symbols-rounded'
-          style={{ fontSize: '2rem', color: 'white' }}
-        >
-          download
-        </span>
-      </DownloadButton>
-      <CloseButton onClick={goBack}>
-        <span
-          style={{ position: 'absolute' }}
-          className='material-symbols-rounded'
-        >
-          close
-        </span>
-      </CloseButton>
-      <BoxContainer title={`${anick}님이 생각한 ${nickName}의 모습이에요`}>
+      <BoxContainer title={''}>
+        <Header>
+          <Title>
+            {anick}님이 생각한 {nickName}의 모습이에요
+          </Title>
+          <CloseButton onClick={goBack}>
+            <span
+              // style={{ position: 'absolute' }}
+              className='material-symbols-rounded'
+            >
+              close
+            </span>
+          </CloseButton>
+        </Header>
+
         <HorizontalLine />
         <Layout>
           <CardLayout>
             <FlipCard imageURL={img} keywords={keyword} />
           </CardLayout>
-          <br />
-          <br />
+
+          <div style={{ marginBottom: '1.25rem' }}>
+            <DownloadButton onClick={downloadImage}>
+              <span
+                className='material-symbols-rounded'
+                style={{ fontSize: '2rem', color: 'white' }}
+              >
+                download
+              </span>
+            </DownloadButton>
+          </div>
+
           {questions.map((question: string, index: number) => (
             <QnA key={index} question={question} answer={answers[index]} />
           ))}
@@ -104,6 +99,9 @@ export default function DetailPage() {
     </Container>
   );
 }
+const Header = styled.div`
+  position: relative;
+`;
 
 const Layout = styled.div`
   display: flex;
@@ -113,7 +111,7 @@ const Layout = styled.div`
 `;
 
 const CardLayout = styled.div`
-  margin: 3rem 3rem 5rem 3rem;
+  margin: 3rem 3rem 1.25rem 3rem;
 `;
 
 const HorizontalLine = styled.div`
@@ -123,20 +121,31 @@ const HorizontalLine = styled.div`
   margin-top: 1.25rem;
   margin-left: 3.5rem;
 `;
+
+const Title = styled.div`
+  font-size: 1.75rem;
+  white-space: pre-line;
+  text-align: center;
+`;
 const CloseButton = styled.button`
   width: 1rem;
   height: 1rem;
+  /* position: absolute; */
+  /* right: 14rem;
+  top: 6.5rem; */
   position: absolute;
-  right: 14rem;
-  top: 6.5rem;
+  right: 0.2rem;
+  top: -0.3rem;
   cursor: pointer;
 `;
 
 const DownloadButton = styled.button`
-  width: 1rem;
-  height: 1rem;
-  position: absolute;
-  left: 46rem;
-  top: 38.5rem;
+  width: 2.8rem;
+  height: 2.8rem;
   cursor: pointer;
+  border-radius: 0.5rem;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
