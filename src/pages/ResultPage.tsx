@@ -31,15 +31,19 @@ export default function ResultPage() {
   const { taskId } = taskIdStore();
   const { urls, setUrls, setIndex } = urlsStore(); // userStore에서 꺼내오기
   const { setKeywords } = keywordsStore();
+  const [title, setTitle] = useState('캐릭터를 만들고 있어요!');
 
   useEffect(() => {
-    getImages(taskId).then((data) => {
-      setUrls(data.result_url);
-      setKeywords(data.keyword);
-      setLoading(false);
-    }).catch((error) => {
-      console.error(error);
-    });
+    getImages(taskId)
+      .then((data) => {
+        setUrls(data.result_url);
+        setKeywords(data.keyword);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setTitle('캐릭터를 생성하지 못하였습니다.');
+      });
   }, []);
 
   return (
@@ -50,7 +54,7 @@ export default function ResultPage() {
 
           {loading === true ? (
             <ModalBackdrop>
-              <Loading title='캐릭터를 만들고 있어요!' />
+              <Loading title={title} />
             </ModalBackdrop>
           ) : null}
 
