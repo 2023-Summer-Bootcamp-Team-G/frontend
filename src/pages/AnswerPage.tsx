@@ -9,8 +9,8 @@ import NickNameInput from '../components/Input/NickNameInput';
 import { userStore } from '../stores/userStore';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
-import ImageList from '../components/Choice/choice';
-import ColorBtn from '../components/Choice/color';
+import ImageList from '../components/Choice/Choice';
+import ColorBtn from '../components/Choice/Color';
 import Container from '../styles/Container';
 
 const setMetaTags = ({
@@ -150,7 +150,6 @@ export default function AnswerPage() {
     const response = await baseInstance.post('/characters', json);
     if (response.status === 201) {
       navigate('/result');
-
       setTaskId(response.data.task_id);
     }
   };
