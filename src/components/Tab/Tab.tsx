@@ -219,7 +219,7 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
 const BoxLayout = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.3rem;
   margin: 1.5rem;
 `;
 

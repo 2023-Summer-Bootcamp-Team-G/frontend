@@ -9,7 +9,7 @@ export default function CharBox({ imageURL, onClick }: CharBoxProps) {
   return (
     <Box>
       <img
-        style={{ width: '13rem', height: '13rem' }}
+        style={{ width: '11rem', height: '11rem' }}
         src={imageURL}
         alt='Character'
         onClick={onClick}
@@ -19,8 +19,8 @@ export default function CharBox({ imageURL, onClick }: CharBoxProps) {
 }
 
 const Box = styled.div`
-  width: 13rem;
-  height: 13rem;
+  width: 11rem;
+  height: 11rem;
 
   //   background-color: red; // 위치 잘 보기위해서 넣은 색
 `;
