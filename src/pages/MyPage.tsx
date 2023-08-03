@@ -88,13 +88,18 @@ export default function MyPage() {
 
       setLoading(true);
 
-      getImages(response.data.task_id).then((data) => {
-        setDuplCharacters({ result_url: data.result_url, keyword: data.keyword });
-        setLoading(false);
-      }).catch((error) => {
-        console.error(error);
-        alert('이미지 생성에 실패했어요!');
-      });
+      getImages(response.data.task_id)
+        .then((data) => {
+          setDuplCharacters({
+            result_url: data.result_url,
+            keyword: data.keyword,
+          });
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error(error);
+          alert('이미지 생성에 실패했어요!');
+        });
     } catch (error) {
       alert('답변이 아직 다 모이지 않았어요!');
     }
@@ -132,7 +137,7 @@ export default function MyPage() {
   const [copied, setCopied] = useState(false); // 복사 여부 상태 관리
 
   const handleCopyClick = () => {
-    const location = window.location
+    const location = window.location;
     const link = `${location.protocol}//${location.host}/answerroom/${poll}`;
 
     if (link) {
@@ -162,7 +167,7 @@ export default function MyPage() {
             home
           </span>
           <HomeBtn
-            style={{ color: 'white', fontSize: '1.2rem' }}
+            style={{ color: 'white', fontSize: '1rem' }}
             onClick={handleHomeClick}
           >
             메인페이지
@@ -172,27 +177,24 @@ export default function MyPage() {
           <>
             <Copy>
               {userId !== '' && (
-                <div>
+                <>
                   <span
                     className='material-symbols-rounded'
-                    style={{
-                      WebkitTransform: 'rotate(120deg)',
-                      transform: 'rotate(120deg)',
-                      color: 'white',
-                    }}
+                    style={{ color: 'white' }}
                   >
-                    link
+                    share
                   </span>
                   <CopyButton
-                    style={{ color: 'white', fontSize: '1.2rem' }}
+                    style={{ color: 'white', fontSize: '1rem' }}
                     onClick={handleCopyClick}
                     disabled={copied}
                   >
                     {copied ? '복사 완료!' : '질문지 공유'}
                   </CopyButton>
-                </div>
+                </>
               )}
             </Copy>
+
             <Logout>
               <span
                 className='material-symbols-rounded'
@@ -208,7 +210,7 @@ export default function MyPage() {
                 style={{
                   textDecoration: 'none',
                   color: 'white',
-                  fontSize: '1.2rem',
+                  fontSize: '1rem',
                 }}
                 onClick={handleLogoutClick}
               >
@@ -268,10 +270,7 @@ export default function MyPage() {
               )}
 
               {ls.state.userId === user_id ? (
-                <Button1 onClick={handleButtonClick}>
-                  {' '}
-                  중복 캐릭터 만들기
-                </Button1>
+                <Button1 onClick={handleButtonClick}>중복 캐릭터</Button1>
               ) : null}
             </DuplicateCharLayout>
           </Top>
@@ -285,7 +284,7 @@ export default function MyPage() {
 
 const Top = styled.div`
   display: flex;
-  padding: 0 4rem;
+  padding: 0 6rem;
   justify-content: center;
   flex-direction: row;
   justify-content: space-between;
@@ -304,9 +303,9 @@ const DuplicateCharLayout = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   margin-bottom: 1.56rem;
 `;
 
@@ -326,13 +325,13 @@ const Button1 = styled.button`
   /* 글자 */
   color: #fff;
   text-align: center;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-style: normal;
-  font-weight: 800;
+  font-weight: 600;
 
   /*네모 박스*/
-  width: 22.1875rem;
-  height: 4.125rem;
+  width: 15rem;
+  height: 3.5rem;
   border-radius: 0.5625rem;
   background: #222;
   display: inline-block;
@@ -345,13 +344,13 @@ const Sbtn = styled.button`
   /* 글자 */
   color: #fff;
   text-align: center;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-style: normal;
-  font-weight: 800;
+  font-weight: 600;
 
   /*네모 박스*/
-  width: 22.1875rem;
-  height: 4.125rem;
+  width: 15rem;
+  height: 3.5rem;
   border-radius: 0.5625rem;
   background: #222;
   display: inline-block;
@@ -368,29 +367,43 @@ const Wrapping = styled.div`
   flex-direction: row;
   gap: 1rem;
 `;
-const Nav = styled.button`
+
+const Nav = styled.div`
   display: flex;
-  align-content: right;
+  align-items: center;
   position: absolute;
-  right: 11rem;
+  right: 14rem;
   top: 3rem;
 `;
-const Copy = styled.button`
+
+const Home = styled.div`
+  display: flex;
+  align-items: center;
   margin-right: 1rem;
+`;
+
+const HomeBtn = styled.button`
+  display: flex;
   align-items: center;
 `;
+
+const Copy = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+`;
+
 const CopyButton = styled.button`
+  /* 수평 가운데 정렬 */
+  display: flex;
   align-items: center;
 `;
-const LogoutBtn = styled.button``;
+const LogoutBtn = styled.button`
+  display: flex;
+  align-items: center;
+`;
+
 const Logout = styled.button`
   display: flex;
   justify-content: center;
-`;
-const Home = styled.button`
-  display: flex;
-  margin-right: 1rem;
-`;
-const HomeBtn = styled.button`
-  display: flex;
 `;

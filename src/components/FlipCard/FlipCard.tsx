@@ -20,12 +20,12 @@ export default function FlipCard({ imageURL, keywords }: FlipCardProps) {
       <CharBox boxChange={boxChange}>
         {imageURL ? (
           <img
-            style={{ width: '25rem', height: '25rem', borderRadius: '0.63rem' }}
+            style={{ width: '20rem', height: '20rem', borderRadius: '0.63rem' }}
             src={imageURL}
           />
         ) : (
           <img
-            style={{ width: '25rem', height: '25rem', borderRadius: '0.63rem' }}
+            style={{ width: '20rem', height: '20rem', borderRadius: '0.63rem' }}
             src='https://i.postimg.cc/G22H5fH9/Group-374.png'
           />
         )}
@@ -40,14 +40,14 @@ export default function FlipCard({ imageURL, keywords }: FlipCardProps) {
 }
 
 const BoxLayout = styled.div`
-  width: 28rem;
-  height: 26.875rem;
+  width: 21.8215rem;
+  height: 21.8215rem;
   position: relative;
 `;
 
 const CharBox = styled.div<{ boxChange: boolean }>`
-  width: 25rem;
-  height: 25rem;
+  width: 20rem;
+  height: 20rem;
 
   background-size: contain; //이미지 안 잘리게
   border-radius: 0.63rem;
@@ -57,14 +57,14 @@ const CharBox = styled.div<{ boxChange: boolean }>`
   z-index: ${(props) => (props.boxChange ? 2 : 1)}; //z 순서 바꿔주기
   transform: translate(
     ${(props) => (props.boxChange ? 0 : '3rem')},
-    ${(props) => (props.boxChange ? 0 : '1.875rem')}
+    ${(props) => (props.boxChange ? 0 : '1rem')}
   ); // x, y 이동하게 하는거. x = 0 -> 3.875, y = 0 -> 1.875
   transition: transform 1s; //이동 시간
 `;
 
 const TagBox = styled.div<{ boxChange: boolean }>`
-  width: 25rem;
-  height: 25rem;
+  width: 20rem;
+  height: 20rem;
   background: linear-gradient(#ffda64, #fe9854);
   border-radius: 0.63rem;
   position: absolute;
@@ -73,7 +73,7 @@ const TagBox = styled.div<{ boxChange: boolean }>`
   z-index: ${(props) => (props.boxChange ? 1 : 2)};
   transform: translate(
     ${(props) => (props.boxChange ? 0 : '-3rem')},
-    ${(props) => (props.boxChange ? 0 : '-1.875rem')}
+    ${(props) => (props.boxChange ? 0 : '-1rem')}
   );
   transition: transform 1s;
   overflow: hidden;
