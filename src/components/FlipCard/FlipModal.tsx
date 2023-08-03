@@ -51,8 +51,8 @@ export default function FlipModal({ setModal }: Props) {
 }
 
 const Layout = styled.div`
-  width: 43.75rem;
-  height: 43.75rem;
+  width: 35rem;
+  height: 37rem;
   border-radius: 1.4375rem;
   background: #fffbfb;
   display: flex;
@@ -67,9 +67,9 @@ const Layout = styled.div`
 
 const Title = styled.p`
   color: #2c2c2c;
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   text-align: center;
   padding-top: 2rem;
   margin-bottom: 2rem;
@@ -102,7 +102,7 @@ const Button = styled.button`
   background: #2c2c2c;
   display: inline-block;
   &:not(:last-child) {
-    margin-right: 1.75rem;
+    margin-right: 1.5rem;
   }
   &:hover {
     box-shadow: 5px 6px 4px rgba(0, 0, 0, 0.25);

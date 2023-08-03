@@ -84,11 +84,12 @@ export default function ResultPage() {
 }
 
 const HorizontalLine = styled.div`
-  width: 100%;
+  width: 90%;
   height: 1px;
   background-color: #000;
   margin-top: 1.25rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1.75rem;
+  margin-left: 3.5rem;
 `;
 const PicLayout = styled.div`
   display: flex;
