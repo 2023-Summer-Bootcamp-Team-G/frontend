@@ -79,16 +79,17 @@ const CardLayout = styled.div`
 `;
 
 const HorizontalLine = styled.div`
-  width: 100%;
+  width: 90%;
   height: 1px;
   background-color: #000;
   margin-top: 1.25rem;
+  margin-left: 3.5rem;
 `;
 const CloseButton = styled.button`
   width: 1rem;
   height: 1rem;
   position: relative;
-  left: 82rem;
-  top: 8rem;
+  left: 75rem;
+  top: -48rem;
   cursor: pointer;
 `;
