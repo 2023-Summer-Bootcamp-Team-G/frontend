@@ -244,6 +244,25 @@ export default function MyPage() {
           </Home>
           {ls.state.userId === user_id ? (
             <>
+              <Copy>
+                {userId !== '' && (
+                  <>
+                    <span
+                      className='material-symbols-rounded'
+                      style={{ color: 'white' }}
+                    >
+                      share
+                    </span>
+                    <CopyButton
+                      style={{ color: 'white', fontSize: '1rem' }}
+                      onClick={handleCopyClick}
+                      disabled={copied}
+                    >
+                      {copied ? '복사 완료!' : '질문지 공유'}
+                    </CopyButton>
+                  </>
+                )}
+              </Copy>
               <Logout>
                 <span
                   className='material-symbols-rounded'
@@ -266,25 +285,6 @@ export default function MyPage() {
                   로그아웃
                 </LogoutBtn>
               </Logout>
-              <Copy>
-                {userId !== '' && (
-                  <>
-                    <span
-                      className='material-symbols-rounded'
-                      style={{ color: 'white' }}
-                    >
-                      share
-                    </span>
-                    <CopyButton
-                      style={{ color: 'white', fontSize: '1rem' }}
-                      onClick={handleCopyClick}
-                      disabled={copied}
-                    >
-                      {copied ? '복사 완료!' : '질문지 공유'}
-                    </CopyButton>
-                  </>
-                )}
-              </Copy>
             </>
           ) : null}
         </Nav>
