@@ -13,16 +13,17 @@ interface StyledButtonProps {
 
 const StyledColorButton = styled.button.withConfig({
   shouldForwardProp: (prop) => !['clicked'].includes(prop),
-}) <StyledButtonProps>`
+})<StyledButtonProps>`
   width: 2.8rem;
-    height: 2.8rem;
+  height: 2.8rem;
   background: ${(props) => props.color};
   background: ${(props) =>
     props.clicked
-      ? `url('${props.color === '#ffff'
-        ? 'https://i.postimg.cc/Vvy6fV8W/Pngtree-check-mark-icon-3566306.png'
-        : 'https://i.postimg.cc/W3vtGydY/Pngtree-correct-icon-4490392.png'
-      }') center center / cover no-repeat, ${props.color}`
+      ? `url('${
+          props.color === '#ffff'
+            ? 'https://i.postimg.cc/Vvy6fV8W/Pngtree-check-mark-icon-3566306.png'
+            : 'https://i.postimg.cc/W3vtGydY/Pngtree-correct-icon-4490392.png'
+        }') center center / cover no-repeat, ${props.color}`
       : props.color};
   border: ${(props) =>
     props.color === '#ffff' ? 'solid 0.08rem gray' : 'none'};
@@ -37,12 +38,12 @@ const StyledColorButton = styled.button.withConfig({
 `;
 
 const ColorButton: React.FC<
-  ButtonProps & { clicked: boolean; onClick: () => void }> = memo(({ color, clicked, onClick }) => {
+  ButtonProps & { clicked: boolean; onClick: () => void }
+> = memo(({ color, clicked, onClick }) => {
   return (
     <StyledColorButton color={color} onClick={onClick} clicked={clicked} />
   );
 });
-
 
 export default function ColorBtn({
   onSelect,
@@ -98,5 +99,5 @@ const Title = styled.div`
   font-size: 1.5rem;
   font-style: normal;
   margin-bottom: 1.3rem;
-  margin-left: 2rem;
+  margin-left: 4.3rem;
 `;
