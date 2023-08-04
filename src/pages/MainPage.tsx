@@ -136,7 +136,7 @@ const ButtonLayout = styled.div`
   justify-content: center;
   position: absolute;
   margin-top: 44rem;
-  margin-left: 11rem;
+  margin-left: 10rem;
   display: flex;
   flex-direction: column;
   align-items: center;
