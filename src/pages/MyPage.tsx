@@ -225,171 +225,166 @@ export default function MyPage() {
   };
 
   return (
-    <>
-      <Container>
-        <BoxContainer title={''}>
-          <Nav>
-            <Home>
-              <span
-                className='material-symbols-rounded'
-                style={{ color: 'white' }}
-              >
-                home
-              </span>
-              <HomeBtn
-                style={{ color: 'white', fontSize: '1rem' }}
-                onClick={handleHomeClick}
-              >
-                메인페이지
-              </HomeBtn>
-            </Home>
-            {ls.state.userId === user_id ? (
-              <>
-                <Copy>
-                  {userId !== '' && (
-                    <>
-                      <span
-                        className='material-symbols-rounded'
-                        style={{ color: 'white' }}
-                      >
-                        share
-                      </span>
-                      <CopyButton
-                        style={{ color: 'white', fontSize: '1rem' }}
-                        onClick={handleCopyClick}
-                        disabled={copied}
-                      >
-                        {copied ? '복사 완료!' : '질문지 공유'}
-                      </CopyButton>
-                    </>
-                  )}
-                </Copy>
-
-                <Logout>
-                  <span
-                    className='material-symbols-rounded'
-                    style={{
-                      color: 'white',
-                      // marginLeft: '1rem',
-                    }}
-                  >
-                    account_circle
-                  </span>
-
-                  <LogoutBtn
-                    style={{
-                      textDecoration: 'none',
-                      color: 'white',
-                      fontSize: '1rem',
-                    }}
-                    onClick={handleLogoutClick}
-                  >
-                    로그아웃
-                  </LogoutBtn>
-                </Logout>
-              </>
-            ) : null}
-          </Nav>
-          <Top>
-            <CharLayout>
-              <Title>{nick} 님 본인이 만든 캐릭터에요!</Title>
-              <FlipCardLayout>
-                <FlipCard
-                  imageURL={myCharacters?.result_url}
-                  keywords={myCharacters?.keyword}
-                />
-                {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
-              </FlipCardLayout>
-
-              <Wrapping>
-                <StyledLink to={`/answerroom/${poll}`}>
-                  {ls.state.userId === user_id ? (
-                    <Sbtn>다시 만들기</Sbtn>
-                  ) : null}
-                </StyledLink>
-                <DownloadButton
-                  onClick={downloadImage}
+    <Container>
+      <BoxContainer title={''}>
+        <Nav>
+          <Home>
+            <span
+              className='material-symbols-rounded'
+              style={{ color: 'white' }}
+            >
+              home
+            </span>
+            <HomeBtn
+              style={{ color: 'white', fontSize: '1rem' }}
+              onClick={handleHomeClick}
+            >
+              메인페이지
+            </HomeBtn>
+          </Home>
+          {ls.state.userId === user_id ? (
+            <>
+              <Logout>
+                <span
+                  className='material-symbols-rounded'
                   style={{
-                    background: '#222222',
-                    width: '2.8rem',
-                    height: '2.8rem',
-                    borderRadius: '0.5rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    color: 'white',
+                    // marginLeft: '1rem',
                   }}
                 >
-                  <span
-                    className='material-symbols-rounded'
-                    style={{ fontSize: '2rem', color: 'white' }}
-                  >
-                    download
-                  </span>
-                </DownloadButton>
-              </Wrapping>
-            </CharLayout>
-            <DuplicateCharLayout>
-              <Title>중복된 키워드로 만든 {nick} 님이에요!</Title>
+                  account_circle
+                </span>
 
-              {duplCharacters ? (
-                loading ? (
-                  <BoxInDog />
-                ) : (
-                  <FlipCardLayout>
-                    <FlipCard
-                      imageURL={duplCharacters.result_url}
-                      keywords={duplCharacters.keyword}
-                    />
-                  </FlipCardLayout>
-                )
-              ) : loading ? (
+                <LogoutBtn
+                  style={{
+                    textDecoration: 'none',
+                    color: 'white',
+                    fontSize: '1rem',
+                  }}
+                  onClick={handleLogoutClick}
+                >
+                  로그아웃
+                </LogoutBtn>
+              </Logout>
+              <Copy>
+                {userId !== '' && (
+                  <>
+                    <span
+                      className='material-symbols-rounded'
+                      style={{ color: 'white' }}
+                    >
+                      share
+                    </span>
+                    <CopyButton
+                      style={{ color: 'white', fontSize: '1rem' }}
+                      onClick={handleCopyClick}
+                      disabled={copied}
+                    >
+                      {copied ? '복사 완료!' : '질문지 공유'}
+                    </CopyButton>
+                  </>
+                )}
+              </Copy>
+            </>
+          ) : null}
+        </Nav>
+        <Top>
+          <CharLayout>
+            <Title>{nick} 님 본인이 만든 캐릭터에요!</Title>
+            <FlipCardLayout>
+              <FlipCard
+                imageURL={myCharacters?.result_url}
+                keywords={myCharacters?.keyword}
+              />
+              {/* 첫 번째 만들어진 캐릭터의 이미지를 FlipCard 컴포넌트에 전달 */}
+            </FlipCardLayout>
+
+            <Wrapping>
+              <StyledLink to={`/answerroom/${poll}`}>
+                {ls.state.userId === user_id ? <Sbtn>다시 만들기</Sbtn> : null}
+              </StyledLink>
+              <DownloadButton
+                onClick={downloadImage}
+                style={{
+                  background: '#222222',
+                  width: '2.8rem',
+                  height: '2.8rem',
+                  borderRadius: '0.5rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <span
+                  className='material-symbols-rounded'
+                  style={{ fontSize: '2rem', color: 'white' }}
+                >
+                  download
+                </span>
+              </DownloadButton>
+            </Wrapping>
+          </CharLayout>
+          <DuplicateCharLayout>
+            <Title>중복된 키워드로 만든 {nick} 님이에요!</Title>
+
+            {duplCharacters ? (
+              loading ? (
                 <BoxInDog />
               ) : (
-                <img
-                  style={{
-                    width: '20.8215rem',
-                    height: '20.8215rem',
-                    marginBottom: '3.5rem',
-                  }}
-                  src='https://i.postimg.cc/G22H5fH9/Group-374.png'
-                />
-              )}
-              <Wrapping>
-                {ls.state.userId === user_id ? (
-                  <Button1 onClick={handleButtonClick}>중복 캐릭터</Button1>
-                ) : null}
-                <DownloadButton
-                  onClick={downloadDuplicateImage}
-                  style={{
-                    background: '#222222',
-                    width: '2.8rem',
-                    height: '2.8rem',
-                    borderRadius: '0.5rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
+                <FlipCardLayout>
+                  <FlipCard
+                    imageURL={duplCharacters.result_url}
+                    keywords={duplCharacters.keyword}
+                  />
+                </FlipCardLayout>
+              )
+            ) : loading ? (
+              <BoxInDog />
+            ) : (
+              <img
+                style={{
+                  width: '20.8215rem',
+                  height: '20.8215rem',
+                  marginBottom: '3.5rem',
+                }}
+                src='https://i.postimg.cc/G22H5fH9/Group-374.png'
+              />
+            )}
+            <Wrapping>
+              {ls.state.userId === user_id ? (
+                <Button1 onClick={handleButtonClick}>중복 캐릭터</Button1>
+              ) : null}
+              <DownloadButton
+                onClick={downloadDuplicateImage}
+                style={{
+                  background: '#222222',
+                  width: '2.8rem',
+                  height: '2.8rem',
+                  borderRadius: '0.5rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <span
+                  className='material-symbols-rounded'
+                  style={{ fontSize: '2rem', color: 'white' }}
                 >
-                  <span
-                    className='material-symbols-rounded'
-                    style={{ fontSize: '2rem', color: 'white' }}
-                  >
-                    download
-                  </span>
-                </DownloadButton>
-              </Wrapping>
-            </DuplicateCharLayout>
-          </Top>
-          <HorizontalLine />
-          <BasicTabs
-            onSubmit={getChar}
-            creatorId={creatorId}
-            nickName={nick}
-            characters={characters}
-          />
-        </BoxContainer>
-      </Container>
-    </>
+                  download
+                </span>
+              </DownloadButton>
+            </Wrapping>
+          </DuplicateCharLayout>
+        </Top>
+        <HorizontalLine />
+        <BasicTabs
+          onSubmit={getChar}
+          creatorId={creatorId}
+          nickName={nick}
+          characters={characters}
+        />
+      </BoxContainer>
+    </Container>
   );
 }
 
@@ -485,16 +480,17 @@ const Nav = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
-  /* right: 14rem; */
-  margin-left: 45rem;
+  /* margin-left: 45rem; */
   width: 70rem;
-  top: 3rem;
+  justify-content: flex-end;
+  top: 0;
+  padding-right: 5rem;
+  height: 5rem;
 `;
 
 const Home = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 1rem;
 `;
 
 const HomeBtn = styled.button`
@@ -505,7 +501,7 @@ const HomeBtn = styled.button`
 const Copy = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 1rem;
+  margin-left: 1rem;
 `;
 
 const CopyButton = styled.button`
@@ -521,6 +517,7 @@ const LogoutBtn = styled.button`
 const Logout = styled.button`
   display: flex;
   justify-content: center;
+  margin-left: 1rem;
 `;
 const DownloadButton = styled.button`
   width: 1rem;
