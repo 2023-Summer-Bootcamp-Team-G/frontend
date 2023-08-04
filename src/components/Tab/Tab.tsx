@@ -6,22 +6,16 @@ import CharBox from '../CharBox/CharBox';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { baseInstance } from '../../apis/config';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { idStore } from '../../stores/id';
 import Swipe from '../Swipe/Swipe';
 import { TestStore } from '../../stores/testStore';
-import { isLoggedIn } from '../../utils/utils';
+import { getCharactersParams } from '../../utils/utils';
 
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
-}
-
-interface Character {
-  id: number;
-  result_url: string;
-  nick_name: string;
 }
 
 function CustomTabPanel(props: TabPanelProps) {
@@ -63,12 +57,24 @@ interface ChartProps {
   pieChartData: [string, number, boolean][];
 }
 
-export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
+interface BasicTabs {
+  onSubmit: () => void;
+  creatorId: string | undefined;
+  nickName: string;
+  characters: any[];
+}
+
+export default function BasicTabs({
+  onSubmit,
+  creatorId,
+  nickName,
+  characters,
+}: BasicTabs) {
+  // const [characters, setCharacters] = useState<Character[]>([]);
   const [value, setValue] = useState(0);
-  const [characters, setCharacters] = useState<Character[]>([]);
   const navigate = useNavigate();
   const { setDetailId } = idStore();
-  const { user_id } = useParams();
+  // const { creatorId } = useParams();
 
   //test
   const [serverData1, setServerData1] = useState<ServerData>({
@@ -88,12 +94,12 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
   const getChart = async () => {
     try {
       const response = await baseInstance.get('/characters/chart', {
-        params: isLoggedIn() ? {} : { user_id: user_id },
+        params: getCharactersParams(creatorId),
       });
 
       setServerData1(response.data); //test
     } catch (error) {
-      console.log(error);
+      error;
     }
   };
   const data: ChartProps[] = serverData.keyword_count.map((item, index) => {
@@ -102,9 +108,9 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
 
     // Check if keywordData is a valid object
     if (typeof keywordData !== 'object' || keywordData === null) {
-      console.log(
-        `질문 ${index + 1}에 잘못된 keywordData가 발견되었습니다. 건너뜁니다...`
-      );
+      // console.log(
+      //   `질문 ${index + 1}에 잘못된 keywordData가 발견되었습니다. 건너뜁니다...`
+      // );
       return { title, pieChartData: [] };
     }
 
@@ -122,24 +128,24 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    console.log(event);
+    event;
     onSubmit(); // 탭이 변경될 때 onSubmit 함수 호출
   };
 
-  const getCharacters = async () => {
-    try {
-      const response = await baseInstance.get('/characters', {
-        params: isLoggedIn() ? {} : { user_id: user_id },
-      });
-      setCharacters(response.data.characters);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const getCharacters = async () => {
+  //   try {
+  //     const response = await baseInstance.get('/characters', {
+  //       params: getCharactersParams(creatorId),
+  //     });
+  //     setCharacters(response.data.characters);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   useEffect(() => {
     getChart();
-    getCharacters();
+    // getCharacters();
   }, []);
 
   //test
@@ -147,8 +153,8 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
     setSerData(data);
   }, [serverData1]);
 
-  const goDetails = (id: number) => {
-    navigate('/mypage/detail');
+  const goDetails = (id: number, nickName: string) => {
+    navigate(`/mypage/detail/${nickName}`);
     setDetailId(id);
   };
 
@@ -212,7 +218,7 @@ export default function BasicTabs({ onSubmit }: { onSubmit: () => void }) {
               <CharBox
                 key={character.id}
                 imageURL={character.result_url}
-                onClick={() => goDetails(character.id)}
+                onClick={() => goDetails(character.id, nickName)}
               />
             ))
           )}

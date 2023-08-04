@@ -15,13 +15,6 @@ export default function SignBtn({
   type,
 }: SignBtnProps) {
   return (
-    // <SGtn
-    //   onClick={() => {
-    //     if (disabled === false) {
-    //       onClick;
-    //     } else console.log('no input ');
-    //   }}
-    // >
     <SGtn type={type} onClick={onClick} disabled={disabled}>
       {title}
     </SGtn>
