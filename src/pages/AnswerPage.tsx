@@ -52,7 +52,7 @@ export default function AnswerPage() {
   const [modalOpen, setModalOpen] = useState(false); //모달 열리고 닫히고
   const { userId, nickName, setCreatorId, setNickName } = userStore();
   const { setTaskId } = taskIdStore();
-  const [nick, setNick] = useState(''); // 답변자 setNick 추후에 수정
+  // const [nick, setNick] = useState(''); // 답변자 setNick 추후에 수정
   const { poll_id } = useParams();
   const { setLink } = linkStore();
 
@@ -64,7 +64,6 @@ export default function AnswerPage() {
   };
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const handleColorSelect = (name: string) => {
-    console.log(name);
     setSelectedColor(name);
   };
 
@@ -100,7 +99,8 @@ export default function AnswerPage() {
         });
         const data = response.data.questions;
         setCreatorId(response.data.user_id);
-        setNickName(response.data.nick_name);
+        // setNickName(response.data.nick_name);
+        // setNick(response.data.nick_name);
         setQuestions([...data.slice(0, 4), ...data.slice(6)]);
       } catch (error) {
         console.error(error);
@@ -139,7 +139,8 @@ export default function AnswerPage() {
     // }
     const json = {
       poll_id: poll_id,
-      creatorName: userId !== '' ? nickName : nick,
+      // creatorName: userId !== '' ? nickName : nick,
+      creatorName: nickName,
       answers: [
         ...answers.slice(0, 4),
         ...answers.slice(-2),
@@ -148,6 +149,9 @@ export default function AnswerPage() {
     };
 
     const response = await baseInstance.post('/characters', json);
+
+    // setNickName(nick);
+
     if (response.status === 201) {
       navigate('/result');
       setTaskId(response.data.task_id);
@@ -174,7 +178,8 @@ export default function AnswerPage() {
         {/* 닉네임이 없으면 모달창 띄우고(modalOpen == true) 있음면 안 띄우게 하고싶음 */}
         {modalOpen === true ? (
           <ModalBackdrop>
-            <NickNameInput setNick={setNick} setModalOpen={setModalOpen} />
+            {/* <NickNameInput setNick={setNick} setModalOpen={setModalOpen} /> */}
+            <NickNameInput setNick={setNickName} setModalOpen={setModalOpen} />
           </ModalBackdrop>
         ) : null}
 

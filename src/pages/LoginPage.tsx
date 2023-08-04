@@ -13,7 +13,7 @@ import useCheckAuth from '../hooks/useCheckAuth';
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { setNickName, setUserId, userId } = userStore(); // userStore에서 꺼내오기
+  const { setNickName, setUserId, setCreatorId, userId } = userStore(); // userStore에서 꺼내오기
   const { setPoll } = pollStore();
 
   // 닉네임, 아이디, 비밀번호, 비밀번호 확인
@@ -30,7 +30,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (id === '') {
-      console.log('hi');
+      console.log('');
     } else {
       navigate(`/mypage/${userId}`);
     }
@@ -42,6 +42,8 @@ export default function LoginPage() {
       const data = { user_id: id, password: pw };
       try {
         const response = await baseInstance.post('/login', data);
+
+        setCreatorId('');
 
         setUserId(id);
         setPoll(response.data.user_data.poll_id);

@@ -26,7 +26,10 @@ export default function FlipModal({ setModal }: Props) {
       const response = await baseInstance.post('/characters/choice', data);
       if (response.status == 201) {
         {
-          userId === ''
+          // userId === ''
+          //   ? navigate(`/mypage/${creatorId}`)
+          //   : navigate(`/mypage/${userId}`);
+          creatorId
             ? navigate(`/mypage/${creatorId}`)
             : navigate(`/mypage/${userId}`);
         }

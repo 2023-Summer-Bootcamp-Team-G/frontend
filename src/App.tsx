@@ -25,7 +25,7 @@ function App() {
         <Route path='/answerroom/:poll_id' element={<AnswerPage />} />
         <Route path='/result' element={<ResultPage />} />
         <Route path='/mypage/:user_id' element={<MyPage />} />
-        <Route path='/mypage/detail' element={<DetailPage />} />
+        <Route path='/mypage/detail/:nickname' element={<DetailPage />} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </>
