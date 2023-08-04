@@ -49,7 +49,7 @@ export default function ResultPage() {
   return (
     <Container>
       <>
-        <BoxContainer title={`내가 생각한 ${nickName}의 모습이에요!`}>
+        <BoxContainer title={'마음에드는 캐릭터를 골라주세요!'}>
           <HorizontalLine />
 
           {loading === true ? (

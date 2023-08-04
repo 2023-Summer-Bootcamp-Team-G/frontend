@@ -24,8 +24,8 @@ const LoadingText = styled.div`
   font-family: 'CookieRun-Regular';
 `;
 const LoadingBox = styled.div`
-  width: 28rem;
-  height: 26.875rem;
+  width: 24rem;
+  height: 22.8rem;
   position: relative;
-  margin-bottom: 2.6rem;
+  margin-bottom: 1.5rem;
 `;

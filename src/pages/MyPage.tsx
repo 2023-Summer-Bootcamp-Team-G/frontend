@@ -209,68 +209,70 @@ export default function MyPage() {
 
   return (
     <>
-      <Nav>
-        <Home>
-          <span className='material-symbols-rounded' style={{ color: 'white' }}>
-            home
-          </span>
-          <HomeBtn
-            style={{ color: 'white', fontSize: '1rem' }}
-            onClick={handleHomeClick}
-          >
-            메인페이지
-          </HomeBtn>
-        </Home>
-        {ls.state.userId === user_id ? (
-          <>
-            <Copy>
-              {userId !== '' && (
-                <>
-                  <span
-                    className='material-symbols-rounded'
-                    style={{ color: 'white' }}
-                  >
-                    share
-                  </span>
-                  <CopyButton
-                    style={{ color: 'white', fontSize: '1rem' }}
-                    onClick={handleCopyClick}
-                    disabled={copied}
-                  >
-                    {copied ? '복사 완료!' : '질문지 공유'}
-                  </CopyButton>
-                </>
-              )}
-            </Copy>
-
-            <Logout>
-              <span
-                className='material-symbols-rounded'
-                style={{
-                  color: 'white',
-                  // marginLeft: '1rem',
-                }}
-              >
-                account_circle
-              </span>
-
-              <LogoutBtn
-                style={{
-                  textDecoration: 'none',
-                  color: 'white',
-                  fontSize: '1rem',
-                }}
-                onClick={handleLogoutClick}
-              >
-                로그아웃
-              </LogoutBtn>
-            </Logout>
-          </>
-        ) : null}
-      </Nav>
-
       <Container>
         <BoxContainer title={''}>
+          <Nav>
+            <Home>
+              <span
+                className='material-symbols-rounded'
+                style={{ color: 'white' }}
+              >
+                home
+              </span>
+              <HomeBtn
+                style={{ color: 'white', fontSize: '1rem' }}
+                onClick={handleHomeClick}
+              >
+                메인페이지
+              </HomeBtn>
+            </Home>
+            {ls.state.userId === user_id ? (
+              <>
+                <Copy>
+                  {userId !== '' && (
+                    <>
+                      <span
+                        className='material-symbols-rounded'
+                        style={{ color: 'white' }}
+                      >
+                        share
+                      </span>
+                      <CopyButton
+                        style={{ color: 'white', fontSize: '1rem' }}
+                        onClick={handleCopyClick}
+                        disabled={copied}
+                      >
+                        {copied ? '복사 완료!' : '질문지 공유'}
+                      </CopyButton>
+                    </>
+                  )}
+                </Copy>
+
+                <Logout>
+                  <span
+                    className='material-symbols-rounded'
+                    style={{
+                      color: 'white',
+                      // marginLeft: '1rem',
+                    }}
+                  >
+                    account_circle
+                  </span>
+
+                  <LogoutBtn
+                    style={{
+                      textDecoration: 'none',
+                      color: 'white',
+                      fontSize: '1rem',
+                    }}
+                    onClick={handleLogoutClick}
+                  >
+                    로그아웃
+                  </LogoutBtn>
+                </Logout>
+              </>
+            ) : null}
+          </Nav>
           <Top>
             <CharLayout>
               <Title>{nickName} 님 본인이 만든 캐릭터에요!</Title>
@@ -461,8 +463,11 @@ const Nav = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
-  right: 14rem;
-  top: 3rem;
+  width: 70rem;
+  justify-content: flex-end;
+  top: 0;
+  padding-right: 5rem;
+  height: 5rem;
 `;
 
 const Home = styled.div`
