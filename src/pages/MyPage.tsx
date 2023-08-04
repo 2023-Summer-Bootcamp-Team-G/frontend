@@ -87,7 +87,7 @@ export default function MyPage() {
       setMyCharacters(response.data.my_character);
       setDuplCharacters(response.data.duplicate_character);
     } catch (error) {
-      console.log(error);
+      error;
     }
   };
 
@@ -226,68 +226,70 @@ export default function MyPage() {
 
   return (
     <>
-      <Nav>
-        <Home>
-          <span className='material-symbols-rounded' style={{ color: 'white' }}>
-            home
-          </span>
-          <HomeBtn
-            style={{ color: 'white', fontSize: '1rem' }}
-            onClick={handleHomeClick}
-          >
-            메인페이지
-          </HomeBtn>
-        </Home>
-        {ls.state.userId === user_id ? (
-          <>
-            <Copy>
-              {userId !== '' && (
-                <>
-                  <span
-                    className='material-symbols-rounded'
-                    style={{ color: 'white' }}
-                  >
-                    share
-                  </span>
-                  <CopyButton
-                    style={{ color: 'white', fontSize: '1rem' }}
-                    onClick={handleCopyClick}
-                    disabled={copied}
-                  >
-                    {copied ? '복사 완료!' : '질문지 공유'}
-                  </CopyButton>
-                </>
-              )}
-            </Copy>
-
-            <Logout>
-              <span
-                className='material-symbols-rounded'
-                style={{
-                  color: 'white',
-                  // marginLeft: '1rem',
-                }}
-              >
-                account_circle
-              </span>
-
-              <LogoutBtn
-                style={{
-                  textDecoration: 'none',
-                  color: 'white',
-                  fontSize: '1rem',
-                }}
-                onClick={handleLogoutClick}
-              >
-                로그아웃
-              </LogoutBtn>
-            </Logout>
-          </>
-        ) : null}
-      </Nav>
-
       <Container>
         <BoxContainer title={''}>
+          <Nav>
+            <Home>
+              <span
+                className='material-symbols-rounded'
+                style={{ color: 'white' }}
+              >
+                home
+              </span>
+              <HomeBtn
+                style={{ color: 'white', fontSize: '1rem' }}
+                onClick={handleHomeClick}
+              >
+                메인페이지
+              </HomeBtn>
+            </Home>
+            {ls.state.userId === user_id ? (
+              <>
+                <Copy>
+                  {userId !== '' && (
+                    <>
+                      <span
+                        className='material-symbols-rounded'
+                        style={{ color: 'white' }}
+                      >
+                        share
+                      </span>
+                      <CopyButton
+                        style={{ color: 'white', fontSize: '1rem' }}
+                        onClick={handleCopyClick}
+                        disabled={copied}
+                      >
+                        {copied ? '복사 완료!' : '질문지 공유'}
+                      </CopyButton>
+                    </>
+                  )}
+                </Copy>
+
+                <Logout>
+                  <span
+                    className='material-symbols-rounded'
+                    style={{
+                      color: 'white',
+                      // marginLeft: '1rem',
+                    }}
+                  >
+                    account_circle
+                  </span>
+
+                  <LogoutBtn
+                    style={{
+                      textDecoration: 'none',
+                      color: 'white',
+                      fontSize: '1rem',
+                    }}
+                    onClick={handleLogoutClick}
+                  >
+                    로그아웃
+                  </LogoutBtn>
+                </Logout>
+              </>
+            ) : null}
+          </Nav>
           <Top>
             <CharLayout>
               <Title>{nick} 님 본인이 만든 캐릭터에요!</Title>
@@ -379,7 +381,12 @@ export default function MyPage() {
             </DuplicateCharLayout>
           </Top>
           <HorizontalLine />
-          <BasicTabs onSubmit={getChar} creatorId={creatorId} nickName={nick} characters={characters} />
+          <BasicTabs
+            onSubmit={getChar}
+            creatorId={creatorId}
+            nickName={nick}
+            characters={characters}
+          />
         </BoxContainer>
       </Container>
     </>
@@ -478,7 +485,9 @@ const Nav = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
-  right: 14rem;
+  /* right: 14rem; */
+  margin-left: 45rem;
+  width: 70rem;
   top: 3rem;
 `;
 

@@ -33,8 +33,6 @@ export default function DetailPage() {
       setKeyword(response.data.keyword);
       setImg(response.data.result_url);
       setAnick(response.data.nick_name);
-
-      console.log(nickname)
     } catch (error) {
       console.error(error);
     }

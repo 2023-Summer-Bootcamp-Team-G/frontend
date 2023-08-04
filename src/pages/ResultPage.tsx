@@ -7,14 +7,12 @@ import Loading from '../components/Loading/Loading';
 import { urlsStore } from '../stores/urls';
 import { keywordsStore } from '../stores/keywords';
 import { taskIdStore } from '../stores/taskId';
-import { userStore } from '../stores/userStore';
 import { getImages } from '../utils/utils';
 import Container from '../styles/Container';
 
 export default function ResultPage() {
   //모달
   const [modal, setModal] = useState(false);
-  const { nickName } = userStore();
 
   const showModal = (index: any) => {
     setModal(true);
@@ -49,7 +47,7 @@ export default function ResultPage() {
   return (
     <Container>
       <>
-        <BoxContainer title={`내가 생각한 ${nickName}의 모습이에요!`}>
+        <BoxContainer title={'마음에 드는 캐릭터를 골라주세요!'}>
           <HorizontalLine />
 
           {loading === true ? (

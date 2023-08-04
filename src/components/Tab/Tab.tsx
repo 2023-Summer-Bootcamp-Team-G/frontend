@@ -64,7 +64,12 @@ interface BasicTabs {
   characters: any[];
 }
 
-export default function BasicTabs({ onSubmit, creatorId, nickName, characters }: BasicTabs) {
+export default function BasicTabs({
+  onSubmit,
+  creatorId,
+  nickName,
+  characters,
+}: BasicTabs) {
   // const [characters, setCharacters] = useState<Character[]>([]);
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
@@ -94,7 +99,7 @@ export default function BasicTabs({ onSubmit, creatorId, nickName, characters }:
 
       setServerData1(response.data); //test
     } catch (error) {
-      console.log(error);
+      error;
     }
   };
   const data: ChartProps[] = serverData.keyword_count.map((item, index) => {
@@ -103,9 +108,9 @@ export default function BasicTabs({ onSubmit, creatorId, nickName, characters }:
 
     // Check if keywordData is a valid object
     if (typeof keywordData !== 'object' || keywordData === null) {
-      console.log(
-        `질문 ${index + 1}에 잘못된 keywordData가 발견되었습니다. 건너뜁니다...`
-      );
+      // console.log(
+      //   `질문 ${index + 1}에 잘못된 keywordData가 발견되었습니다. 건너뜁니다...`
+      // );
       return { title, pieChartData: [] };
     }
 
@@ -123,7 +128,7 @@ export default function BasicTabs({ onSubmit, creatorId, nickName, characters }:
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    console.log(event);
+    event;
     onSubmit(); // 탭이 변경될 때 onSubmit 함수 호출
   };
 

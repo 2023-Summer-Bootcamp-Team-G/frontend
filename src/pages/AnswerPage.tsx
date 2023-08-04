@@ -9,8 +9,8 @@ import NickNameInput from '../components/Input/NickNameInput';
 import { userStore } from '../stores/userStore';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
-import ImageList from '../components/choice/choice';
-import ColorBtn from '../components/choice/color';
+import ImageList from '../components/Choice/Choice';
+import ColorBtn from '../components/Choice/Color';
 import Container from '../styles/Container';
 
 const setMetaTags = ({
@@ -64,7 +64,6 @@ export default function AnswerPage() {
   };
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const handleColorSelect = (name: string) => {
-    console.log(name);
     setSelectedColor(name);
   };
 

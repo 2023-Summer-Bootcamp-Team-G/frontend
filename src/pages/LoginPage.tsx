@@ -30,7 +30,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (id === '') {
-      console.log('hi');
+      console.log('');
     } else {
       navigate(`/mypage/${userId}`);
     }
@@ -42,7 +42,7 @@ export default function LoginPage() {
       const data = { user_id: id, password: pw };
       try {
         const response = await baseInstance.post('/login', data);
-        
+
         setCreatorId('');
 
         setUserId(id);
