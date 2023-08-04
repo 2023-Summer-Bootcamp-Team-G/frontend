@@ -2,7 +2,6 @@ import { styled } from 'styled-components';
 import BoxContainer from '../components/BoxContainer/BoxContainer';
 import FlipCard from '../components/FlipCard/FlipCard';
 import QnA from '../components/QnA/QnA';
-import { userStore } from '../stores/userStore';
 import { useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';
 import { idStore } from '../stores/id';

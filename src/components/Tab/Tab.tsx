@@ -6,7 +6,7 @@ import CharBox from '../CharBox/CharBox';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { baseInstance } from '../../apis/config';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { idStore } from '../../stores/id';
 import Swipe from '../Swipe/Swipe';
 import { TestStore } from '../../stores/testStore';

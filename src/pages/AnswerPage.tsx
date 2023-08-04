@@ -52,7 +52,7 @@ export default function AnswerPage() {
   const [modalOpen, setModalOpen] = useState(false); //모달 열리고 닫히고
   const { userId, nickName, setCreatorId, setNickName } = userStore();
   const { setTaskId } = taskIdStore();
-  const [nick, setNick] = useState(''); // 답변자 setNick 추후에 수정
+  // const [nick, setNick] = useState(''); // 답변자 setNick 추후에 수정
   const { poll_id } = useParams();
   const { setLink } = linkStore();
 
@@ -101,7 +101,7 @@ export default function AnswerPage() {
         const data = response.data.questions;
         setCreatorId(response.data.user_id);
         // setNickName(response.data.nick_name);
-        setNick(response.data.nick_name);
+        // setNick(response.data.nick_name);
         setQuestions([...data.slice(0, 4), ...data.slice(6)]);
       } catch (error) {
         console.error(error);
