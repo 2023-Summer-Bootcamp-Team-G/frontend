@@ -62,7 +62,7 @@ const Title = styled.div`
   font-size: 1.5rem;
   font-style: normal;
   margin-bottom: 1.3rem;
-  margin-left: 2rem;
+  margin-left: 4.3rem;
 `;
 
 const ImageWrapper = styled.div`
