@@ -9,8 +9,8 @@ import NickNameInput from '../components/Input/NickNameInput';
 import { userStore } from '../stores/userStore';
 import { taskIdStore } from '../stores/taskId';
 import { linkStore } from '../stores/link';
-import ImageList from '../components/Choice/Choice';
-import ColorBtn from '../components/Choice/Color';
+import ImageList from '../components/choice/choice';
+import ColorBtn from '../components/choice/color';
 import Container from '../styles/Container';
 
 const setMetaTags = ({
@@ -100,7 +100,8 @@ export default function AnswerPage() {
         });
         const data = response.data.questions;
         setCreatorId(response.data.user_id);
-        setNickName(response.data.nick_name);
+        // setNickName(response.data.nick_name);
+        setNick(response.data.nick_name);
         setQuestions([...data.slice(0, 4), ...data.slice(6)]);
       } catch (error) {
         console.error(error);
@@ -139,7 +140,8 @@ export default function AnswerPage() {
     // }
     const json = {
       poll_id: poll_id,
-      creatorName: userId !== '' ? nickName : nick,
+      // creatorName: userId !== '' ? nickName : nick,
+      creatorName: nickName,
       answers: [
         ...answers.slice(0, 4),
         ...answers.slice(-2),
@@ -148,6 +150,9 @@ export default function AnswerPage() {
     };
 
     const response = await baseInstance.post('/characters', json);
+
+    // setNickName(nick);
+
     if (response.status === 201) {
       navigate('/result');
       setTaskId(response.data.task_id);
@@ -174,7 +179,8 @@ export default function AnswerPage() {
         {/* 닉네임이 없으면 모달창 띄우고(modalOpen == true) 있음면 안 띄우게 하고싶음 */}
         {modalOpen === true ? (
           <ModalBackdrop>
-            <NickNameInput setNick={setNick} setModalOpen={setModalOpen} />
+            {/* <NickNameInput setNick={setNick} setModalOpen={setModalOpen} /> */}
+            <NickNameInput setNick={setNickName} setModalOpen={setModalOpen} />
           </ModalBackdrop>
         ) : null}
 

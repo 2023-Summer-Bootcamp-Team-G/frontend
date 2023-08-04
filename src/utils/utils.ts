@@ -23,3 +23,9 @@ export const isLoggedIn = (): boolean => {
   const ls = JSON.parse(localStorage.getItem('user') || 'null');
   return ls && ls.state && ls.state.userId;
 };
+
+export const getCharactersParams = (creatorId: string | undefined) => {
+  return creatorId ? { user_id: creatorId } : {};
+};
+
+

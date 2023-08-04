@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { userStore } from '../stores/userStore';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { pollStore } from '../stores/poll';
-import { getImages, isLoggedIn } from '../utils/utils';
+import { getImages, getCharactersParams } from '../utils/utils';
 
 import Container from '../styles/Container';
 import BoxInDog from '../components/Loading/BoxInDog';
@@ -43,6 +43,13 @@ const setMetaTags = ({
     urlTag.setAttribute('content', window.location.href);
   }
 };
+
+interface Character {
+  id: number;
+  result_url: string;
+  nick_name: string;
+}
+
 type CharacterData = {
   result_url: string;
   keyword: string[];
@@ -54,29 +61,33 @@ type DuplCharacterData = {
 };
 
 export default function MyPage() {
-  const [characters, setCharacters] = useState<string[]>([]);
+  const [characters, setCharacters] = useState<Character[]>([]);
   const [myCharacters, setMyCharacters] = useState<CharacterData | null>(null);
   const [duplCharacters, setDuplCharacters] =
     useState<DuplCharacterData | null>();
-  const { userId, nickName, setNickName } = userStore();
+  const { userId, creatorId, setCreatorId } = userStore();
   const { poll } = pollStore();
   // const [dupltask, setDuplTask] = useState(''); //중복 task_id
   const { user_id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
+  const [nick, setNick] = useState('');
+
   // --------------------------------------------- 생성자
   const getChar = async () => {
     try {
       const response = await baseInstance.get('/characters', {
-        params: isLoggedIn() ? {} : { user_id: user_id },
+        params: getCharactersParams(creatorId),
       });
+
+      // setNickName(response.data.nick_name);
+      setNick(response.data.nick_name);
       setCharacters(response.data.characters);
       setMyCharacters(response.data.my_character);
       setDuplCharacters(response.data.duplicate_character);
-      setNickName(response.data.nick_name);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -143,16 +154,22 @@ export default function MyPage() {
     if (link) {
       navigator.clipboard.writeText(link).then(() => {
         setCopied(true);
+
+        setTimeout(() => {
+          setCopied(false);
+        }, 1000);
       });
     }
   };
 
   const handleLogoutClick = () => {
     localStorage.removeItem('user');
+    baseInstance.post('/logout');
     navigate('/');
   };
 
   const handleHomeClick = () => {
+    setCreatorId('');
     navigate('/');
   };
 
@@ -273,7 +290,7 @@ export default function MyPage() {
         <BoxContainer title={''}>
           <Top>
             <CharLayout>
-              <Title>{nickName} 님 본인이 만든 캐릭터에요!</Title>
+              <Title>{nick} 님 본인이 만든 캐릭터에요!</Title>
               <FlipCardLayout>
                 <FlipCard
                   imageURL={myCharacters?.result_url}
@@ -310,7 +327,7 @@ export default function MyPage() {
               </Wrapping>
             </CharLayout>
             <DuplicateCharLayout>
-              <Title>중복된 키워드로 만든 {nickName} 님이에요!</Title>
+              <Title>중복된 키워드로 만든 {nick} 님이에요!</Title>
 
               {duplCharacters ? (
                 loading ? (
@@ -362,7 +379,7 @@ export default function MyPage() {
             </DuplicateCharLayout>
           </Top>
           <HorizontalLine />
-          <BasicTabs onSubmit={getChar} />
+          <BasicTabs onSubmit={getChar} creatorId={creatorId} nickName={nick} characters={characters} />
         </BoxContainer>
       </Container>
     </>

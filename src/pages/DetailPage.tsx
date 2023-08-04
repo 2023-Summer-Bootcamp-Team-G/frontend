@@ -6,11 +6,12 @@ import { userStore } from '../stores/userStore';
 import { useEffect, useState } from 'react';
 import { baseInstance } from '../apis/config';
 import { idStore } from '../stores/id';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Container from '../styles/Container';
 
 export default function DetailPage() {
-  const { nickName } = userStore();
+  // const { nickName } = userStore();
+  const { nickname } = useParams();
   const [img, setImg] = useState('');
   const [anick, setAnick] = useState<string>('');
   const [questions, setQuestions] = useState([]);
@@ -33,6 +34,8 @@ export default function DetailPage() {
       setKeyword(response.data.keyword);
       setImg(response.data.result_url);
       setAnick(response.data.nick_name);
+
+      console.log(nickname)
     } catch (error) {
       console.error(error);
     }
@@ -62,7 +65,7 @@ export default function DetailPage() {
       <BoxContainer title={''}>
         <Header>
           <Title>
-            {anick}님이 생각한 {nickName}의 모습이에요
+            {anick}님이 생각한 {nickname}의 모습이에요
           </Title>
           <CloseButton onClick={goBack}>
             <span
